@@ -5,20 +5,20 @@ class Post < ApplicationRecord
   has_many :comments
   has_many :users, through: :comments
   
-  has_one_attached :image
+  has_many_attached :media_types
 
-  validate :acceptable_image
+  validate :acceptable_media_types
 
-  def acceptable_image
-    return unless image.attached?
+  def acceptable_media_types
+    return unless media_types.attached?
 
-    unless image.byte_size <= 1.megabyte
-      errors.add(:main_image, "is too big")
+    unless media_types.byte_size <= 1.megabyte
+      errors.add(:media_types, "is too big")
     end
 
-    acceptable_types = ["image/jpeg", "image/png"]
-    unless acceptable_types.include?(image.content_type)
-      errors.add(:image, "must be a JPEG or PNG")
+    acceptable_types = ["media_types/jpeg", "media_types/png","media_types/gif","media_types/MP4","media_types/MOV"]
+    unless acceptable_types.include?(media_types.content_type)
+      errors.add(:media_types, "must be a JPEG, PNG, GIF, MOV, or MP4 file")
     end
   end
 
