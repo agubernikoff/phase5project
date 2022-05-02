@@ -9,8 +9,9 @@ function Home({ logout, user }) {
   console.log(user);
   return (
     <div>
-      hello {user.username} you are a {user.isSeller ? "seller" : "buyer"}{" "}
-      welcome to the homepage
+      hello <img alt="propic" src={user.profile_picture} />
+      {user.username} you are a {user.isSeller ? "seller" : "buyer"} welcome to
+      the homepage
       <button onClick={handleLogout}>Logout</button>
     </div>
   );

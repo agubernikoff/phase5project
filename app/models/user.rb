@@ -16,7 +16,7 @@ class User < ApplicationRecord
       errors.add(:profile_picture, "is too big")
     end
 
-    acceptable_types = ["profile_picture/jpeg", "profile_picture/png"]
+    acceptable_types = ["image/jpeg", "image/png"]
     unless acceptable_types.include?(profile_picture.content_type)
       errors.add(:profile_picture, "must be a JPEG or PNG")
     end

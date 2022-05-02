@@ -28,7 +28,7 @@ function App() {
   return (
     <div className="App">
       <Routes>
-        <Route exact path="/login" element={<Login />} />
+        <Route exact path="/login" element={<Login onLogin={setUser} />} />
         <Route exact path="/" element={<Home logout={logout} user={user} />} />
       </Routes>
     </div>

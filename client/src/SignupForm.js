@@ -4,11 +4,18 @@ import { useNavigate } from "react-router-dom";
 function SignUpForm({ onLogin }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [profile_picture, setProfilePicture] = useState("");
   const [errors, setErrors] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [decided, setDecided] = useState(false);
   const [isSeller, setIsSeller] = useState(false);
   const navigate = useNavigate();
+
+  const formData = new FormData();
+  formData.append("username", username);
+  formData.append("password", password);
+  formData.append("isSeller", isSeller);
+  formData.append("profile_picture", profile_picture);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -17,14 +24,7 @@ function SignUpForm({ onLogin }) {
     setIsLoading(true);
     fetch("/signup", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        username,
-        password,
-        isSeller,
-      }),
+      body: formData,
     }).then((r) => {
       setIsLoading(false);
       if (r.ok) {
@@ -34,7 +34,8 @@ function SignUpForm({ onLogin }) {
       }
     });
   }
-  console.log(isSeller);
+  console.log(profile_picture);
+
   return (
     <div>
       {decided ? (
@@ -63,6 +64,13 @@ function SignUpForm({ onLogin }) {
             onChange={(e) => setPassword(e.target.value)}
             autoComplete="current-password"
           />
+          <label htmlFor="profile_picture">Profile Picture</label>
+          <input
+            type="file"
+            accept="image/jpeg,image/png"
+            name="profile_picture"
+            onChange={(e) => setProfilePicture(e.target.files[0])}
+          ></input>
           <button type="submit" style={{ marginTop: 10 }}>
             {isLoading ? "Loading..." : "Sign Up"}
           </button>
