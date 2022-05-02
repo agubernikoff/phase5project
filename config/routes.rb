@@ -9,5 +9,6 @@ Rails.application.routes.draw do
   get '/users', to: 'users#index'
   patch '/me', to: 'users#update'
   delete '/users', to: 'users#destroy'
+  resources :projects
   get "*path", to: "fallback#index", constraints: ->(req) { !req.xhr? && req.format.html? }
 end
