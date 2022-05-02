@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import Login from "./Login";
 import Home from "./Home";
+import NewProjectForm from "./NewProjectForm";
 
 function App() {
   const [user, setUser] = useState("");
@@ -30,6 +31,11 @@ function App() {
       <Routes>
         <Route exact path="/login" element={<Login onLogin={setUser} />} />
         <Route exact path="/" element={<Home logout={logout} user={user} />} />
+        <Route
+          exact
+          path="/newprojectform"
+          element={<NewProjectForm user={user} />}
+        />
       </Routes>
     </div>
   );

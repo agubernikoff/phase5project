@@ -4,8 +4,7 @@ class CreateProjects < ActiveRecord::Migration[6.1]
       t.string :title
       t.string :description
       t.integer :likes_threshold
-      t.boolean :isPreorder
-      t.boolean :isForSale
+      t.string :status
 
       t.timestamps
     end

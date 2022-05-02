@@ -74,8 +74,7 @@ ActiveRecord::Schema.define(version: 2022_04_28_231112) do
     t.string "title"
     t.string "description"
     t.integer "likes_threshold"
-    t.boolean "isPreorder"
-    t.boolean "isForSale"
+    t.string "status"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
