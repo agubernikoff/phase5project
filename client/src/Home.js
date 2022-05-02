@@ -9,7 +9,7 @@ function Home({ logout, user }) {
       method: "DELETE",
     }).then(() => logout());
   }
-  console.log(user);
+
   return (
     <div>
       hello <img alt="propic" src={user.profile_picture} />

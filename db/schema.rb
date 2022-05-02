@@ -75,8 +75,10 @@ ActiveRecord::Schema.define(version: 2022_04_28_231112) do
     t.string "description"
     t.integer "likes_threshold"
     t.string "status"
+    t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_projects_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -95,4 +97,5 @@ ActiveRecord::Schema.define(version: 2022_04_28_231112) do
   add_foreign_key "likes", "posts"
   add_foreign_key "likes", "users"
   add_foreign_key "posts", "projects"
+  add_foreign_key "projects", "users"
 end

@@ -3,4 +3,8 @@ class Project < ApplicationRecord
     has_many :posts, dependent: :destroy
     has_many :likes, through: :posts
     has_many :comments, through: :posts
+    validates :title, presence: true
+    validates :likes_threshold, presence: true
+    validates :status, presence: true
+    validates :user_id, presence: true
 end

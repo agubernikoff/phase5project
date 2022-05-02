@@ -31,7 +31,7 @@ class ProjectsController < ApplicationController
     private
     
     def project_params
-      params.permit(:title, :description,:likes_threshold,:status)
+      params.permit(:title, :description,:likes_threshold,:status,:user_id)
     end
     
     def render_unprocessable_entity invalid

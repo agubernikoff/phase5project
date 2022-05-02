@@ -1,15 +1,40 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-function NewProjectForm() {
+function NewProjectForm({ user }) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [likes_threshold, setLikesThreshold] = useState("");
   const status = "New Project";
+  const navigate = useNavigate();
+
+  const formData = new FormData();
+  formData.append("user_id", user.id);
+  formData.append("title", title);
+  formData.append("description", description);
+  formData.append("likes_threshold", likes_threshold);
+  formData.append("status", status);
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    fetch("/projects", {
+      method: "POST",
+      body: formData,
+    }).then((r) => {
+      if (r.ok) {
+        r.json().then((data) => console.log(data));
+      } else {
+        r.json().then((data) => console.log(data));
+      }
+    });
+    navigate("/");
+  }
 
   return (
     <div>
       NewProjectForm
       <form
+        onSubmit={handleSubmit}
         style={{
           display: "flex",
           flexDirection: "column",
@@ -70,7 +95,7 @@ function NewProjectForm() {
           id="status"
           autoComplete="off"
           value={status}
-          readonly
+          readOnly
         />
         <br />
         <input type="submit" value="Submit" />
