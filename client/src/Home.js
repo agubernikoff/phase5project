@@ -19,6 +19,9 @@ function Home({ logout, user }) {
       <button onClick={() => navigate("/newprojectform")}>
         Start a new project
       </button>
+      {user.projects[0] ? (
+        <button onClick={() => navigate("/newpost")}>Add to a project</button>
+      ) : null}
     </div>
   );
 }

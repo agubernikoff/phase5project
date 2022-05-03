@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import Login from "./Login";
 import Home from "./Home";
 import NewProjectForm from "./NewProjectForm";
+import NewPost from "./NewPost";
 
 function App() {
   const [user, setUser] = useState("");
@@ -36,6 +37,7 @@ function App() {
           path="/newprojectform"
           element={<NewProjectForm user={user} />}
         />
+        <Route exact path="/newpost" element={<NewPost user={user} />} />
       </Routes>
     </div>
   );

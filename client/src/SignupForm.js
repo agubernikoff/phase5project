@@ -1,15 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import profile from "./profile.jpeg";
 
 function SignUpForm({ onLogin }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [profile_picture, setProfilePicture] = useState("");
+  const [profile_picture, setProfilePicture] = useState(null);
   const [errors, setErrors] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [decided, setDecided] = useState(false);
   const [isSeller, setIsSeller] = useState(false);
   const navigate = useNavigate();
+
+  async function fetchAsFile(path) {
+    const response = await fetch(path);
+    const blob = await response.blob();
+    return new File([blob], path);
+  }
+
+  useEffect(() => {
+    fetchAsFile(profile).then((data) => setProfilePicture(data));
+  }, []);
 
   const formData = new FormData();
   formData.append("username", username);
@@ -19,7 +30,6 @@ function SignUpForm({ onLogin }) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    navigate("/");
     setErrors([]);
     setIsLoading(true);
     fetch("/signup", {
@@ -28,7 +38,10 @@ function SignUpForm({ onLogin }) {
     }).then((r) => {
       setIsLoading(false);
       if (r.ok) {
-        r.json().then((user) => onLogin(user));
+        r.json().then((user) => {
+          onLogin(user);
+          navigate("/");
+        });
       } else {
         r.json().then((err) => setErrors(err.errors));
       }
