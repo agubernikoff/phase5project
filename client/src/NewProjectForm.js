@@ -6,6 +6,7 @@ function NewProjectForm({ user }) {
   const [description, setDescription] = useState("");
   const [likes_threshold, setLikesThreshold] = useState("");
   const status = "New Project";
+  const [errors, setErrors] = useState([]);
   const navigate = useNavigate();
 
   const formData = new FormData();
@@ -22,12 +23,14 @@ function NewProjectForm({ user }) {
       body: formData,
     }).then((r) => {
       if (r.ok) {
-        r.json().then((data) => console.log(data));
+        r.json().then((data) => {
+          console.log(data);
+          navigate("/");
+        });
       } else {
-        r.json().then((data) => console.log(data));
+        r.json().then((data) => setErrors(data.errors));
       }
     });
-    navigate("/");
   }
 
   return (
@@ -99,6 +102,19 @@ function NewProjectForm({ user }) {
         />
         <br />
         <input type="submit" value="Submit" />
+        {errors.map((err) => (
+          <h3
+            key={err}
+            style={{
+              display: "block",
+              margin: "auto",
+              marginTop: 10,
+              textAlign: "center",
+            }}
+          >
+            {err}
+          </h3>
+        ))}
       </form>
     </div>
   );
