@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-function NewProjectForm({ user }) {
+function NewProjectForm({ user, updateUserProjects }) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [likes_threshold, setLikesThreshold] = useState("");
@@ -24,7 +24,7 @@ function NewProjectForm({ user }) {
     }).then((r) => {
       if (r.ok) {
         r.json().then((data) => {
-          console.log(data);
+          updateUserProjects(data);
           navigate("/");
         });
       } else {

@@ -20,6 +20,29 @@ function App() {
     setUser("");
   }
 
+  function updateUserProjects(newProject) {
+    const updatedProjects = [...user.projects, newProject];
+    setUser({ ...user, projects: updatedProjects });
+  }
+
+  function updateUserProjectsPosts(newPost) {
+    const updatedPosts = [
+      ...user.projects.find((p) => p.id === newPost.project_id).posts,
+      newPost,
+    ];
+    const updatedProject = {
+      ...user.projects.find((p) => p.id === newPost.project_id),
+      posts: updatedPosts,
+    };
+    const filteredProjects = user.projects.filter(
+      (p) => p.id !== newPost.project_id
+    );
+    const updatedProjects = [...filteredProjects, updatedProject];
+    const sortedProjects = updatedProjects.sort((a, b) => a.id - b.id);
+    setUser({ ...user, projects: sortedProjects });
+  }
+  console.log(user);
+
   if (!user)
     return (
       <div>
@@ -35,9 +58,23 @@ function App() {
         <Route
           exact
           path="/newprojectform"
-          element={<NewProjectForm user={user} />}
+          element={
+            <NewProjectForm
+              user={user}
+              updateUserProjects={updateUserProjects}
+            />
+          }
         />
-        <Route exact path="/newpost" element={<NewPost user={user} />} />
+        <Route
+          exact
+          path="/newpost"
+          element={
+            <NewPost
+              user={user}
+              updateUserProjectsPosts={updateUserProjectsPosts}
+            />
+          }
+        />
       </Routes>
     </div>
   );

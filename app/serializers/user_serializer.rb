@@ -2,8 +2,9 @@ class UserSerializer < ActiveModel::Serializer
 include Rails.application.routes.url_helpers
 
   attributes :id,:username,:isSeller,:profile_picture,:projects
+  
   def projects
-    ActiveModel::SerializableResource.new(object.projects,each_serializer: ProjectsSerializer)
+    ActiveModel::SerializableResource.new(object.projects,each_serializer: ProjectSerializer)
   end
   
   def profile_picture
