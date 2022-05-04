@@ -12,6 +12,7 @@ function NewPost({ user, updateUserProjectsPosts }) {
   formData.append("project_id", project_id);
   formData.append("media", media);
   formData.append("caption", caption);
+  formData.append("username", user.username);
 
   function handleSubmit(e) {
     e.preventDefault();
