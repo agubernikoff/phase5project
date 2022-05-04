@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import Login from "./Login";
+import Header from "./Header";
 import Home from "./Home";
 import NewProjectForm from "./NewProjectForm";
 import NewPost from "./NewPost";
+import Footer from "./Footer";
 
 function App() {
   const [user, setUser] = useState("");
@@ -51,31 +53,39 @@ function App() {
     );
 
   return (
-    <div className="App">
-      <Routes>
-        <Route exact path="/login" element={<Login onLogin={setUser} />} />
-        <Route exact path="/" element={<Home logout={logout} user={user} />} />
-        <Route
-          exact
-          path="/newprojectform"
-          element={
-            <NewProjectForm
-              user={user}
-              updateUserProjects={updateUserProjects}
-            />
-          }
-        />
-        <Route
-          exact
-          path="/newpost"
-          element={
-            <NewPost
-              user={user}
-              updateUserProjectsPosts={updateUserProjectsPosts}
-            />
-          }
-        />
-      </Routes>
+    <div className="App" style={{ display: "flex", flexDirection: "row" }}>
+      <Header />
+      <div style={{ width: "66%" }}>
+        <Routes>
+          <Route exact path="/login" element={<Login onLogin={setUser} />} />
+          <Route
+            exact
+            path="/"
+            element={<Home logout={logout} user={user} />}
+          />
+          <Route
+            exact
+            path="/newprojectform"
+            element={
+              <NewProjectForm
+                user={user}
+                updateUserProjects={updateUserProjects}
+              />
+            }
+          />
+          <Route
+            exact
+            path="/newpost"
+            element={
+              <NewPost
+                user={user}
+                updateUserProjectsPosts={updateUserProjectsPosts}
+              />
+            }
+          />
+        </Routes>
+      </div>
+      <Footer user={user} logout={logout} />
     </div>
   );
 }
