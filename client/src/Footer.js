@@ -12,7 +12,11 @@ function Footer({ user, logout }) {
       <h3>FOOTER</h3>
       <div>
         <span> {user.username.toUpperCase()}</span>
-        <img alt="propic" src={user.profile_picture} style={{ width: "10%" }} />
+        <img
+          alt="propic"
+          src={user.profile_picture}
+          style={{ width: "6.5%" }}
+        />
       </div>
       <p>{user.isSeller ? "MY STORE" : "ACCOUNT"}</p>
       <Link to={"/newprojectform"} style={{ textDecoration: "none" }}>
