@@ -1,7 +1,12 @@
 import React from "react";
 
-function Post() {
-  return <div>Post</div>;
+function Post({ post }) {
+  console.log(post);
+  return (
+    <div>
+      <strong>{post.username}</strong>
+    </div>
+  );
 }
 
 export default Post;
