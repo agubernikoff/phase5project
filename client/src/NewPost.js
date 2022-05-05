@@ -6,6 +6,7 @@ function NewPost({ user, updateUserProjectsPosts, updatePosts }) {
   const [files, setFiles] = useState("");
   const [caption, setCaption] = useState([]);
   const [errors, setErrors] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   const formData = new FormData();
@@ -19,6 +20,7 @@ function NewPost({ user, updateUserProjectsPosts, updatePosts }) {
 
   function handleSubmit(e) {
     e.preventDefault();
+    setIsLoading(true);
     if (!files) setErrors(["Please upload photos or videos"]);
     else if (files.length > 10)
       setErrors(["Too many files. Maximum allowed is 10"]);
@@ -27,6 +29,7 @@ function NewPost({ user, updateUserProjectsPosts, updatePosts }) {
         method: "POST",
         body: formData,
       }).then((r) => {
+        setIsLoading(false);
         if (r.ok) {
           r.json().then((data) => {
             updateUserProjectsPosts(data);
@@ -84,7 +87,9 @@ function NewPost({ user, updateUserProjectsPosts, updatePosts }) {
           onChange={(e) => setCaption(e.target.value)}
         />
         <br />
-        <input type="submit" value="Submit" />
+        <button variant="fill" type="submit" style={{ marginTop: 10 }}>
+          {isLoading ? "Loading..." : "SUBMIT"}
+        </button>
         {errors.map((err) => (
           <h3
             key={err}
