@@ -1,16 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import heartIcon from "./assets/heartIcon.png";
 import emptyHeartIcon from "./assets/emptyHeartIcon.png";
 
 function Post({ post }) {
-  console.log(post);
+  const [likeBtnClicked, setLikeBtnClicked] = useState(false);
+
   const content = post.files.map((f) => (
     <img src={f.url} alt={"content"} key={f.url} style={{ width: "100%" }} />
   ));
+
   const comments =
     post.comments.length > 0
       ? post.comments.map((c) => <p>{c.comment}</p>)
       : "no comments yet";
+
+  function handleLikeClick() {
+    setLikeBtnClicked(!likeBtnClicked);
+  }
+  console.log(likeBtnClicked);
   return (
     <div
       style={{
@@ -39,7 +46,12 @@ function Post({ post }) {
       </div>
       <div style={{ overflow: "auto" }}>{content}</div>
       <br />
-      <img src={emptyHeartIcon} alt={"like button"} style={{ width: "6%" }} />
+      <img
+        src={likeBtnClicked ? heartIcon : emptyHeartIcon}
+        alt={"like button"}
+        style={{ width: "6%" }}
+        onClick={handleLikeClick}
+      />
       <span>{`${post.likes.length} likes`}</span>
       <p>{post.caption}</p>
       {comments}
