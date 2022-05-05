@@ -92,7 +92,11 @@ function App() {
               />
             }
           />
-          <Route exact path="/feed" element={<Feed posts={posts} />} />
+          <Route
+            exact
+            path="/feed"
+            element={<Feed posts={posts} user={user} />}
+          />
         </Routes>
       </div>
       <Footer user={user} logout={logout} />

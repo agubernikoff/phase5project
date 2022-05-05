@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import heartIcon from "./assets/heartIcon.png";
 import emptyHeartIcon from "./assets/emptyHeartIcon.png";
 
-function Post({ post }) {
+function Post({ post, user }) {
   const [likeBtnClicked, setLikeBtnClicked] = useState(false);
 
   const content = post.files.map((f) => (
@@ -14,10 +14,24 @@ function Post({ post }) {
       ? post.comments.map((c) => <p>{c.comment}</p>)
       : "no comments yet";
 
-  function handleLikeClick() {
+  function handleLikeClick(e) {
+    console.log(e.target.src.includes("empty"));
     setLikeBtnClicked(!likeBtnClicked);
+    if (e.target.src.includes("empty")) {
+      fetch("/likes", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ post_id: post.id, user_id: user.id }),
+      });
+    } else {
+      const like_id = user.likes.find((uL) => uL.post_id === post.id).id;
+      fetch(`/likes/${like_id}`, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+      });
+    }
   }
-  console.log(likeBtnClicked);
+  console.log(post.id, user);
   return (
     <div
       style={{
