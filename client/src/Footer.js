@@ -27,12 +27,14 @@ function Footer({ user, logout }) {
           <br />
           <br />
           {user.projects[0] ? (
-            <Link to={"/newpost"} style={{ textDecoration: "none" }}>
-              ADD TO A PROJECT
-            </Link>
+            <>
+              <Link to={"/newpost"} style={{ textDecoration: "none" }}>
+                ADD TO A PROJECT
+              </Link>
+              <br />
+              <br />
+            </>
           ) : null}
-          <br />
-          <br />
         </>
       ) : (
         <p>MY ACCOUNT</p>
