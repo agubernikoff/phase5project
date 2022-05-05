@@ -10,8 +10,6 @@ function Post({
   updateUserLikesOnUnlike,
   updatePostLikesOnUnlike,
 }) {
-  const [likeBtnClicked, setLikeBtnClicked] = useState(false);
-
   const content = post.files.map((f) => (
     <img src={f.url} alt={"content"} key={f.url} style={{ width: "100%" }} />
   ));
@@ -21,36 +19,43 @@ function Post({
       ? post.comments.map((c) => <p>{c.comment}</p>)
       : "no comments yet";
 
+  function onLike() {
+    fetch("/likes", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ post_id: post.id, user_id: user.id }),
+    }).then((r) => {
+      if (r.ok) {
+        r.json().then((data) => {
+          updateUserLikesOnLike(data);
+          updatePostLikesOnLike(data);
+        });
+      } else r.json().then((data) => console.log(data));
+    });
+  }
+
+  function onUnlike() {
+    const like = user.likes.find((uL) => uL.post_id === post.id);
+    fetch(`/likes/${like.id}`, {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+    }).then((r) => {
+      if (r.ok) {
+        updateUserLikesOnUnlike(like.id);
+        updatePostLikesOnUnlike(like);
+      } else r.json().then((data) => console.log(data));
+    });
+  }
+
   function handleLikeClick(e) {
-    console.log(e.target.src.includes("empty"));
-    setLikeBtnClicked(!likeBtnClicked);
     if (e.target.src.includes("empty")) {
-      fetch("/likes", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ post_id: post.id, user_id: user.id }),
-      }).then((r) => {
-        if (r.ok) {
-          r.json().then((data) => {
-            updateUserLikesOnLike(data);
-            updatePostLikesOnLike(data);
-          });
-        } else r.json().then((data) => console.log(data));
-      });
+      onLike();
     } else {
-      const like = user.likes.find((uL) => uL.post_id === post.id);
-      fetch(`/likes/${like.id}`, {
-        method: "DELETE",
-        headers: { "Content-Type": "application/json" },
-      }).then((r) => {
-        if (r.ok) {
-          updateUserLikesOnUnlike(like.id);
-          updatePostLikesOnUnlike(like);
-        } else r.json().then((data) => console.log(data));
-      });
+      onUnlike();
     }
   }
-  console.log(post.id, user.likes);
+  const userLikesThisPost = user.likes.filter((uL) => uL.post_id === post.id);
+
   return (
     <div
       style={{
@@ -80,7 +85,7 @@ function Post({
       <div style={{ overflow: "auto" }}>{content}</div>
       <br />
       <img
-        src={likeBtnClicked ? heartIcon : emptyHeartIcon}
+        src={userLikesThisPost[0] ? heartIcon : emptyHeartIcon}
         alt={"like button"}
         style={{ width: "6%" }}
         onClick={handleLikeClick}
