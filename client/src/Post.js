@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import heartIcon from "./assets/heartIcon.png";
 import emptyHeartIcon from "./assets/emptyHeartIcon.png";
 
-function Post({ post, user }) {
+function Post({ post, user, updateUserLikesOnLike, updatePostLikesOnLike }) {
   const [likeBtnClicked, setLikeBtnClicked] = useState(false);
 
   const content = post.files.map((f) => (
@@ -22,6 +22,13 @@ function Post({ post, user }) {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ post_id: post.id, user_id: user.id }),
+      }).then((r) => {
+        if (r.ok) {
+          r.json().then((data) => {
+            updateUserLikesOnLike(data);
+            updatePostLikesOnLike(data);
+          });
+        } else r.json().then((data) => console.log(data));
       });
     } else {
       const like_id = user.likes.find((uL) => uL.post_id === post.id).id;
@@ -31,7 +38,7 @@ function Post({ post, user }) {
       });
     }
   }
-  console.log(post.id, user);
+  console.log(post.id, user.likes);
   return (
     <div
       style={{

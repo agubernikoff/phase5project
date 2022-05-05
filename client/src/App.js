@@ -49,8 +49,22 @@ function App() {
     setUser({ ...user, projects: sortedProjects });
   }
 
+  function updateUserLikesOnLike(newLike) {
+    setUser({ ...user, likes: [...user.likes, newLike] });
+  }
+
   function updatePosts(newPost) {
     setPosts([...posts, newPost]);
+  }
+
+  function updatePostLikesOnLike(newLike) {
+    const likedPost = posts.find((p) => p.id === newLike.post_id);
+    const updatedLikes = [...likedPost.likes, newLike];
+    const updatedPost = { ...likedPost, likes: updatedLikes };
+    const filteredPosts = posts.filter((p) => p.id !== newLike.post_id);
+    const updatedPosts = [...filteredPosts, updatedPost];
+    const sorted = updatedPosts.sort((a, b) => a.id - b.id);
+    setPosts(sorted);
   }
 
   if (!user)
@@ -95,7 +109,14 @@ function App() {
           <Route
             exact
             path="/feed"
-            element={<Feed posts={posts} user={user} />}
+            element={
+              <Feed
+                posts={posts}
+                user={user}
+                updateUserLikesOnLike={updateUserLikesOnLike}
+                updatePostLikesOnLike={updatePostLikesOnLike}
+              />
+            }
           />
         </Routes>
       </div>
