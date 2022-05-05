@@ -9,6 +9,7 @@ function Header() {
         HOME
       </Link>
       <br />
+      <br />
       <Link to={"/feed"} style={{ textDecoration: "none" }}>
         FEED
       </Link>

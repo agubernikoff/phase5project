@@ -20,7 +20,7 @@ function Footer({ user, logout }) {
       </div>
       {user.isSeller ? (
         <>
-          <p>"MY STORE"</p>
+          <p>MY STORE</p>
           <Link to={"/newprojectform"} style={{ textDecoration: "none" }}>
             START A NEW PROJECT
           </Link>
