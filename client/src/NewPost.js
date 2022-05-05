@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-function NewPost({ user, updateUserProjectsPosts }) {
+function NewPost({ user, updateUserProjectsPosts, updatePosts }) {
   const [project_id, setProjectId] = useState(user.projects[0].id);
   const [files, setFiles] = useState("");
   const [caption, setCaption] = useState([]);
@@ -30,6 +30,7 @@ function NewPost({ user, updateUserProjectsPosts }) {
         if (r.ok) {
           r.json().then((data) => {
             updateUserProjectsPosts(data);
+            updatePosts(data);
             navigate("/");
           });
         } else {

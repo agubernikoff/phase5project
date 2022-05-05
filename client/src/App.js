@@ -48,7 +48,10 @@ function App() {
     const sortedProjects = updatedProjects.sort((a, b) => a.id - b.id);
     setUser({ ...user, projects: sortedProjects });
   }
-  console.log(user);
+
+  function updatePosts(newPost) {
+    setPosts([...posts, newPost]);
+  }
 
   if (!user)
     return (
@@ -85,6 +88,7 @@ function App() {
               <NewPost
                 user={user}
                 updateUserProjectsPosts={updateUserProjectsPosts}
+                updatePosts={updatePosts}
               />
             }
           />
