@@ -16,6 +16,7 @@ function NewPost({ user, updateUserProjectsPosts }) {
   //   formData.append("files", files);
   formData.append("caption", caption);
   formData.append("username", user.username);
+  formData.append("user_profile_picture", user.profile_picture);
 
   function handleSubmit(e) {
     e.preventDefault();

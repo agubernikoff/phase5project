@@ -32,7 +32,7 @@ class PostsController < ApplicationController
     private
     
     def post_params
-      params.permit(:project_id,:username,:caption,files:[])
+      params.permit(:project_id,:username,:user_profile_picture,:caption,files:[])
     end
     
     def render_unprocessable_entity invalid
