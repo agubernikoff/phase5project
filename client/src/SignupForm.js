@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import profile from "./profile.jpeg";
+import profile from "./assets/profile.jpeg";
 
 function SignUpForm({ onLogin }) {
   const [username, setUsername] = useState("");
