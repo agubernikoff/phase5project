@@ -10,13 +10,12 @@ function NewPost({ user, updateUserProjectsPosts }) {
 
   const formData = new FormData();
   formData.append("project_id", project_id);
-  for (let i = 0; i < files.length; i++) {
-    formData.append("files[]", files[i]);
-  }
-  //   formData.append("files", files);
   formData.append("caption", caption);
   formData.append("username", user.username);
   formData.append("user_profile_picture", user.profile_picture);
+  for (let i = 0; i < files.length; i++) {
+    formData.append("files[]", files[i]);
+  }
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -46,14 +45,6 @@ function NewPost({ user, updateUserProjectsPosts }) {
     </option>
   ));
 
-  function seperateFiles(filelist) {
-    const array = [];
-    for (let i = 0; i < filelist.length; i++) {
-      array.push(filelist[i]);
-    }
-    setFiles(array);
-  }
-  console.log(files);
   return (
     <div>
       NewPost
