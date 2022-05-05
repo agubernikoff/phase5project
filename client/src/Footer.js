@@ -18,19 +18,25 @@ function Footer({ user, logout }) {
           style={{ width: "6.5%" }}
         />
       </div>
-      <p>{user.isSeller ? "MY STORE" : "ACCOUNT"}</p>
-      <Link to={"/newprojectform"} style={{ textDecoration: "none" }}>
-        START A NEW PROJECT
-      </Link>
-      <br />
-      <br />
-      {user.projects[0] ? (
-        <Link to={"/newpost"} style={{ textDecoration: "none" }}>
-          ADD TO A PROJECT
-        </Link>
-      ) : null}
-      <br />
-      <br />
+      {user.isSeller ? (
+        <>
+          <p>"MY STORE"</p>
+          <Link to={"/newprojectform"} style={{ textDecoration: "none" }}>
+            START A NEW PROJECT
+          </Link>
+          <br />
+          <br />
+          {user.projects[0] ? (
+            <Link to={"/newpost"} style={{ textDecoration: "none" }}>
+              ADD TO A PROJECT
+            </Link>
+          ) : null}
+          <br />
+          <br />
+        </>
+      ) : (
+        <p>MY ACCOUNT</p>
+      )}
       <Link
         to={"/login"}
         onClick={handleLogout}
