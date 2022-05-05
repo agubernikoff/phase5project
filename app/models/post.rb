@@ -5,24 +5,24 @@ class Post < ApplicationRecord
   has_many :comments,dependent: :destroy
   has_many :users, through: :comments
   
-  has_many_attached :media
+  has_many_attached :files
 
-  validate :acceptable_media
+  # validate :acceptable_files
 
-  def acceptable_media
-    return unless media.attached?
+  def acceptable_files
+    return unless files.attached?
 
-    unless media.byte_size <= 1.megabyte
-      errors.add(:media, "is too big")
+    unless files.byte_size <= 1.megabyte
+      errors.add(:files, "is too big")
     end
 
-    acceptable = ["media/jpeg", "media/png","media/gif","media/MP4","media/MOV"]
-    unless acceptable.include?(media.content_type)
-      errors.add(:media, "must be a JPEG, PNG, GIF, MOV, or MP4 file")
+    acceptable = ["files/jpeg", "files/png","files/gif","files/MP4","files/MOV"]
+    unless acceptable.include?(files.content_type)
+      errors.add(:files, "must be a JPEG, PNG, GIF, MOV, or MP4 file")
     end
 
-    unless media.length<=10
-      errors.add(:media, "...too many attachments. Max is 10")
+    unless files.length<=10
+      errors.add(:files, "...too many attachments. Max is 10")
     end
   end
 

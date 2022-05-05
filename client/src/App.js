@@ -3,12 +3,14 @@ import { Routes, Route } from "react-router-dom";
 import Login from "./Login";
 import Header from "./Header";
 import Home from "./Home";
+import Feed from "./Feed";
 import NewProjectForm from "./NewProjectForm";
 import NewPost from "./NewPost";
 import Footer from "./Footer";
 
 function App() {
   const [user, setUser] = useState("");
+  const [posts, setPosts] = useState([]);
 
   useEffect(() => {
     fetch("/me").then((r) => {
@@ -16,6 +18,9 @@ function App() {
         r.json().then((user) => setUser(user));
       }
     });
+    fetch("/posts")
+      .then((r) => r.json())
+      .then((data) => setPosts(data));
   }, []);
 
   function logout() {
@@ -83,6 +88,7 @@ function App() {
               />
             }
           />
+          <Route exact path="/feed" element={<Feed posts={posts} />} />
         </Routes>
       </div>
       <Footer user={user} logout={logout} />

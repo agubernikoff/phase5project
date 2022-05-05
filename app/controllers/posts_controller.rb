@@ -12,6 +12,7 @@ class PostsController < ApplicationController
     end
 
     def create
+        # byebug
         post= Post.create!(post_params)
         render json: post, status: :created
     end
@@ -31,7 +32,7 @@ class PostsController < ApplicationController
     private
     
     def post_params
-      params.permit(:project_id,:username,:caption,media:[])
+      params.permit(:project_id,:username,:caption,files:[])
     end
     
     def render_unprocessable_entity invalid

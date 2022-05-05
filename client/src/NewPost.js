@@ -3,21 +3,24 @@ import { useNavigate } from "react-router-dom";
 
 function NewPost({ user, updateUserProjectsPosts }) {
   const [project_id, setProjectId] = useState(user.projects[0].id);
-  const [media, setMedia] = useState("");
+  const [files, setFiles] = useState("");
   const [caption, setCaption] = useState([]);
   const [errors, setErrors] = useState([]);
   const navigate = useNavigate();
 
   const formData = new FormData();
   formData.append("project_id", project_id);
-  formData.append("media", media);
+  for (let i = 0; i < files.length; i++) {
+    formData.append("files[]", files[i]);
+  }
+  //   formData.append("files", files);
   formData.append("caption", caption);
   formData.append("username", user.username);
 
   function handleSubmit(e) {
     e.preventDefault();
-    if (!media) setErrors(["Please upload photos or videos"]);
-    else if (media.length > 10)
+    if (!files) setErrors(["Please upload photos or videos"]);
+    else if (files.length > 10)
       setErrors(["Too many files. Maximum allowed is 10"]);
     else {
       fetch("/posts", {
@@ -47,9 +50,9 @@ function NewPost({ user, updateUserProjectsPosts }) {
     for (let i = 0; i < filelist.length; i++) {
       array.push(filelist[i]);
     }
-    setMedia(array);
+    setFiles(array);
   }
-
+  console.log(files);
   return (
     <div>
       NewPost
@@ -67,13 +70,13 @@ function NewPost({ user, updateUserProjectsPosts }) {
           {projectOptions}
         </select>
         <br />
-        <label htmlFor="media">Upload photos or videos:</label>
+        <label htmlFor="files">Upload photos or videos:</label>
         <input
           type="file"
           accept=".jpeg,.png,.gif,.mov,.mp4"
-          name="media"
+          name="files"
           multiple
-          onChange={(e) => seperateFiles(e.target.files)}
+          onChange={(e) => setFiles(e.target.files)}
         ></input>
         <br />
         <label htmlFor="caption">Caption:</label>
