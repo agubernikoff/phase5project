@@ -2,7 +2,14 @@ import React, { useState } from "react";
 import heartIcon from "./assets/heartIcon.png";
 import emptyHeartIcon from "./assets/emptyHeartIcon.png";
 
-function Post({ post, user, updateUserLikesOnLike, updatePostLikesOnLike }) {
+function Post({
+  post,
+  user,
+  updateUserLikesOnLike,
+  updatePostLikesOnLike,
+  updateUserLikesOnUnlike,
+  updatePostLikesOnUnlike,
+}) {
   const [likeBtnClicked, setLikeBtnClicked] = useState(false);
 
   const content = post.files.map((f) => (
@@ -31,10 +38,15 @@ function Post({ post, user, updateUserLikesOnLike, updatePostLikesOnLike }) {
         } else r.json().then((data) => console.log(data));
       });
     } else {
-      const like_id = user.likes.find((uL) => uL.post_id === post.id).id;
-      fetch(`/likes/${like_id}`, {
+      const like = user.likes.find((uL) => uL.post_id === post.id);
+      fetch(`/likes/${like.id}`, {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
+      }).then((r) => {
+        if (r.ok) {
+          updateUserLikesOnUnlike(like.id);
+          updatePostLikesOnUnlike(like);
+        } else r.json().then((data) => console.log(data));
       });
     }
   }

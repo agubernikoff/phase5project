@@ -53,6 +53,11 @@ function App() {
     setUser({ ...user, likes: [...user.likes, newLike] });
   }
 
+  function updateUserLikesOnUnlike(unlikeID) {
+    const filtered = user.likes.filter((uL) => uL.id !== unlikeID);
+    setUser({ ...user, likes: filtered });
+  }
+
   function updatePosts(newPost) {
     setPosts([...posts, newPost]);
   }
@@ -62,6 +67,16 @@ function App() {
     const updatedLikes = [...likedPost.likes, newLike];
     const updatedPost = { ...likedPost, likes: updatedLikes };
     const filteredPosts = posts.filter((p) => p.id !== newLike.post_id);
+    const updatedPosts = [...filteredPosts, updatedPost];
+    const sorted = updatedPosts.sort((a, b) => a.id - b.id);
+    setPosts(sorted);
+  }
+
+  function updatePostLikesOnUnlike(unlike) {
+    const unLikedPost = posts.find((p) => p.id === unlike.post_id);
+    const filtered = unLikedPost.likes.filter((l) => l.id !== unlike.id);
+    const updatedPost = { ...unLikedPost, likes: filtered };
+    const filteredPosts = posts.filter((p) => p.id !== unLikedPost.id);
     const updatedPosts = [...filteredPosts, updatedPost];
     const sorted = updatedPosts.sort((a, b) => a.id - b.id);
     setPosts(sorted);
@@ -114,7 +129,9 @@ function App() {
                 posts={posts}
                 user={user}
                 updateUserLikesOnLike={updateUserLikesOnLike}
+                updateUserLikesOnUnlike={updateUserLikesOnUnlike}
                 updatePostLikesOnLike={updatePostLikesOnLike}
+                updatePostLikesOnUnlike={updatePostLikesOnUnlike}
               />
             }
           />
