@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Loading from "./Loading";
 
 function NewPost({ user, updateUserProjectsPosts, updatePosts }) {
   const [project_id, setProjectId] = useState(user.projects[0].id);
@@ -88,7 +89,7 @@ function NewPost({ user, updateUserProjectsPosts, updatePosts }) {
         />
         <br />
         <button variant="fill" type="submit" style={{ marginTop: 10 }}>
-          {isLoading ? "Loading..." : "SUBMIT"}
+          {isLoading ? <Loading /> : "SUBMIT"}
         </button>
         {errors.map((err) => (
           <h3

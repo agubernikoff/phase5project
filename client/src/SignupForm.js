@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import profile from "./assets/profile.jpeg";
+import Loading from "./Loading";
 
 function SignUpForm({ onLogin }) {
   const [username, setUsername] = useState("");
@@ -85,7 +86,7 @@ function SignUpForm({ onLogin }) {
             onChange={(e) => setProfilePicture(e.target.files[0])}
           ></input>
           <button type="submit" style={{ marginTop: 10 }}>
-            {isLoading ? "Loading..." : "Sign Up"}
+            {isLoading ? <Loading /> : "Sign Up"}
           </button>
           {errors.map((err) => (
             <h3

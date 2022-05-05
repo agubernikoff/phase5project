@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Loading from "./Loading";
 
 function LoginForm({ onLogin }) {
   const [username, setUsername] = useState("");
@@ -55,7 +56,7 @@ function LoginForm({ onLogin }) {
         onChange={(e) => setPassword(e.target.value)}
       />
       <button variant="fill" type="submit" style={{ marginTop: 10 }}>
-        {isLoading ? "Loading..." : "Login"}
+        {isLoading ? <Loading /> : "Login"}
       </button>
       {errors.map((err) => (
         <h3
