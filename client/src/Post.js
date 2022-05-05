@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import heartIcon from "./assets/heartIcon.png";
 import emptyHeartIcon from "./assets/emptyHeartIcon.png";
 
