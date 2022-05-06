@@ -9,6 +9,7 @@ function Post({
   updatePostLikesOnLike,
   updateUserLikesOnUnlike,
   updatePostLikesOnUnlike,
+  updatePostCommentsOnComment,
 }) {
   const [comment, setComment] = useState("");
   const content = post.files.map((f) => (
@@ -81,9 +82,11 @@ function Post({
         commenter_username: user.username,
         commenter_profile_picture: user.profile_picture,
       }),
-    })
-      .then((r) => r.json())
-      .then((data) => console.log(data));
+    }).then((r) => {
+      if (r.ok) {
+        r.json().then((data) => updatePostCommentsOnComment(data));
+      } else r.json().then((data) => console.log(data));
+    });
     setComment("");
   }
 

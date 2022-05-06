@@ -8,6 +8,7 @@ function Feed({
   updatePostLikesOnLike,
   updateUserLikesOnUnlike,
   updatePostLikesOnUnlike,
+  updatePostCommentsOnComment,
 }) {
   //   console.log(posts[0].files[0].url);
   const postCards = posts.map((post) => (
@@ -19,6 +20,7 @@ function Feed({
       updateUserLikesOnUnlike={updateUserLikesOnUnlike}
       updatePostLikesOnLike={updatePostLikesOnLike}
       updatePostLikesOnUnlike={updatePostLikesOnUnlike}
+      updatePostCommentsOnComment={updatePostCommentsOnComment}
     />
   ));
   return <div>Feed{postCards}</div>;

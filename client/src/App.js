@@ -82,6 +82,16 @@ function App() {
     setPosts(sorted);
   }
 
+  function updatePostCommentsOnComment(newComment) {
+    const likedPost = posts.find((p) => p.id === newComment.post_id);
+    const updatedComments = [...likedPost.comments, newComment];
+    const updatedPost = { ...likedPost, comments: updatedComments };
+    const filteredPosts = posts.filter((p) => p.id !== newComment.post_id);
+    const updatedPosts = [...filteredPosts, updatedPost];
+    const sorted = updatedPosts.sort((a, b) => a.id - b.id);
+    setPosts(sorted);
+  }
+
   if (!user)
     return (
       <div>
@@ -132,6 +142,7 @@ function App() {
                 updateUserLikesOnUnlike={updateUserLikesOnUnlike}
                 updatePostLikesOnLike={updatePostLikesOnLike}
                 updatePostLikesOnUnlike={updatePostLikesOnUnlike}
+                updatePostCommentsOnComment={updatePostCommentsOnComment}
               />
             }
           />
