@@ -29,6 +29,7 @@ class CommentsController < ApplicationController
   # DELETE /comments/1
   def destroy
     @comment.destroy
+    render json: @comment
   end
 
   private

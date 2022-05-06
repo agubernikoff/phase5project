@@ -10,6 +10,7 @@ function Post({
   updateUserLikesOnUnlike,
   updatePostLikesOnUnlike,
   updatePostCommentsOnComment,
+  updatePostCommentsOnDelete,
 }) {
   const [comment, setComment] = useState("");
   const content = post.files.map((f) => (
@@ -30,7 +31,13 @@ function Post({
               {c.comment}
             </span>
             {c.user_id === user.id ? (
-              <button style={{ position: "absolute", right: 0 }}>x</button>
+              <button
+                style={{ position: "absolute", right: 0 }}
+                value={c.id}
+                onClick={deleteComment}
+              >
+                x
+              </button>
             ) : null}
           </div>
         ))
@@ -91,6 +98,14 @@ function Post({
       } else r.json().then((data) => console.log(data));
     });
     setComment("");
+  }
+
+  function deleteComment(e) {
+    console.log(e.target.value);
+    fetch(`/comments/${e.target.value}`, {
+      method: "DELETE",
+      headers: { "Content-Type": "appliation/json" },
+    }).then((r) => r.json().then((data) => updatePostCommentsOnDelete(data)));
   }
 
   return (
