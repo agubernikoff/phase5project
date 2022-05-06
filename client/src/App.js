@@ -68,7 +68,7 @@ function App() {
     const updatedPost = { ...likedPost, likes: updatedLikes };
     const filteredPosts = posts.filter((p) => p.id !== newLike.post_id);
     const updatedPosts = [...filteredPosts, updatedPost];
-    const sorted = updatedPosts.sort((a, b) => a.id - b.id);
+    const sorted = updatedPosts.sort((a, b) => b.id - a.id);
     setPosts(sorted);
   }
 
@@ -78,7 +78,7 @@ function App() {
     const updatedPost = { ...unLikedPost, likes: filtered };
     const filteredPosts = posts.filter((p) => p.id !== unLikedPost.id);
     const updatedPosts = [...filteredPosts, updatedPost];
-    const sorted = updatedPosts.sort((a, b) => a.id - b.id);
+    const sorted = updatedPosts.sort((a, b) => b.id - a.id);
     setPosts(sorted);
   }
 
@@ -88,7 +88,7 @@ function App() {
     const updatedPost = { ...likedPost, comments: updatedComments };
     const filteredPosts = posts.filter((p) => p.id !== newComment.post_id);
     const updatedPosts = [...filteredPosts, updatedPost];
-    const sorted = updatedPosts.sort((a, b) => a.id - b.id);
+    const sorted = updatedPosts.sort((a, b) => b.id - a.id);
     setPosts(sorted);
   }
 
@@ -98,7 +98,7 @@ function App() {
     const updatedPost = { ...post, comments: filtered };
     const filteredPosts = posts.filter((p) => p.id !== post.id);
     const updatedPosts = [...filteredPosts, updatedPost];
-    const sorted = updatedPosts.sort((a, b) => a.id - b.id);
+    const sorted = updatedPosts.sort((a, b) => b.id - a.id);
     setPosts(sorted);
   }
 

@@ -51,8 +51,8 @@ function Post({
     }).then((r) => {
       if (r.ok) {
         r.json().then((data) => {
-          updateUserLikesOnLike(data);
-          updatePostLikesOnLike(data);
+          updateUserLikesOnLike(data.like ? data.like : data);
+          updatePostLikesOnLike(data.like ? data.like : data);
         });
       } else r.json().then((data) => console.log(data));
     });
