@@ -3,7 +3,7 @@ class ProjectsController < ApplicationController
     rescue_from ActiveRecord::RecordNotFound,with: :render_not_found
     
     def index
-        render json: Project.all
+        render json: Project.all.where(status:'Preorder')
     end
 
     def show
