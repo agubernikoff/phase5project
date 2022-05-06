@@ -3,7 +3,7 @@ class PostsController < ApplicationController
     rescue_from ActiveRecord::RecordNotFound,with: :render_not_found
     
     def index
-        render json: Post.joins(:project).where(project: {status:'New Project'})
+        render json: Post.joins(:project).where(project: {status:'New Project'}).order(id: :desc)
     end
 
     def show
