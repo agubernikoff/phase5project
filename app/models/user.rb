@@ -4,6 +4,7 @@ class User < ApplicationRecord
     validates :password, presence: true,length:{minimum:8}
     has_many :projects,dependent: :destroy
     has_many :posts, through: :projects
+    has_many :production_updates,through: :projects
     has_many :likes
     has_many :comments
 
