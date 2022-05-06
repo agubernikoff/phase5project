@@ -4,6 +4,7 @@ import Login from "./Login";
 import Header from "./Header";
 import Home from "./Home";
 import Feed from "./Feed";
+import ComingSoon from "./ComingSoon";
 import NewProjectForm from "./NewProjectForm";
 import NewPost from "./NewPost";
 import Footer from "./Footer";
@@ -178,6 +179,7 @@ function App() {
               />
             }
           />
+          <Route exact path="/comingsoon" element={<ComingSoon />} />
         </Routes>
       </div>
       <Footer user={user} logout={logout} />
