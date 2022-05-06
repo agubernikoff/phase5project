@@ -10,6 +10,7 @@ function Feed({
   updatePostLikesOnUnlike,
   updatePostCommentsOnComment,
   updatePostCommentsOnDelete,
+  updatePostsOnLikesThreshold,
 }) {
   //   console.log(posts[0].files[0].url);
   const postCards = posts.map((post) => (
@@ -23,6 +24,7 @@ function Feed({
       updatePostLikesOnUnlike={updatePostLikesOnUnlike}
       updatePostCommentsOnComment={updatePostCommentsOnComment}
       updatePostCommentsOnDelete={updatePostCommentsOnDelete}
+      updatePostsOnLikesThreshold={updatePostsOnLikesThreshold}
     />
   ));
   return <div>Feed{postCards}</div>;

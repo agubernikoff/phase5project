@@ -11,6 +11,7 @@ function Post({
   updatePostLikesOnUnlike,
   updatePostCommentsOnComment,
   updatePostCommentsOnDelete,
+  updatePostsOnLikesThreshold,
 }) {
   const [comment, setComment] = useState("");
   const content = post.files.map((f) => (
@@ -52,7 +53,8 @@ function Post({
       if (r.ok) {
         r.json().then((data) => {
           updateUserLikesOnLike(data.like ? data.like : data);
-          updatePostLikesOnLike(data.like ? data.like : data);
+          if (data.like) updatePostsOnLikesThreshold(data);
+          else updatePostLikesOnLike(data);
         });
       } else r.json().then((data) => console.log(data));
     });
@@ -145,6 +147,7 @@ function Post({
         onClick={handleLikeClick}
       />
       <span style={{ float: "right" }}>{`${post.likes.length} LIKES`}</span>
+      {post.message ? post.message.map((pm) => <p key={pm}>{pm}</p>) : null}
       <p>{post.caption}</p>
       {comments}
       <br />

@@ -72,6 +72,26 @@ function App() {
     setPosts(sorted);
   }
 
+  function updatePostsOnLikesThreshold(data) {
+    const likedPost = posts.find((p) => p.id === data.like.post_id);
+    const updatedLikes = [...likedPost.likes, data.like];
+    const updatedPost = { ...likedPost, likes: updatedLikes };
+    const mappedIds = data.updated_project_posts.map((upp) => upp.id);
+    const projectPosts = posts.filter((p) => mappedIds.includes(p.id));
+    const filteredProjectPosts = projectPosts.filter(
+      (p) => p.id !== updatedPost.id
+    );
+    const updatedFilteredProjectPosts = [...filteredProjectPosts, updatedPost];
+    const updatedProjectPosts = updatedFilteredProjectPosts.map((p) => {
+      return { ...p, message: data.message };
+    });
+    const filteredPosts = posts.filter((p) => !mappedIds.includes(p.id));
+    const updatedPosts = [...filteredPosts, ...updatedProjectPosts];
+    const sorted = updatedPosts.sort((a, b) => b.id - a.id);
+    setPosts(sorted);
+    setTimeout(() => setPosts(filteredPosts), 5000);
+  }
+
   function updatePostLikesOnUnlike(unlike) {
     const unLikedPost = posts.find((p) => p.id === unlike.post_id);
     const filtered = unLikedPost.likes.filter((l) => l.id !== unlike.id);
@@ -154,6 +174,7 @@ function App() {
                 updatePostLikesOnUnlike={updatePostLikesOnUnlike}
                 updatePostCommentsOnComment={updatePostCommentsOnComment}
                 updatePostCommentsOnDelete={updatePostCommentsOnDelete}
+                updatePostsOnLikesThreshold={updatePostsOnLikesThreshold}
               />
             }
           />
