@@ -115,7 +115,7 @@ function Post({
       style={{
         display: "block",
         margin: "auto",
-        width: 333,
+        width: "50%",
         border: "solid 1px black",
       }}
     >

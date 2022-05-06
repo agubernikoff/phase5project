@@ -7,6 +7,11 @@ function Footer({ user, logout }) {
       method: "DELETE",
     }).then(() => logout());
   }
+
+  const hasPreorderProject = user.projects.filter(
+    (project) => project.status === "Preorder"
+  );
+  console.log(hasPreorderProject);
   return (
     <div style={{ width: "16.5%", textAlign: "right" }}>
       <h3>FOOTER</h3>
@@ -33,6 +38,13 @@ function Footer({ user, logout }) {
               </Link>
               <br />
               <br />
+            </>
+          ) : null}
+          {hasPreorderProject[0] ? (
+            <>
+              *PRODUCTION UPATE*
+              <br />
+              <br />{" "}
             </>
           ) : null}
         </>
