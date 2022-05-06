@@ -17,7 +17,7 @@ function Post({
   const comments =
     post.comments.length > 0
       ? post.comments.map((c) => <p>{c.comment}</p>)
-      : "no comments yet";
+      : "NO COMMENTS YET...";
 
   function onLike() {
     fetch("/likes", {
@@ -56,6 +56,10 @@ function Post({
   }
   const userLikesThisPost = user.likes.filter((uL) => uL.post_id === post.id);
 
+  function newComment(e) {
+    e.preventDefault();
+    console.log("submitted");
+  }
   return (
     <div
       style={{
@@ -73,13 +77,15 @@ function Post({
         />
         <strong>{post.username}</strong>
         <span style={{ float: "right", color: "#807f7f" }}>
-          {new Date(post.created_at).toLocaleDateString(undefined, {
-            day: "numeric",
-            month: "long",
-            year: "numeric",
-            hour: "numeric",
-            minute: "numeric",
-          })}
+          {new Date(post.created_at)
+            .toLocaleDateString(undefined, {
+              day: "numeric",
+              month: "long",
+              year: "numeric",
+              hour: "numeric",
+              minute: "numeric",
+            })
+            .toUpperCase()}
         </span>
       </div>
       <div style={{ overflow: "auto" }}>{content}</div>
@@ -90,10 +96,17 @@ function Post({
         style={{ width: "6%" }}
         onClick={handleLikeClick}
       />
-      <span>{`${post.likes.length} likes`}</span>
+      <span style={{ float: "right" }}>{`${post.likes.length} LIKES`}</span>
       <p>{post.caption}</p>
       {comments}
-      <button>add a comment</button>
+      <br />
+      <form onSubmit={newComment}>
+        <input
+          style={{ borderRadius: 10, border: "1px solid grey" }}
+          placeholder="add a comment..."
+        ></input>
+        <button>SUBMIT</button>
+      </form>
     </div>
   );
 }

@@ -12,5 +12,6 @@ Rails.application.routes.draw do
   resources :projects
   resources :posts
   resources :likes, only:[:index, :create, :destroy]
+  resources :comments, only: [:index, :create, :destroy]
   get "*path", to: "fallback#index", constraints: ->(req) { !req.xhr? && req.format.html? }
 end
