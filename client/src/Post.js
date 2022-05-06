@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import heartIcon from "./assets/heartIcon.png";
 import emptyHeartIcon from "./assets/emptyHeartIcon.png";
 
@@ -10,13 +10,26 @@ function Post({
   updateUserLikesOnUnlike,
   updatePostLikesOnUnlike,
 }) {
+  const [comment, setComment] = useState("");
   const content = post.files.map((f) => (
     <img src={f.url} alt={"content"} key={f.url} style={{ width: "100%" }} />
   ));
 
   const comments =
     post.comments.length > 0
-      ? post.comments.map((c) => <p>{c.comment}</p>)
+      ? post.comments.map((c) => (
+          <div key={c.id}>
+            <img
+              src={c.commenter_profile_picture}
+              alt={c.commenter_username}
+              style={{ width: "5%", borderRadius: 20 }}
+            />
+            <span>
+              <strong>{c.commenter_username}: </strong>
+              {c.comment}
+            </span>
+          </div>
+        ))
       : "NO COMMENTS YET...";
 
   function onLike() {
@@ -58,8 +71,22 @@ function Post({
 
   function newComment(e) {
     e.preventDefault();
-    console.log("submitted");
+    fetch("/comments", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        comment: comment,
+        post_id: post.id,
+        user_id: user.id,
+        commenter_username: user.username,
+        commenter_profile_picture: user.profile_picture,
+      }),
+    })
+      .then((r) => r.json())
+      .then((data) => console.log(data));
+    setComment("");
   }
+
   return (
     <div
       style={{
@@ -104,6 +131,8 @@ function Post({
         <input
           style={{ borderRadius: 10, border: "1px solid grey" }}
           placeholder="add a comment..."
+          value={comment}
+          onChange={(e) => setComment(e.target.value)}
         ></input>
         <button>SUBMIT</button>
       </form>
