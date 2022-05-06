@@ -19,7 +19,7 @@ function Post({
   const comments =
     post.comments.length > 0
       ? post.comments.map((c) => (
-          <div key={c.id}>
+          <div key={c.id} style={{ position: "relative" }}>
             <img
               src={c.commenter_profile_picture}
               alt={c.commenter_username}
@@ -29,6 +29,9 @@ function Post({
               <strong>{c.commenter_username}: </strong>
               {c.comment}
             </span>
+            {c.user_id === user.id ? (
+              <button style={{ position: "absolute", right: 0 }}>x</button>
+            ) : null}
           </div>
         ))
       : "NO COMMENTS YET...";
