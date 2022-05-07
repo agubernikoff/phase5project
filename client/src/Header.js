@@ -1,23 +1,29 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 function Header() {
+  const activeStyle = ({ isActive }) =>
+    isActive
+      ? {
+          textDecoration: "underline",
+        }
+      : null;
   return (
     <div style={{ width: "16.5%" }}>
       <h3>INSERT TITLE HERE</h3>
-      <Link to={"/"} style={{ textDecoration: "none" }}>
+      <NavLink to={"/"} style={activeStyle}>
         HOME
-      </Link>
+      </NavLink>
       <br />
       <br />
-      <Link to={"/feed"} style={{ textDecoration: "none" }}>
+      <NavLink to={"/feed"} style={activeStyle}>
         FEED
-      </Link>
+      </NavLink>
       <br />
       <br />
-      <Link to={"/comingsoon"} style={{ textDecoration: "none" }}>
+      <NavLink to={"/comingsoon"} style={activeStyle}>
         COMING SOON
-      </Link>
+      </NavLink>
       <p>MARKETPLACE</p>
     </div>
   );

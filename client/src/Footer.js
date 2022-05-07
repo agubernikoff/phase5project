@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 function Footer({ user, logout }) {
   function handleLogout() {
@@ -11,6 +11,13 @@ function Footer({ user, logout }) {
   const hasPreorderProject = user.projects.filter(
     (project) => project.status === "Preorder"
   );
+
+  const activeStyle = ({ isActive }) =>
+    isActive
+      ? {
+          textDecoration: "underline",
+        }
+      : null;
 
   return (
     <div style={{ width: "16.5%", textAlign: "right" }}>
@@ -26,28 +33,25 @@ function Footer({ user, logout }) {
       {user.isSeller ? (
         <>
           <p>MY STORE</p>
-          <Link to={"/newprojectform"} style={{ textDecoration: "none" }}>
+          <NavLink to={"/newprojectform"} style={activeStyle}>
             START A NEW PROJECT
-          </Link>
+          </NavLink>
           <br />
           <br />
           {user.projects[0] ? (
             <>
-              <Link to={"/newpost"} style={{ textDecoration: "none" }}>
+              <NavLink to={"/newpost"} style={activeStyle}>
                 ADD TO A PROJECT
-              </Link>
+              </NavLink>
               <br />
               <br />
             </>
           ) : null}
           {hasPreorderProject[0] ? (
             <>
-              <Link
-                to={"/newproductionupdate"}
-                style={{ textDecoration: "none" }}
-              >
+              <NavLink to={"/newproductionupdate"} style={activeStyle}>
                 PRODUCTION UPDATE
-              </Link>
+              </NavLink>
               <br />
               <br />{" "}
             </>
@@ -56,13 +60,9 @@ function Footer({ user, logout }) {
       ) : (
         <p>MY ACCOUNT</p>
       )}
-      <Link
-        to={"/login"}
-        onClick={handleLogout}
-        style={{ textDecoration: "none" }}
-      >
+      <NavLink to={"/login"} onClick={handleLogout} style={activeStyle}>
         LOGOUT
-      </Link>
+      </NavLink>
     </div>
   );
 }

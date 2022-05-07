@@ -5,12 +5,15 @@ body {
 }
 
 a {
-  /* color: white; */
+  text-decoration: none;
   color: black;
 }
 
 a:hover {
   text-decoration: underline;
-  text-decoration-color: #807f7f;
-  color: #807f7f;
+}
+
+a:visited {
+  text-decoration: none;
+  color: black;
 }
