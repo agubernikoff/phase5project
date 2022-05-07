@@ -140,6 +140,19 @@ function App() {
     setUser({ ...user, projects: sorted });
   }
 
+  function updateProjects(newUpdate) {
+    const project = preOrderProjects.find((p) => p.id === newUpdate.project_id);
+    const filteredProjects = preOrderProjects.filter(
+      (p) => p.id !== newUpdate.project_id
+    );
+    const updatedProject = {
+      ...project,
+      production_updates: [...project.production_updates, newUpdate],
+    };
+    setPreOrderProjects([...filteredProjects, updatedProject]);
+  }
+  console.log(preOrderProjects);
+
   if (!user)
     return (
       <div>
@@ -188,6 +201,7 @@ function App() {
                 updateUserProjectProductionUpdates={
                   updateUserProjectProductionUpdates
                 }
+                updateProjects={updateProjects}
               />
             }
           />

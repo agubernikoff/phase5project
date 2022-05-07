@@ -2,7 +2,11 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Loading from "./Loading";
 
-function ProductionUpdate({ user, updateUserProjectProductionUpdates }) {
+function ProductionUpdate({
+  user,
+  updateUserProjectProductionUpdates,
+  updateProjects,
+}) {
   const preorderProjects = user.projects.filter(
     (project) => project.status === "Preorder"
   );
@@ -53,6 +57,7 @@ function ProductionUpdate({ user, updateUserProjectProductionUpdates }) {
         if (r.ok) {
           r.json().then((data) => {
             updateUserProjectProductionUpdates(data);
+            updateProjects(data);
             navigate("/");
           });
         } else {
