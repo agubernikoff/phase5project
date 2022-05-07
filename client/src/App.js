@@ -7,7 +7,7 @@ import Feed from "./Feed";
 import ComingSoon from "./ComingSoon";
 import NewProjectForm from "./NewProjectForm";
 import NewPost from "./NewPost";
-import ProductionUpdate from "./ProductionUpdate";
+import ProductionUpdateForm from "./ProductionUpdateForm";
 import Footer from "./Footer";
 
 function App() {
@@ -151,7 +151,6 @@ function App() {
     };
     setPreOrderProjects([...filteredProjects, updatedProject]);
   }
-  console.log(preOrderProjects);
 
   if (!user)
     return (
@@ -196,7 +195,7 @@ function App() {
             exact
             path="/newproductionupdate"
             element={
-              <ProductionUpdate
+              <ProductionUpdateForm
                 user={user}
                 updateUserProjectProductionUpdates={
                   updateUserProjectProductionUpdates

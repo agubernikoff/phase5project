@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Loading from "./Loading";
 
-function ProductionUpdate({
+function ProductionUpdateForm({
   user,
   updateUserProjectProductionUpdates,
   updateProjects,
@@ -19,9 +19,7 @@ function ProductionUpdate({
         ].ETA
       : ""
   );
-  console.log(user);
   const [status, setStatus] = useState("On Schedule");
-  console.log(status);
   const [caption, setCaption] = useState([]);
   const [files, setFiles] = useState("");
   const [errors, setErrors] = useState([]);
@@ -178,4 +176,4 @@ function ProductionUpdate({
   );
 }
 
-export default ProductionUpdate;
+export default ProductionUpdateForm;

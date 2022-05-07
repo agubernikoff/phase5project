@@ -12,7 +12,6 @@ function Feed({
   updatePostCommentsOnDelete,
   updatePostsOnLikesThreshold,
 }) {
-  //   console.log(posts[0].files[0].url);
   const postCards = posts.map((post) => (
     <Post
       post={post}

@@ -13,6 +13,10 @@ function Preorder({ project }) {
       />
     ))
   );
+
+  const updates = project.production_updates.map((update) => (
+    <div key={update.id}>update</div>
+  ));
   return (
     <div
       style={{
@@ -23,8 +27,20 @@ function Preorder({ project }) {
       }}
     >
       <div style={{ width: "fit-content" }}>
-        <p>STATUS: </p>
-        <p>ETA:</p>
+        <p>
+          STATUS:{" "}
+          {project.production_updates[0]
+            ? project.production_updates[project.production_updates.length - 1]
+                .status
+            : null}
+        </p>
+        <p>
+          ETA:{" "}
+          {project.production_updates[0]
+            ? project.production_updates[project.production_updates.length - 1]
+                .ETA
+            : null}
+        </p>
         <img
           src={project.posts[0].user_profile_picture}
           alt={`${project.posts[0].username}`}
@@ -33,8 +49,10 @@ function Preorder({ project }) {
         <strong> {project.posts[0].username}</strong>
         <span>: {project.title}</span>
       </div>
-      {content}
       {project.description ? <p>project.description </p> : null}
+      <h5>POSTS:</h5>
+      {content}
+      {updates}
       <button>PREORDER</button>
     </div>
   );

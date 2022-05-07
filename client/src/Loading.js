@@ -5,7 +5,6 @@ function Loading() {
   const [index, setIndex] = useState(13);
   const loading = "...Loading...";
   const loadingArray = loading.split("");
-  console.log(index);
   useEffect(() => {
     let timer = setTimeout(() => {
       if (index > -13) setIndex(index - 1);

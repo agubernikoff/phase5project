@@ -48,7 +48,6 @@ function SignUpForm({ onLogin }) {
       }
     });
   }
-  console.log(profile_picture);
 
   return (
     <div>
