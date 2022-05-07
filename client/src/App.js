@@ -13,6 +13,7 @@ import Footer from "./Footer";
 function App() {
   const [user, setUser] = useState("");
   const [posts, setPosts] = useState([]);
+  const [preOrderProjects, setPreOrderProjects] = useState([]);
 
   useEffect(() => {
     fetch("/me").then((r) => {
@@ -23,6 +24,9 @@ function App() {
     fetch("/posts")
       .then((r) => r.json())
       .then((data) => setPosts(data));
+    fetch("/projects")
+      .then((r) => r.json())
+      .then((data) => setPreOrderProjects(data));
   }, []);
 
   function logout() {
@@ -124,6 +128,18 @@ function App() {
     setPosts(sorted);
   }
 
+  function updateUserProjectProductionUpdates(newUpdate) {
+    const project = user.projects.find((p) => p.id === newUpdate.project_id);
+    const updatedUpdates = [...project.production_updates, newUpdate];
+    const updatedProject = { ...project, production_updates: updatedUpdates };
+    const filteredProjects = user.projects.filter(
+      (p) => p.id !== newUpdate.project_id
+    );
+    const updatedProjects = [...filteredProjects, updatedProject];
+    const sorted = updatedProjects.sort((a, b) => b.id - a.id);
+    setUser({ ...user, projects: sorted });
+  }
+
   if (!user)
     return (
       <div>
@@ -166,7 +182,14 @@ function App() {
           <Route
             exact
             path="/newproductionupdate"
-            element={<ProductionUpdate user={user} />}
+            element={
+              <ProductionUpdate
+                user={user}
+                updateUserProjectProductionUpdates={
+                  updateUserProjectProductionUpdates
+                }
+              />
+            }
           />
           <Route
             exact
@@ -185,7 +208,11 @@ function App() {
               />
             }
           />
-          <Route exact path="/comingsoon" element={<ComingSoon />} />
+          <Route
+            exact
+            path="/comingsoon"
+            element={<ComingSoon preOrderProjects={preOrderProjects} />}
+          />
         </Routes>
       </div>
       <Footer user={user} logout={logout} />

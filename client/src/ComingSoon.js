@@ -1,14 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Preorder from "./Preorder";
 
-function ComingSoon() {
-  const [preOrderProjects, setPreOrderProject] = useState([]);
-
-  useEffect(() => {
-    fetch("/projects")
-      .then((r) => r.json())
-      .then((data) => setPreOrderProject(data));
-  }, []);
+function ComingSoon({ preOrderProjects }) {
   const availableForPreorder = preOrderProjects.map((p) => (
     <Preorder key={p.id} project={p} />
   ));

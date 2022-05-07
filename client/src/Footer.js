@@ -11,7 +11,7 @@ function Footer({ user, logout }) {
   const hasPreorderProject = user.projects.filter(
     (project) => project.status === "Preorder"
   );
-  console.log(hasPreorderProject);
+
   return (
     <div style={{ width: "16.5%", textAlign: "right" }}>
       <h3>FOOTER</h3>

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Loading from "./Loading";
 
-function ProductionUpdate({ user }) {
+function ProductionUpdate({ user, updateUserProjectProductionUpdates }) {
   const preorderProjects = user.projects.filter(
     (project) => project.status === "Preorder"
   );
@@ -15,6 +15,7 @@ function ProductionUpdate({ user }) {
         ].ETA
       : ""
   );
+  console.log(user);
   const [status, setStatus] = useState("On Schedule");
   console.log(status);
   const [caption, setCaption] = useState([]);
@@ -33,7 +34,6 @@ function ProductionUpdate({ user }) {
   }
   const dateRegex =
     /^([0]?[1-9]|[1][0-2])[./-]([0]?[1-9]|[1|2][0-9]|[3][0|1])[./-]([0-9]{4}|[0-9]{2})$/;
-  console.log(dateRegex.test(ETA), ETA);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -52,7 +52,7 @@ function ProductionUpdate({ user }) {
         setIsLoading(false);
         if (r.ok) {
           r.json().then((data) => {
-            console.log(data);
+            updateUserProjectProductionUpdates(data);
             navigate("/");
           });
         } else {
