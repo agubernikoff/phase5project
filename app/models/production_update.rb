@@ -6,7 +6,8 @@ class ProductionUpdate < ApplicationRecord
     validates :status, presence: true
     validates :caption, presence: true
     validates :project_id, presence: true
-    validate :acceptable_images
+
+    # validate :acceptable_images
 
   def acceptable_images
     return unless images.attached?

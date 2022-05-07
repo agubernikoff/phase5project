@@ -2,10 +2,23 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Loading from "./Loading";
 
-function NewPost({ user, updateUserProjectsPosts, updatePosts }) {
-  const [project_id, setProjectId] = useState(user.projects[0].id);
-  const [files, setFiles] = useState("");
+function ProductionUpdate({ user }) {
+  const preorderProjects = user.projects.filter(
+    (project) => project.status === "Preorder"
+  );
+  const [project_id, setProjectId] = useState(preorderProjects[0].id);
+  const selectedProject = preorderProjects.filter((p) => p.id === project_id);
+  const [ETA, setETA] = useState(
+    selectedProject[0].production_updates[0]
+      ? selectedProject[0].production_updates[
+          selectedProject[0].production_updates.length - 1
+        ].ETA
+      : ""
+  );
+  const [status, setStatus] = useState("On Schedule");
+  console.log(status);
   const [caption, setCaption] = useState([]);
+  const [files, setFiles] = useState("");
   const [errors, setErrors] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
@@ -13,31 +26,33 @@ function NewPost({ user, updateUserProjectsPosts, updatePosts }) {
   const formData = new FormData();
   formData.append("project_id", project_id);
   formData.append("caption", caption);
-  formData.append("username", user.username);
-  formData.append("user_profile_picture", user.profile_picture);
+  formData.append("ETA", ETA);
+  formData.append("status", status);
   for (let i = 0; i < files.length; i++) {
-    formData.append("files[]", files[i]);
+    formData.append("images[]", files[i]);
   }
+  const dateRegex =
+    /^([0]?[1-9]|[1][0-2])[./-]([0]?[1-9]|[1|2][0-9]|[3][0|1])[./-]([0-9]{4}|[0-9]{2})$/;
+  console.log(dateRegex.test(ETA), ETA);
 
   function handleSubmit(e) {
     e.preventDefault();
     setIsLoading(true);
-    if (!files) {
-      setErrors(["Please upload photos or videos"]);
-      setIsLoading(false);
-    } else if (files.length > 10) {
+    if (files.length > 10) {
       setErrors(["Too many files. Maximum allowed is 10"]);
       setIsLoading(false);
+    } else if (!dateRegex.test(ETA)) {
+      setErrors(["Please enter a valid date"]);
+      setIsLoading(false);
     } else {
-      fetch("/posts", {
+      fetch("/production_updates", {
         method: "POST",
         body: formData,
       }).then((r) => {
         setIsLoading(false);
         if (r.ok) {
           r.json().then((data) => {
-            updateUserProjectsPosts(data);
-            updatePosts(data);
+            console.log(data);
             navigate("/");
           });
         } else {
@@ -50,15 +65,21 @@ function NewPost({ user, updateUserProjectsPosts, updatePosts }) {
     }
   }
 
-  const projectOptions = user.projects.map((p) => (
+  const projectOptions = preorderProjects.map((p) => (
     <option key={p.title} value={p.id}>
       {p.title}
     </option>
   ));
 
+  const statusOptions = ["On Schedule", "Delayed"].map((a) => (
+    <option key={a} value={a}>
+      {a}
+    </option>
+  ));
+
   return (
     <div>
-      NewPost
+      ProductionUpdate
       <form
         onSubmit={handleSubmit}
         style={{
@@ -72,6 +93,43 @@ function NewPost({ user, updateUserProjectsPosts, updatePosts }) {
         <select onChange={(e) => setProjectId(parseInt(e.target.value))}>
           {projectOptions}
         </select>
+        <br />
+        <label>Status:</label>
+        <select value={status} onChange={(e) => setStatus(e.target.value)}>
+          {statusOptions}
+        </select>
+        <br />
+        {selectedProject[0].production_updates[0] &&
+        status === "On Schedule" ? (
+          <>
+            <label htmlFor="username">
+              When will your product be available to purchase?
+            </label>
+            <input
+              type="text"
+              id="username"
+              autoComplete="off"
+              value={ETA}
+              placeholder="MM/DD/YYYY"
+              readOnly
+              onChange={(e) => setETA(e.target.value)}
+            />
+          </>
+        ) : (
+          <>
+            <label htmlFor="username">
+              When will your product be available to purchase?
+            </label>
+            <input
+              type="text"
+              id="username"
+              autoComplete="off"
+              value={ETA}
+              placeholder="MM/DD/YYYY"
+              onChange={(e) => setETA(e.target.value)}
+            />
+          </>
+        )}
         <br />
         <label htmlFor="files">Upload photos or videos:</label>
         <input
@@ -115,4 +173,4 @@ function NewPost({ user, updateUserProjectsPosts, updatePosts }) {
   );
 }
 
-export default NewPost;
+export default ProductionUpdate;

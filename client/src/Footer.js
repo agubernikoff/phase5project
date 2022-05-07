@@ -42,7 +42,12 @@ function Footer({ user, logout }) {
           ) : null}
           {hasPreorderProject[0] ? (
             <>
-              *PRODUCTION UPATE*
+              <Link
+                to={"/newproductionupdate"}
+                style={{ textDecoration: "none" }}
+              >
+                PRODUCTION UPDATE
+              </Link>
               <br />
               <br />{" "}
             </>

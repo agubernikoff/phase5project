@@ -7,6 +7,7 @@ import Feed from "./Feed";
 import ComingSoon from "./ComingSoon";
 import NewProjectForm from "./NewProjectForm";
 import NewPost from "./NewPost";
+import ProductionUpdate from "./ProductionUpdate";
 import Footer from "./Footer";
 
 function App() {
@@ -161,6 +162,11 @@ function App() {
                 updatePosts={updatePosts}
               />
             }
+          />
+          <Route
+            exact
+            path="/newproductionupdate"
+            element={<ProductionUpdate user={user} />}
           />
           <Route
             exact

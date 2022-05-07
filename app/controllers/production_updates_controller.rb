@@ -4,7 +4,7 @@ class ProductionUpdatesController < ApplicationController
 
   def create
     production_update= ProductionUpdate.create!(production_update_params)
-    render json: project, status: :created
+    render json: production_update, status: :created
   end
 
   def destroy
