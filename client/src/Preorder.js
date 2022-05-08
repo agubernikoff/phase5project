@@ -73,7 +73,19 @@ function Preorder({ project, user }) {
                 }
               />
             )}
-            <button onClick={toggleHistory}>
+            <button
+              onClick={toggleHistory}
+              style={{
+                border: "1px solid black",
+                borderRadius: 20,
+                backgroundColor: "white",
+                color: "grey",
+                display: "block",
+                margin: "auto",
+                position: "relative",
+                bottom: 11,
+              }}
+            >
               {viewHistory ? "SHOW LESS" : "VIEW HISTORY"}
             </button>
           </div>
