@@ -65,7 +65,7 @@ function App() {
   }
 
   function updatePosts(newPost) {
-    setPosts([...posts, newPost]);
+    setPosts([newPost, ...posts]);
   }
 
   function updatePostLikesOnLike(newLike) {
@@ -140,7 +140,21 @@ function App() {
     setUser({ ...user, projects: sorted });
   }
 
-  function updateProjects(newUpdate) {
+  function updateProjectsOnThreshold(data) {
+    const postIDs = data.updated_project_posts.map((upp) => upp.id);
+    console.log(postIDs);
+    const updatedProjectPosts = posts.filter((post) =>
+      postIDs.includes(post.id)
+    );
+    const newProject = {
+      ...data.updated_project,
+      posts: updatedProjectPosts,
+      production_updates: [],
+    };
+    setPreOrderProjects([...preOrderProjects, newProject]);
+  }
+
+  function updateProjectsOnProductionUpdate(newUpdate) {
     const project = preOrderProjects.find((p) => p.id === newUpdate.project_id);
     const filteredProjects = preOrderProjects.filter(
       (p) => p.id !== newUpdate.project_id
@@ -200,7 +214,9 @@ function App() {
                 updateUserProjectProductionUpdates={
                   updateUserProjectProductionUpdates
                 }
-                updateProjects={updateProjects}
+                updateProjectsOnProductionUpdate={
+                  updateProjectsOnProductionUpdate
+                }
               />
             }
           />
@@ -218,6 +234,7 @@ function App() {
                 updatePostCommentsOnComment={updatePostCommentsOnComment}
                 updatePostCommentsOnDelete={updatePostCommentsOnDelete}
                 updatePostsOnLikesThreshold={updatePostsOnLikesThreshold}
+                updateProjectsOnThreshold={updateProjectsOnThreshold}
               />
             }
           />

@@ -2,7 +2,6 @@ class LikesController < ApplicationController
   rescue_from ActiveRecord::RecordInvalid,with: :render_unprocessable_entity
     rescue_from ActiveRecord::RecordNotFound,with: :render_not_found
   before_action :set_like, only: [:show, :update, :destroy]
-
   # GET /likes
   def index
     @likes = Like.all

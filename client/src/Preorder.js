@@ -13,7 +13,12 @@ function Preorder({ project, user }) {
         key={file.url}
         src={file.url}
         alt={"content"}
-        style={{ width: "50%", margin: "auto", margintop: 0, display: "block" }}
+        style={{
+          width: "50%",
+          margin: "auto",
+          margintop: 0,
+          display: "block",
+        }}
       />
     ))
   );

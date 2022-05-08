@@ -5,7 +5,7 @@ import Loading from "./Loading";
 function ProductionUpdateForm({
   user,
   updateUserProjectProductionUpdates,
-  updateProjects,
+  updateProjectsOnProductionUpdate,
 }) {
   const preorderProjects = user.projects.filter(
     (project) => project.status === "Preorder"
@@ -55,7 +55,7 @@ function ProductionUpdateForm({
         if (r.ok) {
           r.json().then((data) => {
             updateUserProjectProductionUpdates(data);
-            updateProjects(data);
+            updateProjectsOnProductionUpdate(data);
             navigate("/");
           });
         } else {
