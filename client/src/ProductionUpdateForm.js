@@ -80,6 +80,15 @@ function ProductionUpdateForm({
     </option>
   ));
 
+  function updateETA(id) {
+    const project = user.projects.find((p) => p.id === id);
+    setETA(
+      project.production_updates[0]
+        ? project.production_updates[project.production_updates.length - 1].ETA
+        : ""
+    );
+  }
+
   return (
     <div>
       ProductionUpdate
@@ -93,7 +102,12 @@ function ProductionUpdateForm({
         }}
       >
         <label>Choose a project to post to:</label>
-        <select onChange={(e) => setProjectId(parseInt(e.target.value))}>
+        <select
+          onChange={(e) => {
+            setProjectId(parseInt(e.target.value));
+            updateETA(parseInt(e.target.value));
+          }}
+        >
           {projectOptions}
         </select>
         <br />
