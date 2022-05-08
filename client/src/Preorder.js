@@ -1,26 +1,52 @@
 import React, { useState } from "react";
 import Update from "./Update";
+import Post from "./Post";
 
-function Preorder({ project, user }) {
+function Preorder({
+  project,
+  user,
+  updateUserLikesOnLike,
+  updatePostLikesOnLike,
+  updateUserLikesOnUnlike,
+  updatePostLikesOnUnlike,
+  updatePostCommentsOnComment,
+  updatePostCommentsOnDelete,
+  updatePostsOnLikesThreshold,
+  updateProjectsOnThreshold,
+}) {
   const [viewHistory, setViewHistory] = useState(false);
   function toggleHistory() {
     setViewHistory(!viewHistory);
   }
-
-  const content = project.posts.map((post) =>
-    post.files.map((file) => (
-      <img
-        key={file.url}
-        src={file.url}
-        alt={"content"}
-        style={{
-          width: "50%",
-          margin: "auto",
-          margintop: 0,
-          display: "block",
-        }}
+  const content = project.posts.map(
+    (post) => (
+      <Post
+        key={post.id}
+        post={post}
+        user={user}
+        updateUserLikesOnLike={updateUserLikesOnLike}
+        updateUserLikesOnUnlike={updateUserLikesOnUnlike}
+        updatePostLikesOnLike={updatePostLikesOnLike}
+        updatePostLikesOnUnlike={updatePostLikesOnUnlike}
+        updatePostCommentsOnComment={updatePostCommentsOnComment}
+        updatePostCommentsOnDelete={updatePostCommentsOnDelete}
+        updatePostsOnLikesThreshold={updatePostsOnLikesThreshold}
+        updateProjectsOnThreshold={updateProjectsOnThreshold}
       />
-    ))
+    )
+    // post.files.map((file) => (
+    //   <img
+    //     key={file.url}
+    //     src={file.url}
+    //     alt={"content"}
+    //     style={{
+    //       width: "50%",
+    //       margin: "auto",
+    //       margintop: 0,
+    //       display: "block",
+    //     }}
+    //   />
+    // ))
   );
 
   const updates = project.production_updates.map((update) => (

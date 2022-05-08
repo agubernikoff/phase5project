@@ -14,6 +14,7 @@ function Post({
   updatePostsOnLikesThreshold,
   updateProjectsOnThreshold,
 }) {
+  console.log(post.id);
   const [comment, setComment] = useState("");
   const content = post.files.map((f) => (
     <img src={f.url} alt={"content"} key={f.url} style={{ width: "100%" }} />
@@ -141,7 +142,7 @@ function Post({
             .toUpperCase()}
         </span>
       </div>
-      <div style={{ overflow: "auto" }}>{content}</div>
+      <div style={{ overflow: "auto", width: "100%" }}>{content}</div>
       <br />
       <img
         src={userLikesThisPost[0] ? heartIcon : emptyHeartIcon}

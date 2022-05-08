@@ -55,8 +55,8 @@ function App() {
     setUser({ ...user, projects: sortedProjects });
   }
 
-  function updateUserLikesOnLike(newLike) {
-    setUser({ ...user, likes: [...user.likes, newLike] });
+  function updateUserLikesOnLike(unlike) {
+    setUser({ ...user, likes: [...user.likes, unlike] });
   }
 
   function updateUserLikesOnUnlike(unlikeID) {
@@ -68,11 +68,11 @@ function App() {
     setPosts([newPost, ...posts]);
   }
 
-  function updatePostLikesOnLike(newLike) {
-    const likedPost = posts.find((p) => p.id === newLike.post_id);
-    const updatedLikes = [...likedPost.likes, newLike];
+  function updatePostLikesOnLike(unlike) {
+    const likedPost = posts.find((p) => p.id === unlike.post_id);
+    const updatedLikes = [...likedPost.likes, unlike];
     const updatedPost = { ...likedPost, likes: updatedLikes };
-    const filteredPosts = posts.filter((p) => p.id !== newLike.post_id);
+    const filteredPosts = posts.filter((p) => p.id !== unlike.post_id);
     const updatedPosts = [...filteredPosts, updatedPost];
     const sorted = updatedPosts.sort((a, b) => b.id - a.id);
     setPosts(sorted);
@@ -166,6 +166,48 @@ function App() {
     setPreOrderProjects([...filteredProjects, updatedProject]);
   }
 
+  function updateProjectPostLikesOnLike(unlike) {
+    const project = preOrderProjects.find((p) =>
+      p.posts.find((p) => p.id === unlike.post_id)
+    );
+    const post = project.posts.find((p) => p.id === unlike.post_id);
+    const updatedPost = { ...post, likes: [...post.likes, unlike] };
+    const filteredProjectPosts = project.posts.filter(
+      (pp) => pp.id !== post.id
+    );
+    const updatedProjectPosts = [...filteredProjectPosts, updatedPost].sort(
+      (a, b) => a.id - b.id
+    );
+    const updatedProject = { ...project, posts: updatedProjectPosts };
+    const filteredProjects = preOrderProjects.filter(
+      (pop) => pop.id !== project.id
+    );
+    setPreOrderProjects([...filteredProjects, updatedProject]);
+  }
+
+  function updateProjectPostLikesOnUnlike(unlike) {
+    const project = preOrderProjects.find((p) =>
+      p.posts.find((p) => p.id === unlike.post_id)
+    );
+    const post = project.posts.find((p) => p.id === unlike.post_id);
+    const filteredPostLikes = post.likes.filter((pl) => pl.id !== unlike.id);
+    const updatedPost = { ...post, likes: filteredPostLikes };
+    const filteredProjectPosts = project.posts.filter(
+      (pp) => pp.id !== post.id
+    );
+    const updatedProjectPosts = [...filteredProjectPosts, updatedPost].sort(
+      (a, b) => a.id - b.id
+    );
+    const updatedProject = {
+      ...project,
+      posts: updatedProjectPosts,
+    };
+    const filteredProjects = preOrderProjects.filter(
+      (pop) => pop.id !== project.id
+    );
+    setPreOrderProjects([...filteredProjects, updatedProject]);
+  }
+
   if (!user)
     return (
       <div>
@@ -242,7 +284,18 @@ function App() {
             exact
             path="/comingsoon"
             element={
-              <ComingSoon preOrderProjects={preOrderProjects} user={user} />
+              <ComingSoon
+                preOrderProjects={preOrderProjects}
+                user={user}
+                updateUserLikesOnLike={updateUserLikesOnLike}
+                updateUserLikesOnUnlike={updateUserLikesOnUnlike}
+                updatePostLikesOnLike={updateProjectPostLikesOnLike}
+                updatePostLikesOnUnlike={updateProjectPostLikesOnUnlike}
+                updatePostCommentsOnComment={updatePostCommentsOnComment}
+                updatePostCommentsOnDelete={updatePostCommentsOnDelete}
+                updatePostsOnLikesThreshold={updatePostsOnLikesThreshold}
+                updateProjectsOnThreshold={updateProjectsOnThreshold}
+              />
             }
           />
         </Routes>
