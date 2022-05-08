@@ -89,7 +89,7 @@ function NewPost({ user, updateUserProjectsPosts, updatePosts }) {
           autoComplete="off"
           rows="10"
           cols="75"
-          //   placeholder="Tell us about your new project"
+          placeholder="Tell us about your new post"
           value={caption}
           onChange={(e) => setCaption(e.target.value)}
         />

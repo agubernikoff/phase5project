@@ -18,36 +18,21 @@ function Preorder({
   function toggleHistory() {
     setViewHistory(!viewHistory);
   }
-  const content = project.posts.map(
-    (post) => (
-      <Post
-        key={post.id}
-        post={post}
-        user={user}
-        updateUserLikesOnLike={updateUserLikesOnLike}
-        updateUserLikesOnUnlike={updateUserLikesOnUnlike}
-        updatePostLikesOnLike={updatePostLikesOnLike}
-        updatePostLikesOnUnlike={updatePostLikesOnUnlike}
-        updatePostCommentsOnComment={updatePostCommentsOnComment}
-        updatePostCommentsOnDelete={updatePostCommentsOnDelete}
-        updatePostsOnLikesThreshold={updatePostsOnLikesThreshold}
-        updateProjectsOnThreshold={updateProjectsOnThreshold}
-      />
-    )
-    // post.files.map((file) => (
-    //   <img
-    //     key={file.url}
-    //     src={file.url}
-    //     alt={"content"}
-    //     style={{
-    //       width: "50%",
-    //       margin: "auto",
-    //       margintop: 0,
-    //       display: "block",
-    //     }}
-    //   />
-    // ))
-  );
+  const content = project.posts.map((post) => (
+    <Post
+      key={post.id}
+      post={post}
+      user={user}
+      updateUserLikesOnLike={updateUserLikesOnLike}
+      updateUserLikesOnUnlike={updateUserLikesOnUnlike}
+      updatePostLikesOnLike={updatePostLikesOnLike}
+      updatePostLikesOnUnlike={updatePostLikesOnUnlike}
+      updatePostCommentsOnComment={updatePostCommentsOnComment}
+      updatePostCommentsOnDelete={updatePostCommentsOnDelete}
+      updatePostsOnLikesThreshold={updatePostsOnLikesThreshold}
+      updateProjectsOnThreshold={updateProjectsOnThreshold}
+    />
+  ));
 
   const updates = project.production_updates.map((update) => (
     <Update update={update} key={update.id} />

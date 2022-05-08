@@ -74,7 +74,7 @@ function ProductionUpdateForm({
     </option>
   ));
 
-  const statusOptions = ["On Schedule", "Delayed"].map((a) => (
+  const statusOptions = ["On Schedule", "Delayed", "Completed"].map((a) => (
     <option key={a} value={a}>
       {a}
     </option>
@@ -88,7 +88,7 @@ function ProductionUpdateForm({
         style={{
           display: "flex",
           flexDirection: "column",
-          width: "fit-content",
+          width: "80%",
           margin: "auto",
         }}
       >
@@ -97,7 +97,7 @@ function ProductionUpdateForm({
           {projectOptions}
         </select>
         <br />
-        <label>Status:</label>
+        <label>*Status:</label>
         <select value={status} onChange={(e) => setStatus(e.target.value)}>
           {statusOptions}
         </select>
@@ -150,7 +150,7 @@ function ProductionUpdateForm({
           autoComplete="off"
           rows="10"
           cols="75"
-          //   placeholder="Tell us about your new project"
+          placeholder="Tell us how production of your project is going"
           value={caption}
           onChange={(e) => setCaption(e.target.value)}
         />
@@ -158,9 +158,8 @@ function ProductionUpdateForm({
         <button variant="fill" type="submit" style={{ marginTop: 10 }}>
           {isLoading ? <Loading /> : "SUBMIT"}
         </button>
-        {errors.map((err) => (
+        {status === "Completed" ? (
           <h3
-            key={err}
             style={{
               display: "block",
               margin: "auto",
@@ -168,9 +167,24 @@ function ProductionUpdateForm({
               textAlign: "center",
             }}
           >
-            {err}
+            * This action will move your Project to MARKETPLACE. You will be
+            prompted to upload a product listing.
           </h3>
-        ))}
+        ) : (
+          errors.map((err) => (
+            <h3
+              key={err}
+              style={{
+                display: "block",
+                margin: "auto",
+                marginTop: 10,
+                textAlign: "center",
+              }}
+            >
+              {err}
+            </h3>
+          ))
+        )}
       </form>
     </div>
   );
