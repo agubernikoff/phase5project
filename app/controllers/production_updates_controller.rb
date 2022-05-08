@@ -4,6 +4,10 @@ class ProductionUpdatesController < ApplicationController
 
   def create
     production_update= ProductionUpdate.create!(production_update_params)
+    if params[:status] == 'Completed'
+      project=Project.find(params[:project_id])
+      project.update(status:'For Sale')
+    end
     render json: production_update, status: :created
   end
 
