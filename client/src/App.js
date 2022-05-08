@@ -55,8 +55,8 @@ function App() {
     setUser({ ...user, projects: sortedProjects });
   }
 
-  function updateUserLikesOnLike(unlike) {
-    setUser({ ...user, likes: [...user.likes, unlike] });
+  function updateUserLikesOnLike(like) {
+    setUser({ ...user, likes: [...user.likes, like] });
   }
 
   function updateUserLikesOnUnlike(unlikeID) {
@@ -68,11 +68,11 @@ function App() {
     setPosts([newPost, ...posts]);
   }
 
-  function updatePostLikesOnLike(unlike) {
-    const likedPost = posts.find((p) => p.id === unlike.post_id);
-    const updatedLikes = [...likedPost.likes, unlike];
+  function updatePostLikesOnLike(like) {
+    const likedPost = posts.find((p) => p.id === like.post_id);
+    const updatedLikes = [...likedPost.likes, like];
     const updatedPost = { ...likedPost, likes: updatedLikes };
-    const filteredPosts = posts.filter((p) => p.id !== unlike.post_id);
+    const filteredPosts = posts.filter((p) => p.id !== like.post_id);
     const updatedPosts = [...filteredPosts, updatedPost];
     const sorted = updatedPosts.sort((a, b) => b.id - a.id);
     setPosts(sorted);
@@ -166,12 +166,12 @@ function App() {
     setPreOrderProjects([...filteredProjects, updatedProject]);
   }
 
-  function updateProjectPostLikesOnLike(unlike) {
+  function updateProjectPostLikesOnLike(like) {
     const project = preOrderProjects.find((p) =>
-      p.posts.find((p) => p.id === unlike.post_id)
+      p.posts.find((p) => p.id === like.post_id)
     );
-    const post = project.posts.find((p) => p.id === unlike.post_id);
-    const updatedPost = { ...post, likes: [...post.likes, unlike] };
+    const post = project.posts.find((p) => p.id === like.post_id);
+    const updatedPost = { ...post, likes: [...post.likes, like] };
     const filteredProjectPosts = project.posts.filter(
       (pp) => pp.id !== post.id
     );
@@ -192,6 +192,50 @@ function App() {
     const post = project.posts.find((p) => p.id === unlike.post_id);
     const filteredPostLikes = post.likes.filter((pl) => pl.id !== unlike.id);
     const updatedPost = { ...post, likes: filteredPostLikes };
+    const filteredProjectPosts = project.posts.filter(
+      (pp) => pp.id !== post.id
+    );
+    const updatedProjectPosts = [...filteredProjectPosts, updatedPost].sort(
+      (a, b) => a.id - b.id
+    );
+    const updatedProject = {
+      ...project,
+      posts: updatedProjectPosts,
+    };
+    const filteredProjects = preOrderProjects.filter(
+      (pop) => pop.id !== project.id
+    );
+    setPreOrderProjects([...filteredProjects, updatedProject]);
+  }
+
+  function updateProjectPostCommentsOnComment(newComment) {
+    const project = preOrderProjects.find((p) =>
+      p.posts.find((p) => p.id === newComment.post_id)
+    );
+    const post = project.posts.find((p) => p.id === newComment.post_id);
+    const updatedPost = { ...post, comments: [...post.comments, newComment] };
+    const filteredProjectPosts = project.posts.filter(
+      (pp) => pp.id !== post.id
+    );
+    const updatedProjectPosts = [...filteredProjectPosts, updatedPost].sort(
+      (a, b) => a.id - b.id
+    );
+    const updatedProject = { ...project, posts: updatedProjectPosts };
+    const filteredProjects = preOrderProjects.filter(
+      (pop) => pop.id !== project.id
+    );
+    setPreOrderProjects([...filteredProjects, updatedProject]);
+  }
+
+  function updateProjectPostCommentsOnDeletedComment(deletedComment) {
+    const project = preOrderProjects.find((p) =>
+      p.posts.find((p) => p.id === deletedComment.post_id)
+    );
+    const post = project.posts.find((p) => p.id === deletedComment.post_id);
+    const filteredPostComments = post.comments.filter(
+      (pl) => pl.id !== deletedComment.id
+    );
+    const updatedPost = { ...post, comments: filteredPostComments };
     const filteredProjectPosts = project.posts.filter(
       (pp) => pp.id !== post.id
     );
@@ -291,8 +335,10 @@ function App() {
                 updateUserLikesOnUnlike={updateUserLikesOnUnlike}
                 updatePostLikesOnLike={updateProjectPostLikesOnLike}
                 updatePostLikesOnUnlike={updateProjectPostLikesOnUnlike}
-                updatePostCommentsOnComment={updatePostCommentsOnComment}
-                updatePostCommentsOnDelete={updatePostCommentsOnDelete}
+                updatePostCommentsOnComment={updateProjectPostCommentsOnComment}
+                updatePostCommentsOnDelete={
+                  updateProjectPostCommentsOnDeletedComment
+                }
                 updatePostsOnLikesThreshold={updatePostsOnLikesThreshold}
                 updateProjectsOnThreshold={updateProjectsOnThreshold}
               />
