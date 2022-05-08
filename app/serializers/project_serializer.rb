@@ -1,5 +1,5 @@
 class ProjectSerializer < ActiveModel::Serializer
-  attributes :id,:title,:description,:likes_threshold,:status,:created_at,:posts,:production_updates
+  attributes :id,:title,:description,:likes_threshold,:status,:created_at,:user_id,:posts,:production_updates
   
   def posts
     ActiveModelSerializers::SerializableResource.new(object.posts,each_serializer: PostSerializer)

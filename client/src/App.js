@@ -224,7 +224,9 @@ function App() {
           <Route
             exact
             path="/comingsoon"
-            element={<ComingSoon preOrderProjects={preOrderProjects} />}
+            element={
+              <ComingSoon preOrderProjects={preOrderProjects} user={user} />
+            }
           />
         </Routes>
       </div>

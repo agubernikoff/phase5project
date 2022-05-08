@@ -1,7 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
+import Update from "./Update";
 
-function Preorder({ project }) {
-  console.log(project);
+function Preorder({ project, user }) {
+  const [viewHistory, setViewHistory] = useState(false);
+  function toggleHistory() {
+    setViewHistory(!viewHistory);
+  }
 
   const content = project.posts.map((post) =>
     post.files.map((file) => (
@@ -9,38 +13,18 @@ function Preorder({ project }) {
         key={file.url}
         src={file.url}
         alt={"content"}
-        style={{ width: "100%" }}
+        style={{ width: "50%", margin: "auto", margintop: 0, display: "block" }}
       />
     ))
   );
 
   const updates = project.production_updates.map((update) => (
-    <div key={update.id}>update</div>
+    <Update update={update} key={update.id} />
   ));
   return (
-    <div
-      style={{
-        border: "1px solid black",
-        width: "50%",
-        display: "block",
-        margin: "auto",
-      }}
-    >
+    <div>
       <div style={{ width: "fit-content" }}>
-        <p>
-          STATUS:{" "}
-          {project.production_updates[0]
-            ? project.production_updates[project.production_updates.length - 1]
-                .status
-            : null}
-        </p>
-        <p>
-          ETA:{" "}
-          {project.production_updates[0]
-            ? project.production_updates[project.production_updates.length - 1]
-                .ETA
-            : null}
-        </p>
+        <br />
         <img
           src={project.posts[0].user_profile_picture}
           alt={`${project.posts[0].username}`}
@@ -49,11 +33,66 @@ function Preorder({ project }) {
         <strong> {project.posts[0].username}</strong>
         <span>: {project.title}</span>
       </div>
-      {project.description ? <p>project.description </p> : null}
-      <h5>POSTS:</h5>
-      {content}
-      {updates}
-      <button>PREORDER</button>
+      <div
+        style={{
+          border: "1px solid black",
+          width: "50%",
+          display: "block",
+          margin: "auto",
+        }}
+      >
+        <span>
+          STATUS:{" "}
+          {project.production_updates[0]
+            ? project.production_updates[project.production_updates.length - 1]
+                .status
+            : "N/A"}
+        </span>
+        <span style={{ float: "right" }}>
+          ETA:{" "}
+          {project.production_updates[0]
+            ? project.production_updates[project.production_updates.length - 1]
+                .ETA
+            : "N/A"}
+        </span>
+        {project.description ? (
+          <p>PROJECT DESCRIPTION: {project.description}</p>
+        ) : null}
+        <p style={{ marginBottom: 0 }}>POSTS:</p>
+        {content}
+        {project.production_updates[0] ? (
+          <div>
+            {viewHistory ? (
+              updates
+            ) : (
+              <Update
+                update={
+                  project.production_updates[
+                    project.production_updates.length - 1
+                  ]
+                }
+              />
+            )}
+            <button onClick={toggleHistory}>
+              {viewHistory ? "SHOW LESS" : "VIEW HISTORY"}
+            </button>
+          </div>
+        ) : project.user_id === user.id ? (
+          "No updates yet. Please add an update."
+        ) : (
+          "No updates yet. Please check back later"
+        )}
+        <button
+          style={{
+            margin: "auto",
+            marginTop: 5,
+            marginBottom: 5,
+            display: "block",
+          }}
+        >
+          PREORDER
+        </button>
+      </div>
     </div>
   );
 }
