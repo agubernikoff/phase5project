@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { NavLink } from "react-router-dom";
 import heartIcon from "./assets/heartIcon.png";
 import emptyHeartIcon from "./assets/emptyHeartIcon.png";
 
@@ -15,7 +16,6 @@ function Post({
   updateProjectsOnThreshold,
   updateUserOnSelfLikeThreshold,
 }) {
-  console.log(post);
   const [comment, setComment] = useState("");
   const content = post.files.map((f) => (
     <img src={f.url} alt={"content"} key={f.url} style={{ width: "100%" }} />
@@ -31,7 +31,7 @@ function Post({
               style={{ width: "5%", borderRadius: 20 }}
             />
             <span>
-              <strong>{c.commenter_username}: </strong>
+              <NavLink to={`/u/${c.user_id}`}>{c.commenter_username}: </NavLink>
               {c.comment}
             </span>
             {c.user_id === user.id ? (
@@ -131,7 +131,7 @@ function Post({
           alt={`${post.username}`}
           style={{ width: "5%", borderRadius: 20 }}
         />
-        <strong>{post.username}</strong>
+        <NavLink to={`/u/${post.user_id}`}>{post.username}</NavLink>
         <span style={{ float: "right", color: "#807f7f" }}>
           {new Date(post.created_at)
             .toLocaleDateString(undefined, {

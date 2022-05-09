@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { NavLink } from "react-router-dom";
 import Update from "./Update";
 import Post from "./Post";
 
@@ -14,6 +15,7 @@ function Preorder({
   updatePostsOnLikesThreshold,
   updateProjectsOnThreshold,
 }) {
+  console.log(project);
   const [viewHistory, setViewHistory] = useState(false);
   function toggleHistory() {
     setViewHistory(!viewHistory);
@@ -46,7 +48,10 @@ function Preorder({
           alt={`${project.posts[0].username}`}
           style={{ width: "5%", borderRadius: 20 }}
         />
-        <strong> {project.posts[0].username}</strong>
+        <NavLink to={`/u/${project.user_id}`}>
+          {" "}
+          {project.posts[0].username}
+        </NavLink>
         <span>: {project.title}</span>
       </div>
       <div
