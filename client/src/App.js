@@ -287,6 +287,27 @@ function App() {
     setPreOrderProjects([...filteredProjects, updatedProject]);
   }
 
+  function updateUserProjectsOnProductionComplete(data) {
+    const projectToUpdate = user.projects.find((p) => p.id === data.project_id);
+    const updatedProject = {
+      ...projectToUpdate,
+      status: "For Sale",
+      production_updates: [...projectToUpdate.production_updates, data],
+    };
+    const filteredProjects = user.projects.filter(
+      (p) => p.id !== data.project_id
+    );
+    const updatedUserProjects = [...filteredProjects, updatedProject];
+    setUser({ ...user, projects: updatedUserProjects });
+  }
+
+  function updateProjectsOnProductionComplete(data) {
+    const filteredProjects = preOrderProjects.filter(
+      (pop) => pop.id !== data.project_id
+    );
+    setPreOrderProjects(filteredProjects);
+  }
+
   if (!user)
     return (
       <div>
@@ -337,6 +358,12 @@ function App() {
                 }
                 updateProjectsOnProductionUpdate={
                   updateProjectsOnProductionUpdate
+                }
+                updateProjectsOnProductionComplete={
+                  updateProjectsOnProductionComplete
+                }
+                updateUserProjectsOnProductionComplete={
+                  updateUserProjectsOnProductionComplete
                 }
               />
             }

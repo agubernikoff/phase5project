@@ -15,7 +15,6 @@ function Post({
   updateProjectsOnThreshold,
   updateUserOnSelfLikeThreshold,
 }) {
-  console.log(post.id);
   const [comment, setComment] = useState("");
   const content = post.files.map((f) => (
     <img src={f.url} alt={"content"} key={f.url} style={{ width: "100%" }} />
