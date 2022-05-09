@@ -86,7 +86,7 @@ function SignUpForm({ onLogin }) {
             name="profile_picture"
             onChange={(e) => setProfilePicture(e.target.files[0])}
           ></input>
-          <label htmlFor="caption">Caption:</label>
+          <label htmlFor="caption">Bio:</label>
           <textarea
             type="text"
             id="description"
