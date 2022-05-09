@@ -39,28 +39,34 @@ function App() {
   }
 
   function updateUserOnSelfLikeThreshold(data) {
-    const likedPost = posts.find((p) => p.id === data.like.post_id);
-    const updatedLikes = [...likedPost.likes, data.like];
-    const updatedPost = { ...likedPost, likes: updatedLikes };
-    const mappedIds = data.updated_project_posts.map((upp) => upp.id);
-    const projectPosts = posts.filter((p) => mappedIds.includes(p.id));
-    const filteredProjectPosts = projectPosts.filter(
-      (p) => p.id !== updatedPost.id
-    );
-    const updatedFilteredProjectPosts = [...filteredProjectPosts, updatedPost];
-    const newProject = {
-      ...data.updated_project,
-      posts: updatedFilteredProjectPosts,
-      production_updates: [],
-    };
-    const filteredUserProjects = user.projects.filter(
-      (up) => up.id !== newProject.id
-    );
-    setUser({
-      ...user,
-      projects: [...filteredUserProjects, newProject],
-      likes: [...user.likes, data.like],
-    });
+    const userProjectsIDs = user.projects.map((p) => p.id);
+    if (userProjectsIDs.includes(data.updated_project.id)) {
+      const likedPost = posts.find((p) => p.id === data.like.post_id);
+      const updatedLikes = [...likedPost.likes, data.like];
+      const updatedPost = { ...likedPost, likes: updatedLikes };
+      const mappedIds = data.updated_project_posts.map((upp) => upp.id);
+      const projectPosts = posts.filter((p) => mappedIds.includes(p.id));
+      const filteredProjectPosts = projectPosts.filter(
+        (p) => p.id !== updatedPost.id
+      );
+      const updatedFilteredProjectPosts = [
+        ...filteredProjectPosts,
+        updatedPost,
+      ];
+      const newProject = {
+        ...data.updated_project,
+        posts: updatedFilteredProjectPosts,
+        production_updates: [],
+      };
+      const filteredUserProjects = user.projects.filter(
+        (up) => up.id !== newProject.id
+      );
+      setUser({
+        ...user,
+        projects: [...filteredUserProjects, newProject],
+        likes: [...user.likes, data.like],
+      });
+    }
   }
 
   function updateUserProjectsPosts(newPost) {
