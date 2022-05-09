@@ -31,7 +31,7 @@ class UsersController < ApplicationController
     
     def update
       user = User.find(session[:user_id])
-      user.update!(user_params)
+      user.update!(user_update_params)
       render json: user
     end
     
@@ -46,6 +46,10 @@ class UsersController < ApplicationController
     
     def user_params
       params.permit(:username,:bio, :password,:isSeller,:profile_picture)
+    end
+
+    def user_update_params
+      params.permit(:username,:bio,:isSeller,:profile_picture)
     end
     
     def render_unprocessable_entity invalid

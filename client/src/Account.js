@@ -3,10 +3,11 @@ import { useParams } from "react-router-dom";
 import Preorder from "./Preorder";
 import Loading from "./Loading";
 
-function Account({ user }) {
+function Account({ user, updateUserOnEdit }) {
   const [accountHolder, setAccountHolder] = useState("");
   const [username, setUsername] = useState("");
   const [profile_picture, setProfilePicture] = useState(null);
+  const [editFormPicture, setEditFormPicture] = useState("");
   const [bio, setBio] = useState("");
   const [errors, setErrors] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -21,8 +22,8 @@ function Account({ user }) {
         setAccountHolder(data);
         setUsername(data.username);
         setBio(data.bio);
-        setProfilePicture(data.profile_picture);
         setIsSeller(data.isSeller);
+        setEditFormPicture(data.profile_picture);
       });
   }, [id]);
   console.log(accountHolder, profile_picture);
@@ -36,7 +37,7 @@ function Account({ user }) {
   const formData = new FormData();
   formData.append("username", username);
   formData.append("isSeller", isSeller);
-  formData.append("profile_picture", profile_picture);
+  if (profile_picture) formData.append("profile_picture", profile_picture);
   formData.append("bio", bio);
 
   function handleSubmit(e) {
@@ -50,8 +51,9 @@ function Account({ user }) {
       setIsLoading(false);
       if (r.ok) {
         r.json().then((user) => {
-          console.log(user);
-          //   setAccountHolder(user);
+          setAccountHolder(user);
+          updateUserOnEdit(user);
+          setDisplayOnly(true);
         });
       } else {
         r.json().then((err) => setErrors(err.errors));
@@ -105,7 +107,7 @@ function Account({ user }) {
             >
               <img
                 alt={accountHolder.username}
-                src={accountHolder.profile_picture}
+                src={editFormPicture}
                 style={{
                   width: "95%",
                   borderRadius: 60,
@@ -140,7 +142,10 @@ function Account({ user }) {
                 accept="image/jpeg,image/png"
                 name="profile_picture"
                 style={{ display: "none" }}
-                onChange={(e) => setProfilePicture(e.target.files[0])}
+                onChange={(e) => {
+                  setProfilePicture(e.target.files[0]);
+                  setEditFormPicture(URL.createObjectURL(e.target.files[0]));
+                }}
               ></input>
               <input
                 type="text"

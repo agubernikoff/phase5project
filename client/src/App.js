@@ -34,6 +34,10 @@ function App() {
     setUser("");
   }
 
+  function updateUserOnEdit(user) {
+    setUser(user);
+  }
+
   function updateUserProjects(newProject) {
     const updatedProjects = [...user.projects, newProject];
     setUser({ ...user, projects: updatedProjects });
@@ -408,7 +412,13 @@ function App() {
               />
             }
           />
-          <Route exact path="/u/:id" element={<Account user={user} />} />
+          <Route
+            exact
+            path="/u/:id"
+            element={
+              <Account user={user} updateUserOnEdit={updateUserOnEdit} />
+            }
+          />
         </Routes>
       </div>
       <Footer user={user} logout={logout} />
