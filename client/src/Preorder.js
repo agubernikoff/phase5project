@@ -115,16 +115,18 @@ function Preorder({
         ) : (
           "No updates yet. Please check back later"
         )}
-        <button
-          style={{
-            margin: "auto",
-            marginTop: 5,
-            marginBottom: 5,
-            display: "block",
-          }}
-        >
-          PREORDER
-        </button>
+        {project.status === "Preorder" ? (
+          <button
+            style={{
+              margin: "auto",
+              marginTop: 5,
+              marginBottom: 5,
+              display: "block",
+            }}
+          >
+            PREORDER
+          </button>
+        ) : null}
       </div>
     </div>
   );
