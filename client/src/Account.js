@@ -22,6 +22,7 @@ function Account({ user }) {
         setUsername(data.username);
         setBio(data.bio);
         setProfilePicture(data.profile_picture);
+        setIsSeller(data.isSeller);
       });
   }, [id]);
   console.log(accountHolder, profile_picture);
@@ -170,12 +171,14 @@ function Account({ user }) {
               onChange={(e) => setBio(e.target.value)}
             />
           </div>
-          <button
-            onClick={() => setIsSeller(true)}
-            style={{ display: "block", width: "fit-content", margin: "auto" }}
-          >
-            BECOME A SELLER
-          </button>
+          {isSeller ? null : (
+            <button
+              onClick={() => setIsSeller(true)}
+              style={{ display: "block", width: "fit-content", margin: "auto" }}
+            >
+              BECOME A SELLER
+            </button>
+          )}
           <button type="submit" style={{ marginTop: 10 }}>
             {isLoading ? <Loading /> : "Edit Profile"}
           </button>
