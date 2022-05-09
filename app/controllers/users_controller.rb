@@ -14,7 +14,7 @@ class UsersController < ApplicationController
       render json: user, status: :created
     end
     
-    def show
+    def show_me
       user = User.find(session[:user_id])
       if user
         render json: user

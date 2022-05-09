@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   # Leave this here to help deploy your app later!
   post "/login", to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
-  get "/me", to: 'users#show'
+  get "/me", to: 'users#show_me'
   post "/signup", to: 'users#create'
   get '/users', to: 'users#index'
   patch '/me', to: 'users#update'
