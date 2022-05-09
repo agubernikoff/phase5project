@@ -153,16 +153,17 @@ function Account({ user, updateUserOnEdit }) {
                 autoComplete="off"
                 value={username}
                 placeholder={username}
-                style={{ fontSize: 108, display: "inline-block", width: "98%" }}
+                style={{
+                  fontSize: 108,
+                  display: "inline-block",
+                  width: "99%",
+                }}
                 onChange={(e) => setUsername(e.target.value.toLowerCase())}
               />
             </div>
           </div>
-          <div style={{ position: "relative", marginTop: 10 }}>
-            <label
-              htmlFor="caption"
-              style={{ position: "relative", bottom: 145 }}
-            >
+          <div style={{ position: "relative", marginTop: 10, display: "flex" }}>
+            <label htmlFor="caption">
               <strong>BIO: </strong>
             </label>
             <textarea
@@ -170,7 +171,7 @@ function Account({ user, updateUserOnEdit }) {
               id="description"
               autoComplete="off"
               rows="10"
-              cols="88"
+              cols="105"
               placeholder="Tell us about yourself"
               value={bio}
               onChange={(e) => setBio(e.target.value)}
@@ -184,8 +185,11 @@ function Account({ user, updateUserOnEdit }) {
               BECOME A SELLER
             </button>
           )}
-          <button type="submit" style={{ marginTop: 10 }}>
-            {isLoading ? <Loading /> : "Edit Profile"}
+          <button
+            type="submit"
+            style={{ margin: "auto", marginTop: 10, width: "fit-content" }}
+          >
+            {isLoading ? <Loading /> : "EDIT PROFILE"}
           </button>
           {errors.map((err) => (
             <h3
