@@ -13,6 +13,7 @@ function Account({ user, updateUserOnEdit }) {
   const [isLoading, setIsLoading] = useState(false);
   const [isSeller, setIsSeller] = useState(false);
   const [displayOnly, setDisplayOnly] = useState(true);
+  const [followedProjects, setFollowedProjects] = useState([]);
 
   let { id } = useParams();
   useEffect(() => {
@@ -208,7 +209,7 @@ function Account({ user, updateUserOnEdit }) {
       )}
       {accountHolder.isSeller && accountHolder.projects[0] ? (
         <div>
-          <strong>PROJECTS:</strong> {mappedProjects}
+          <strong>MY PROJECTS:</strong> {mappedProjects}
         </div>
       ) : null}
     </div>
