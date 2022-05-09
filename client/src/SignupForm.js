@@ -7,6 +7,7 @@ function SignUpForm({ onLogin }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [profile_picture, setProfilePicture] = useState(null);
+  const [bio, setBio] = useState("");
   const [errors, setErrors] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [decided, setDecided] = useState(false);
@@ -28,6 +29,7 @@ function SignUpForm({ onLogin }) {
   formData.append("password", password);
   formData.append("isSeller", isSeller);
   formData.append("profile_picture", profile_picture);
+  formData.append("bio", bio);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -84,6 +86,17 @@ function SignUpForm({ onLogin }) {
             name="profile_picture"
             onChange={(e) => setProfilePicture(e.target.files[0])}
           ></input>
+          <label htmlFor="caption">Caption:</label>
+          <textarea
+            type="text"
+            id="description"
+            autoComplete="off"
+            rows="10"
+            cols="75"
+            placeholder="Tell us about yourself"
+            value={bio}
+            onChange={(e) => setBio(e.target.value)}
+          />
           <button type="submit" style={{ marginTop: 10 }}>
             {isLoading ? <Loading /> : "Sign Up"}
           </button>
