@@ -13,6 +13,7 @@ function Post({
   updatePostCommentsOnDelete,
   updatePostsOnLikesThreshold,
   updateProjectsOnThreshold,
+  updateUserOnSelfLikeThreshold,
 }) {
   console.log(post.id);
   const [comment, setComment] = useState("");
@@ -58,6 +59,7 @@ function Post({
           if (data.like) {
             updatePostsOnLikesThreshold(data);
             updateProjectsOnThreshold(data);
+            updateUserOnSelfLikeThreshold(data);
           } else updatePostLikesOnLike(data);
         });
       } else r.json().then((data) => console.log(data));

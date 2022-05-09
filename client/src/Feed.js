@@ -12,6 +12,7 @@ function Feed({
   updatePostCommentsOnDelete,
   updatePostsOnLikesThreshold,
   updateProjectsOnThreshold,
+  updateUserOnSelfLikeThreshold,
 }) {
   const postCards = posts.map((post) => (
     <Post
@@ -26,6 +27,7 @@ function Feed({
       updatePostCommentsOnDelete={updatePostCommentsOnDelete}
       updatePostsOnLikesThreshold={updatePostsOnLikesThreshold}
       updateProjectsOnThreshold={updateProjectsOnThreshold}
+      updateUserOnSelfLikeThreshold={updateUserOnSelfLikeThreshold}
     />
   ));
   return <div>Feed{postCards}</div>;

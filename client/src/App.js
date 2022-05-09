@@ -38,6 +38,31 @@ function App() {
     setUser({ ...user, projects: updatedProjects });
   }
 
+  function updateUserOnSelfLikeThreshold(data) {
+    const likedPost = posts.find((p) => p.id === data.like.post_id);
+    const updatedLikes = [...likedPost.likes, data.like];
+    const updatedPost = { ...likedPost, likes: updatedLikes };
+    const mappedIds = data.updated_project_posts.map((upp) => upp.id);
+    const projectPosts = posts.filter((p) => mappedIds.includes(p.id));
+    const filteredProjectPosts = projectPosts.filter(
+      (p) => p.id !== updatedPost.id
+    );
+    const updatedFilteredProjectPosts = [...filteredProjectPosts, updatedPost];
+    const newProject = {
+      ...data.updated_project,
+      posts: updatedFilteredProjectPosts,
+      production_updates: [],
+    };
+    const filteredUserProjects = user.projects.filter(
+      (up) => up.id !== newProject.id
+    );
+    setUser({
+      ...user,
+      projects: [...filteredUserProjects, newProject],
+      likes: [...user.likes, data.like],
+    });
+  }
+
   function updateUserProjectsPosts(newPost) {
     const updatedPosts = [
       ...user.projects.find((p) => p.id === newPost.project_id).posts,
@@ -141,14 +166,18 @@ function App() {
   }
 
   function updateProjectsOnThreshold(data) {
-    const postIDs = data.updated_project_posts.map((upp) => upp.id);
-    console.log(postIDs);
-    const updatedProjectPosts = posts.filter((post) =>
-      postIDs.includes(post.id)
+    const likedPost = posts.find((p) => p.id === data.like.post_id);
+    const updatedLikes = [...likedPost.likes, data.like];
+    const updatedPost = { ...likedPost, likes: updatedLikes };
+    const mappedIds = data.updated_project_posts.map((upp) => upp.id);
+    const projectPosts = posts.filter((p) => mappedIds.includes(p.id));
+    const filteredProjectPosts = projectPosts.filter(
+      (p) => p.id !== updatedPost.id
     );
+    const updatedFilteredProjectPosts = [...filteredProjectPosts, updatedPost];
     const newProject = {
       ...data.updated_project,
-      posts: updatedProjectPosts,
+      posts: updatedFilteredProjectPosts,
       production_updates: [],
     };
     setPreOrderProjects([...preOrderProjects, newProject]);
@@ -321,6 +350,7 @@ function App() {
                 updatePostCommentsOnDelete={updatePostCommentsOnDelete}
                 updatePostsOnLikesThreshold={updatePostsOnLikesThreshold}
                 updateProjectsOnThreshold={updateProjectsOnThreshold}
+                updateUserOnSelfLikeThreshold={updateUserOnSelfLikeThreshold}
               />
             }
           />
