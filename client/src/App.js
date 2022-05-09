@@ -5,10 +5,11 @@ import Header from "./Header";
 import Home from "./Home";
 import Feed from "./Feed";
 import ComingSoon from "./ComingSoon";
+import Footer from "./Footer";
+import Account from "./Account";
 import NewProjectForm from "./NewProjectForm";
 import NewPost from "./NewPost";
 import ProductionUpdateForm from "./ProductionUpdateForm";
-import Footer from "./Footer";
 
 function App() {
   const [user, setUser] = useState("");
@@ -407,6 +408,7 @@ function App() {
               />
             }
           />
+          <Route exact path="/u/:id" element={<Account />} />
         </Routes>
       </div>
       <Footer user={user} logout={logout} />

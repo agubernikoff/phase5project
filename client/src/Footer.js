@@ -21,18 +21,24 @@ function Footer({ user, logout }) {
 
   return (
     <div style={{ width: "16.5%", textAlign: "right" }}>
-      <h3>FOOTER</h3>
+      {/* <h3>FOOTER</h3> */}
       <div>
-        <span> {user.username.toUpperCase()}</span>
+        <h3 style={{ display: "inline-block" }}>
+          {user.username.toUpperCase()}
+        </h3>
         <img
           alt="propic"
           src={user.profile_picture}
-          style={{ width: "6.5%" }}
+          style={{ width: "10%", borderRadius: 20 }}
         />
       </div>
       {user.isSeller ? (
         <>
-          <p>MY STORE</p>
+          <NavLink to={`/u/${user.id}`} style={activeStyle}>
+            MY STORE
+          </NavLink>
+          <br />
+          <br />
           <NavLink to={"/newprojectform"} style={activeStyle}>
             START A NEW PROJECT
           </NavLink>
@@ -58,7 +64,13 @@ function Footer({ user, logout }) {
           ) : null}
         </>
       ) : (
-        <p>MY ACCOUNT</p>
+        <>
+          <NavLink to={`/u/${user.id}`} style={activeStyle}>
+            MY ACCOUNT
+          </NavLink>
+          <br />
+          <br />
+        </>
       )}
       <NavLink to={"/login"} onClick={handleLogout} style={activeStyle}>
         LOGOUT
