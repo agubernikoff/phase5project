@@ -408,7 +408,7 @@ function App() {
               />
             }
           />
-          <Route exact path="/u/:id" element={<Account />} />
+          <Route exact path="/u/:id" element={<Account user={user} />} />
         </Routes>
       </div>
       <Footer user={user} logout={logout} />
