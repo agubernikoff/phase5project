@@ -10,6 +10,7 @@ import Account from "./Account";
 import NewProjectForm from "./NewProjectForm";
 import NewPost from "./NewPost";
 import ProductionUpdateForm from "./ProductionUpdateForm";
+import ListAProduct from "./ListAProduct";
 
 function App() {
   const [user, setUser] = useState("");
@@ -372,6 +373,11 @@ function App() {
                 }
               />
             }
+          />
+          <Route
+            exact
+            path="/newproduct"
+            element={<ListAProduct user={user} />}
           />
           <Route
             exact

@@ -5,11 +5,11 @@ class Product < ApplicationRecord
 
     before_save :calculate_inventory
 
+    validates :name, presence: true
+    validates :price, presence: true
+    validates :images, presence: true,on: :create
+
     def calculate_inventory
     self[:inventory] =xs+s+m+l+xl+xxl+one_size_fits_all
-    end
-
-    def sell_one size_column
-        binding.pry
     end
 end

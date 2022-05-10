@@ -12,6 +12,10 @@ function Footer({ user, logout }) {
     (project) => project.status === "Preorder"
   );
 
+  const hasForSaleProjects = user.projects.find(
+    (project) => project.status === "For Sale"
+  );
+
   const activeStyle = ({ isActive }) =>
     isActive
       ? {
@@ -57,6 +61,15 @@ function Footer({ user, logout }) {
             <>
               <NavLink to={"/newproductionupdate"} style={activeStyle}>
                 PRODUCTION UPDATE
+              </NavLink>
+              <br />
+              <br />{" "}
+            </>
+          ) : null}
+          {hasForSaleProjects ? (
+            <>
+              <NavLink to={"/newproduct"} style={activeStyle}>
+                LIST A PRODUCT FOR SALE
               </NavLink>
               <br />
               <br />{" "}
