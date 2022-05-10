@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Loading from "./Loading";
 
-function ListAProduct({ user }) {
+function ListAProduct({ user, updateProductsOnNewListing }) {
   const forSaleProjects = user.projects.filter(
     (project) => project.status === "For Sale"
   );
@@ -62,7 +62,7 @@ function ListAProduct({ user }) {
         setIsLoading(false);
         if (r.ok) {
           r.json().then((data) => {
-            console.log(data);
+            updateProductsOnNewListing(data);
             navigate("/");
           });
         } else {

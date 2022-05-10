@@ -322,6 +322,10 @@ function App() {
     setPreOrderProjects(filteredProjects);
   }
 
+  function updateProductsOnNewListing(newProduct) {
+    setProducts([...products, newProduct]);
+  }
+
   if (!user)
     return (
       <div>
@@ -429,7 +433,12 @@ function App() {
           <Route
             exact
             path="/newproduct"
-            element={<ListAProduct user={user} />}
+            element={
+              <ListAProduct
+                user={user}
+                updateProductsOnNewListing={updateProductsOnNewListing}
+              />
+            }
           />
           <Route
             exact

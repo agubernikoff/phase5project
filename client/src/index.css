@@ -22,11 +22,12 @@ a:visited {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  align-items: flex-end;
 }
 
 .productPreview {
   width: 30%;
-  height: 350px;
+  height: fit-content;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
