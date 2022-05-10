@@ -1,11 +1,11 @@
 import React from "react";
-import Product from "./Product";
+import ProductPreview from "./ProductPreview";
 
 function Marketplace({ products }) {
-  const mappedProducts = products.map((product) => (
-    <Product key={product.id} product={product} />
+  const mappedProductPreviews = products.map((product) => (
+    <ProductPreview key={product.id} product={product} />
   ));
-  return <div>Marketplace{mappedProducts}</div>;
+  return <div>Marketplace{mappedProductPreviews}</div>;
 }
 
 export default Marketplace;
