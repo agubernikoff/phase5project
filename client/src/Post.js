@@ -15,6 +15,11 @@ function Post({
   updatePostsOnLikesThreshold,
   updateProjectsOnThreshold,
   updateUserOnSelfLikeThreshold,
+  accountHolder,
+  updateAccountOnLike,
+  updateAccountOnUnLike,
+  updateAccountOnComment,
+  updateAccountOnDeleteComment,
 }) {
   const [comment, setComment] = useState("");
   const content = post.files.map((f) => (
@@ -60,7 +65,10 @@ function Post({
             updatePostsOnLikesThreshold(data);
             updateProjectsOnThreshold(data);
             updateUserOnSelfLikeThreshold(data);
-          } else updatePostLikesOnLike(data);
+          } else {
+            updatePostLikesOnLike(data);
+            if (accountHolder) updateAccountOnLike(data);
+          }
         });
       } else r.json().then((data) => console.log(data));
     });
@@ -75,6 +83,7 @@ function Post({
       if (r.ok) {
         updateUserLikesOnUnlike(like.id);
         updatePostLikesOnUnlike(like);
+        if (accountHolder) updateAccountOnUnLike(like);
       } else r.json().then((data) => console.log(data));
     });
   }
@@ -102,7 +111,10 @@ function Post({
       }),
     }).then((r) => {
       if (r.ok) {
-        r.json().then((data) => updatePostCommentsOnComment(data));
+        r.json().then((data) => {
+          updatePostCommentsOnComment(data);
+          if (accountHolder) updateAccountOnComment(data);
+        });
       } else r.json().then((data) => console.log(data));
     });
     setComment("");
@@ -113,7 +125,12 @@ function Post({
     fetch(`/comments/${e.target.value}`, {
       method: "DELETE",
       headers: { "Content-Type": "appliation/json" },
-    }).then((r) => r.json().then((data) => updatePostCommentsOnDelete(data)));
+    }).then((r) =>
+      r.json().then((data) => {
+        updatePostCommentsOnDelete(data);
+        if (accountHolder) updateAccountOnDeleteComment(data);
+      })
+    );
   }
 
   return (
@@ -125,6 +142,7 @@ function Post({
         border: "solid 1px black",
       }}
     >
+      {accountHolder ? "something" : "nothing"}
       <div style={{ width: "fit-content" }}>
         <img
           src={post.user_profile_picture}

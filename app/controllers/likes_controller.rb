@@ -19,7 +19,7 @@ class LikesController < ApplicationController
     post=Post.find(params[:post_id])
     project=post.project
     avg_likes=project.posts.map{|post| post.likes.length}.sum.to_f/project.posts.length.to_f
-    if avg_likes == project.likes_threshold
+    if avg_likes == project.likes_threshold && project.status == 'New Project'
       project.update(status: 'Preorder')
       render json: {like: @like,updated_project: project,updated_project_posts:project.posts,message: ["PROJECT REACHED LIKES THRESHOLD.","NOW AVAILABLE FOR PREORDER.","MOVED TO 'COMING SOON' TAB"]}
     else render json: @like, status: :created, location: @like

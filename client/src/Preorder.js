@@ -14,8 +14,12 @@ function Preorder({
   updatePostCommentsOnDelete,
   updatePostsOnLikesThreshold,
   updateProjectsOnThreshold,
+  accountHolder,
+  updateAccountOnLike,
+  updateAccountOnUnLike,
+  updateAccountOnComment,
+  updateAccountOnDeleteComment,
 }) {
-  console.log(project);
   const [viewHistory, setViewHistory] = useState(false);
   function toggleHistory() {
     setViewHistory(!viewHistory);
@@ -33,6 +37,11 @@ function Preorder({
       updatePostCommentsOnDelete={updatePostCommentsOnDelete}
       updatePostsOnLikesThreshold={updatePostsOnLikesThreshold}
       updateProjectsOnThreshold={updateProjectsOnThreshold}
+      accountHolder={accountHolder}
+      updateAccountOnLike={updateAccountOnLike}
+      updateAccountOnUnLike={updateAccountOnUnLike}
+      updateAccountOnComment={updateAccountOnComment}
+      updateAccountOnDeleteComment={updateAccountOnDeleteComment}
     />
   ));
 
@@ -67,7 +76,7 @@ function Preorder({
           {project.production_updates[0]
             ? project.production_updates[project.production_updates.length - 1]
                 .status
-            : "N/A"}
+            : project.status}
         </span>
         <span style={{ float: "right" }}>
           ETA:{" "}

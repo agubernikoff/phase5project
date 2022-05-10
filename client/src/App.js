@@ -416,7 +416,27 @@ function App() {
             exact
             path="/u/:id"
             element={
-              <Account user={user} updateUserOnEdit={updateUserOnEdit} />
+              <Account
+                user={user}
+                updateUserOnEdit={updateUserOnEdit}
+                updateUserLikesOnLike={updateUserLikesOnLike}
+                updateUserLikesOnUnlike={updateUserLikesOnUnlike}
+                updateProjectPostLikesOnLike={updateProjectPostLikesOnLike}
+                updateProjectPostLikesOnUnlike={updateProjectPostLikesOnUnlike}
+                updateProjectPostCommentsOnComment={
+                  updateProjectPostCommentsOnComment
+                }
+                updateProjectPostCommentsOnDeletedComment={
+                  updateProjectPostCommentsOnDeletedComment
+                }
+                updatePostLikesOnLike={updatePostLikesOnLike}
+                updatePostLikesOnUnlike={updatePostLikesOnUnlike}
+                updatePostCommentsOnComment={updatePostCommentsOnComment}
+                updatePostCommentsOnDelete={updatePostCommentsOnDelete}
+                updatePostsOnLikesThreshold={updatePostsOnLikesThreshold}
+                updateProjectsOnThreshold={updateProjectsOnThreshold}
+                updateUserOnSelfLikeThreshold={updateUserOnSelfLikeThreshold}
+              />
             }
           />
         </Routes>
