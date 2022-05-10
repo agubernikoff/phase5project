@@ -5,6 +5,7 @@ import Header from "./Header";
 import Home from "./Home";
 import Feed from "./Feed";
 import ComingSoon from "./ComingSoon";
+import Marketplace from "./Marketplace";
 import Footer from "./Footer";
 import Account from "./Account";
 import NewProjectForm from "./NewProjectForm";
@@ -334,6 +335,46 @@ function App() {
           />
           <Route
             exact
+            path="/feed"
+            element={
+              <Feed
+                posts={posts}
+                user={user}
+                updateUserLikesOnLike={updateUserLikesOnLike}
+                updateUserLikesOnUnlike={updateUserLikesOnUnlike}
+                updatePostLikesOnLike={updatePostLikesOnLike}
+                updatePostLikesOnUnlike={updatePostLikesOnUnlike}
+                updatePostCommentsOnComment={updatePostCommentsOnComment}
+                updatePostCommentsOnDelete={updatePostCommentsOnDelete}
+                updatePostsOnLikesThreshold={updatePostsOnLikesThreshold}
+                updateProjectsOnThreshold={updateProjectsOnThreshold}
+                updateUserOnSelfLikeThreshold={updateUserOnSelfLikeThreshold}
+              />
+            }
+          />
+          <Route
+            exact
+            path="/comingsoon"
+            element={
+              <ComingSoon
+                preOrderProjects={preOrderProjects}
+                user={user}
+                updateUserLikesOnLike={updateUserLikesOnLike}
+                updateUserLikesOnUnlike={updateUserLikesOnUnlike}
+                updatePostLikesOnLike={updateProjectPostLikesOnLike}
+                updatePostLikesOnUnlike={updateProjectPostLikesOnUnlike}
+                updatePostCommentsOnComment={updateProjectPostCommentsOnComment}
+                updatePostCommentsOnDelete={
+                  updateProjectPostCommentsOnDeletedComment
+                }
+                updatePostsOnLikesThreshold={updatePostsOnLikesThreshold}
+                updateProjectsOnThreshold={updateProjectsOnThreshold}
+              />
+            }
+          />
+          <Route exact path="/marketplace" element={<Marketplace />} />
+          <Route
+            exact
             path="/newprojectform"
             element={
               <NewProjectForm
@@ -378,45 +419,6 @@ function App() {
             exact
             path="/newproduct"
             element={<ListAProduct user={user} />}
-          />
-          <Route
-            exact
-            path="/feed"
-            element={
-              <Feed
-                posts={posts}
-                user={user}
-                updateUserLikesOnLike={updateUserLikesOnLike}
-                updateUserLikesOnUnlike={updateUserLikesOnUnlike}
-                updatePostLikesOnLike={updatePostLikesOnLike}
-                updatePostLikesOnUnlike={updatePostLikesOnUnlike}
-                updatePostCommentsOnComment={updatePostCommentsOnComment}
-                updatePostCommentsOnDelete={updatePostCommentsOnDelete}
-                updatePostsOnLikesThreshold={updatePostsOnLikesThreshold}
-                updateProjectsOnThreshold={updateProjectsOnThreshold}
-                updateUserOnSelfLikeThreshold={updateUserOnSelfLikeThreshold}
-              />
-            }
-          />
-          <Route
-            exact
-            path="/comingsoon"
-            element={
-              <ComingSoon
-                preOrderProjects={preOrderProjects}
-                user={user}
-                updateUserLikesOnLike={updateUserLikesOnLike}
-                updateUserLikesOnUnlike={updateUserLikesOnUnlike}
-                updatePostLikesOnLike={updateProjectPostLikesOnLike}
-                updatePostLikesOnUnlike={updateProjectPostLikesOnUnlike}
-                updatePostCommentsOnComment={updateProjectPostCommentsOnComment}
-                updatePostCommentsOnDelete={
-                  updateProjectPostCommentsOnDeletedComment
-                }
-                updatePostsOnLikesThreshold={updatePostsOnLikesThreshold}
-                updateProjectsOnThreshold={updateProjectsOnThreshold}
-              />
-            }
           />
           <Route
             exact

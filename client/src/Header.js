@@ -24,7 +24,11 @@ function Header() {
       <NavLink to={"/comingsoon"} style={activeStyle}>
         COMING SOON
       </NavLink>
-      <p>MARKETPLACE</p>
+      <br />
+      <br />
+      <NavLink to={"/marketplace"} style={activeStyle}>
+        MARKETPLACE
+      </NavLink>
     </div>
   );
 }
