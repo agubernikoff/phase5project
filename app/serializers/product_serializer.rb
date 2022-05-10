@@ -1,6 +1,6 @@
 class ProductSerializer < ActiveModel::Serializer
   include Rails.application.routes.url_helpers
-  attributes :id,:name,:description,:price,:inventory,:xs,:s,:m,:l,:xl,:xxl,:one_size_fits_all,:project_id,:images
+  attributes :id,:name,:description,:price,:inventory,:xs,:s,:m,:l,:xl,:xxl,:one_size_fits_all,:project_id,:images,:seller
 
   def images
     return unless object.images.attached?
@@ -13,5 +13,9 @@ class ProductSerializer < ActiveModel::Serializer
       image.blob.attributes.slice(:imagename,:byte_size,:id).merge(url: image_url(image))
     end
     
+  end
+
+  def seller
+    User.find(Project.find(object.project_id).user_id).username
   end
 end

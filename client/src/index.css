@@ -17,3 +17,26 @@ a:visited {
   text-decoration: none;
   color: black;
 }
+
+.marketplace {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.productPreview {
+  width: 30%;
+  height: 350px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  margin: 1%;
+}
+.productPreview p {
+  margin: 0;
+  float: bottom;
+}
+.productInfo {
+  float: bottom;
+  height: fit-content;
+}
