@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_09_023807) do
+ActiveRecord::Schema.define(version: 2022_05_10_154454) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -85,6 +85,24 @@ ActiveRecord::Schema.define(version: 2022_05_09_023807) do
     t.index ["project_id"], name: "index_production_updates_on_project_id"
   end
 
+  create_table "products", force: :cascade do |t|
+    t.string "name"
+    t.string "description"
+    t.float "price"
+    t.integer "inventory"
+    t.integer "xs"
+    t.integer "s"
+    t.integer "m"
+    t.integer "l"
+    t.integer "xl"
+    t.integer "xxl"
+    t.integer "one_size_fits_all"
+    t.bigint "project_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["project_id"], name: "index_products_on_project_id"
+  end
+
   create_table "projects", force: :cascade do |t|
     t.string "title"
     t.string "description"
@@ -113,5 +131,6 @@ ActiveRecord::Schema.define(version: 2022_05_09_023807) do
   add_foreign_key "likes", "users"
   add_foreign_key "posts", "projects"
   add_foreign_key "production_updates", "projects"
+  add_foreign_key "products", "projects"
   add_foreign_key "projects", "users"
 end

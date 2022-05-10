@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   resources :posts
   resources :likes, only:[:index, :create, :destroy]
   resources :comments, only: [:index, :create, :destroy]
+  resources :products
   post '/production_updates',to: 'production_updates#create'
   delete '/production_updates',to: 'production_updates#destroy'
   get "*path", to: "fallback#index", constraints: ->(req) { !req.xhr? && req.format.html? }
