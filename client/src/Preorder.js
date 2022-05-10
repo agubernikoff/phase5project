@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
-import Update from "./Update";
 import Post from "./Post";
+import Update from "./Update";
+import ProductPreview from "./ProductPreview";
 
 function Preorder({
   project,
@@ -48,6 +49,11 @@ function Preorder({
   const updates = project.production_updates.map((update) => (
     <Update update={update} key={update.id} />
   ));
+
+  const productPreviews = project.products.map((p) => (
+    <ProductPreview key={p.id} product={p} />
+  ));
+
   return (
     <div>
       <div style={{ width: "fit-content" }}>
@@ -124,6 +130,13 @@ function Preorder({
         ) : (
           "No updates yet. Please check back later"
         )}
+        {project.products[0] ? (
+          <div
+            style={{ margin: "auto", display: "flex", width: "fit-content" }}
+          >
+            {productPreviews}
+          </div>
+        ) : null}
         {project.status === "Preorder" ? (
           <button
             style={{

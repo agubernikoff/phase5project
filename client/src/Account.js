@@ -199,13 +199,19 @@ function Account({
       ))
     : null;
 
-  console.log(
-    accountHolder.projects
-      ? [...mappedNewProjects, ...mappedComingSoonProjects].sort(
-          (a, b) => a.key - b.key
-        )
-      : null
-  );
+  const mappedForSaleProjects = accountHolder.projects
+    ? forSaleProjects.map((p) => (
+        <Preorder key={p.id} user={user} project={p} />
+      ))
+    : null;
+
+  const mappedProjects = accountHolder.projects
+    ? [
+        ...mappedNewProjects,
+        ...mappedComingSoonProjects,
+        ...mappedForSaleProjects,
+      ].sort((a, b) => a.key - b.key)
+    : null;
 
   const formData = new FormData();
   formData.append("username", username);
@@ -358,11 +364,15 @@ function Account({
     />
   ));
 
-  console.log(
-    [...newProjectsImFollowing, ...comingSoonProjectsImFollowing].sort(
-      (a, b) => a.key - b.key
-    )
-  );
+  const forSaleProjectsImFollowing = likedForSaleProjects.map((p) => (
+    <Preorder key={p.id} user={user} project={p} />
+  ));
+
+  const mappedProjectsImFollowing = [
+    ...newProjectsImFollowing,
+    ...comingSoonProjectsImFollowing,
+    ...forSaleProjectsImFollowing,
+  ].sort((a, b) => a.key - b.key);
 
   return (
     <div>
@@ -511,15 +521,13 @@ function Account({
       )}
       {accountHolder.isSeller && accountHolder.projects[0] ? (
         <div>
-          <strong>MY PROJECTS:</strong> {mappedNewProjects}
-          {mappedComingSoonProjects}
+          <strong>MY PROJECTS:</strong> {mappedProjects}
         </div>
       ) : null}
       {accountHolder ? (
         <div>
           <strong>PROJECTS I'M INTERESTED IN:</strong>
-          {newProjectsImFollowing}
-          {comingSoonProjectsImFollowing}
+          {mappedProjectsImFollowing}
         </div>
       ) : null}
     </div>
