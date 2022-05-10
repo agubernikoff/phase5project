@@ -17,6 +17,7 @@ function App() {
   const [user, setUser] = useState("");
   const [posts, setPosts] = useState([]);
   const [preOrderProjects, setPreOrderProjects] = useState([]);
+  const [products, setProducts] = useState([]);
 
   useEffect(() => {
     fetch("/me").then((r) => {
@@ -24,12 +25,18 @@ function App() {
         r.json().then((user) => setUser(user));
       }
     });
+  }, []);
+
+  useEffect(() => {
     fetch("/posts")
       .then((r) => r.json())
       .then((data) => setPosts(data));
     fetch("/projects")
       .then((r) => r.json())
       .then((data) => setPreOrderProjects(data));
+    fetch("/products")
+      .then((r) => r.json())
+      .then((data) => setProducts(data));
   }, []);
 
   function logout() {
@@ -372,7 +379,11 @@ function App() {
               />
             }
           />
-          <Route exact path="/marketplace" element={<Marketplace />} />
+          <Route
+            exact
+            path="/marketplace"
+            element={<Marketplace products={products} />}
+          />
           <Route
             exact
             path="/newprojectform"
