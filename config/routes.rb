@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   patch '/me', to: 'users#update'
   delete '/users', to: 'users#destroy'
   resources :projects
+  get '/liked_projects/:id', to: 'projects#liked_projects'
   resources :posts
   resources :likes, only:[:index, :create, :destroy]
   resources :comments, only: [:index, :create, :destroy]

@@ -13,7 +13,7 @@ function Account({ user, updateUserOnEdit }) {
   const [isLoading, setIsLoading] = useState(false);
   const [isSeller, setIsSeller] = useState(false);
   const [displayOnly, setDisplayOnly] = useState(true);
-  const [followedProjects, setFollowedProjects] = useState([]);
+  const [likedProjects, setLikedProjects] = useState([]);
 
   let { id } = useParams();
   useEffect(() => {
@@ -26,8 +26,10 @@ function Account({ user, updateUserOnEdit }) {
         setIsSeller(data.isSeller);
         setEditFormPicture(data.profile_picture);
       });
+    fetch(`/liked_projects/${id}`)
+      .then((r) => r.json())
+      .then((data) => setLikedProjects(data));
   }, [id]);
-  console.log(accountHolder, profile_picture);
 
   const mappedProjects = accountHolder.projects
     ? accountHolder.projects.map((p) => (
@@ -61,6 +63,10 @@ function Account({ user, updateUserOnEdit }) {
       }
     });
   }
+
+  const projectsImFollowing = likedProjects.map((p) => (
+    <Preorder key={p.id} project={p} user={user} />
+  ));
 
   return (
     <div>
@@ -210,6 +216,12 @@ function Account({ user, updateUserOnEdit }) {
       {accountHolder.isSeller && accountHolder.projects[0] ? (
         <div>
           <strong>MY PROJECTS:</strong> {mappedProjects}
+        </div>
+      ) : null}
+      {accountHolder ? (
+        <div>
+          <strong>PROJECTS I'M INTERESTED IN:</strong>
+          {projectsImFollowing}
         </div>
       ) : null}
     </div>

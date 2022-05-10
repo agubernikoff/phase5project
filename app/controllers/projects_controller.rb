@@ -6,6 +6,11 @@ class ProjectsController < ApplicationController
         render json: Project.all.where(status:'Preorder')
     end
 
+    def liked_projects
+      projects=User.find(params[:id]).likes.map{|l|l.post_id}.map{|id| Post.find(id)}.map{|p|p.project_id}.map{|id| Project.find(id)}
+      render json: projects.uniq
+    end
+
     def show
         project = Project.find(params[:id])
         render json: project
