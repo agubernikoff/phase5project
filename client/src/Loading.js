@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 
 function Loading() {
   const [index, setIndex] = useState(13);
-  const loading = "...Loading...";
+  const loading = "...LOADING...";
   const loadingArray = loading.split("");
   useEffect(() => {
     let timer = setTimeout(() => {

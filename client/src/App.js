@@ -115,12 +115,14 @@ function App() {
 
   function updatePostLikesOnLike(like) {
     const likedPost = posts.find((p) => p.id === like.post_id);
-    const updatedLikes = [...likedPost.likes, like];
-    const updatedPost = { ...likedPost, likes: updatedLikes };
-    const filteredPosts = posts.filter((p) => p.id !== like.post_id);
-    const updatedPosts = [...filteredPosts, updatedPost];
-    const sorted = updatedPosts.sort((a, b) => b.id - a.id);
-    setPosts(sorted);
+    if (likedPost) {
+      const updatedLikes = [...likedPost.likes, like];
+      const updatedPost = { ...likedPost, likes: updatedLikes };
+      const filteredPosts = posts.filter((p) => p.id !== like.post_id);
+      const updatedPosts = [...filteredPosts, updatedPost];
+      const sorted = updatedPosts.sort((a, b) => b.id - a.id);
+      setPosts(sorted);
+    }
   }
 
   function updatePostsOnLikesThreshold(data) {
@@ -145,32 +147,38 @@ function App() {
 
   function updatePostLikesOnUnlike(unlike) {
     const unLikedPost = posts.find((p) => p.id === unlike.post_id);
-    const filtered = unLikedPost.likes.filter((l) => l.id !== unlike.id);
-    const updatedPost = { ...unLikedPost, likes: filtered };
-    const filteredPosts = posts.filter((p) => p.id !== unLikedPost.id);
-    const updatedPosts = [...filteredPosts, updatedPost];
-    const sorted = updatedPosts.sort((a, b) => b.id - a.id);
-    setPosts(sorted);
+    if (unLikedPost) {
+      const filtered = unLikedPost.likes.filter((l) => l.id !== unlike.id);
+      const updatedPost = { ...unLikedPost, likes: filtered };
+      const filteredPosts = posts.filter((p) => p.id !== unLikedPost.id);
+      const updatedPosts = [...filteredPosts, updatedPost];
+      const sorted = updatedPosts.sort((a, b) => b.id - a.id);
+      setPosts(sorted);
+    }
   }
 
   function updatePostCommentsOnComment(newComment) {
     const likedPost = posts.find((p) => p.id === newComment.post_id);
-    const updatedComments = [...likedPost.comments, newComment];
-    const updatedPost = { ...likedPost, comments: updatedComments };
-    const filteredPosts = posts.filter((p) => p.id !== newComment.post_id);
-    const updatedPosts = [...filteredPosts, updatedPost];
-    const sorted = updatedPosts.sort((a, b) => b.id - a.id);
-    setPosts(sorted);
+    if (likedPost) {
+      const updatedComments = [...likedPost.comments, newComment];
+      const updatedPost = { ...likedPost, comments: updatedComments };
+      const filteredPosts = posts.filter((p) => p.id !== newComment.post_id);
+      const updatedPosts = [...filteredPosts, updatedPost];
+      const sorted = updatedPosts.sort((a, b) => b.id - a.id);
+      setPosts(sorted);
+    }
   }
 
   function updatePostCommentsOnDelete(deletedComment) {
     const post = posts.find((p) => p.id === deletedComment.post_id);
-    const filtered = post.comments.filter((l) => l.id !== deletedComment.id);
-    const updatedPost = { ...post, comments: filtered };
-    const filteredPosts = posts.filter((p) => p.id !== post.id);
-    const updatedPosts = [...filteredPosts, updatedPost];
-    const sorted = updatedPosts.sort((a, b) => b.id - a.id);
-    setPosts(sorted);
+    if (post) {
+      const filtered = post.comments.filter((l) => l.id !== deletedComment.id);
+      const updatedPost = { ...post, comments: filtered };
+      const filteredPosts = posts.filter((p) => p.id !== post.id);
+      const updatedPosts = [...filteredPosts, updatedPost];
+      const sorted = updatedPosts.sort((a, b) => b.id - a.id);
+      setPosts(sorted);
+    }
   }
 
   function updateUserProjectProductionUpdates(newUpdate) {

@@ -201,7 +201,25 @@ function Account({
 
   const mappedForSaleProjects = accountHolder.projects
     ? forSaleProjects.map((p) => (
-        <Preorder key={p.id} user={user} project={p} />
+        <Preorder
+          key={p.id}
+          user={user}
+          project={p}
+          updateUserLikesOnLike={updateUserLikesOnLike}
+          updateUserLikesOnUnlike={updateUserLikesOnUnlike}
+          updatePostLikesOnLike={updatePostLikesOnLike}
+          updatePostLikesOnUnlike={updatePostLikesOnUnlike}
+          updatePostCommentsOnComment={updatePostCommentsOnComment}
+          updatePostCommentsOnDelete={updatePostCommentsOnDelete}
+          updatePostsOnLikesThreshold={updatePostsOnLikesThreshold}
+          updateProjectsOnThreshold={updateProjectsOnThreshold}
+          updateUserOnSelfLikeThreshold={updateUserOnSelfLikeThreshold}
+          accountHolder={accountHolder}
+          updateAccountOnLike={updateAccountHolderOnLike}
+          updateAccountOnUnLike={updateAccountHolderOnUnLike}
+          updateAccountOnComment={updateAccountHolderOnComment}
+          updateAccountOnDeleteComment={updateAccountHolderOnDeleteComment}
+        />
       ))
     : null;
 
@@ -365,7 +383,25 @@ function Account({
   ));
 
   const forSaleProjectsImFollowing = likedForSaleProjects.map((p) => (
-    <Preorder key={p.id} user={user} project={p} />
+    <Preorder
+      key={p.id}
+      user={user}
+      project={p}
+      updateUserLikesOnLike={updateUserLikesOnLike}
+      updateUserLikesOnUnlike={updateUserLikesOnUnlike}
+      updatePostLikesOnLike={updatePostLikesOnLike}
+      updatePostLikesOnUnlike={updatePostLikesOnUnlike}
+      updatePostCommentsOnComment={updatePostCommentsOnComment}
+      updatePostCommentsOnDelete={updatePostCommentsOnDelete}
+      updatePostsOnLikesThreshold={updatePostsOnLikesThreshold}
+      updateProjectsOnThreshold={updateProjectsOnThreshold}
+      updateUserOnSelfLikeThreshold={updateUserOnSelfLikeThreshold}
+      accountHolder={accountHolder}
+      updateAccountOnLike={updateLikedProjectsOnLike}
+      updateAccountOnUnLike={updateLikedProjectsOnUnLike}
+      updateAccountOnComment={updateLikedProjectsOnComment}
+      updateAccountOnDeleteComment={updateLikedProjectsOnDeleteComment}
+    />
   ));
 
   const mappedProjectsImFollowing = [
@@ -376,6 +412,7 @@ function Account({
 
   return (
     <div>
+      {accountHolder ? null : <Loading />}
       {accountHolder.id === user.id ? (
         <button onClick={() => setDisplayOnly(!displayOnly)}>
           {displayOnly ? "EDIT PROFILE" : "CANCEL"}
