@@ -6,6 +6,10 @@ class ProjectsController < ApplicationController
         render json: Project.all.where(status:'Preorder')
     end
 
+    def most_popular
+      render json: Project.all.sort_by{|p| -p.calculate_avg_likes}
+    end
+
     def liked_projects
       projects=User.find(params[:id]).likes.map{|l|l.post_id}.map{|id| Post.find(id)}.map{|p|p.project_id}.map{|id| Project.find(id)}
       render json: projects.uniq

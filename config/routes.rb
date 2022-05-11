@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   delete '/users', to: 'users#destroy'
   resources :projects
   get '/liked_projects/:id', to: 'projects#liked_projects'
+  get '/most_popular_projects',to: 'projects#most_popular'
   resources :posts
   resources :likes, only:[:index, :create, :destroy]
   resources :comments, only: [:index, :create, :destroy]

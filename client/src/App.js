@@ -360,7 +360,29 @@ function App() {
           <Route
             exact
             path="/"
-            element={<Home logout={logout} user={user} />}
+            element={
+              <Home
+                logout={logout}
+                user={user}
+                updateUserLikesOnLike={updateUserLikesOnLike}
+                updateUserLikesOnUnlike={updateUserLikesOnUnlike}
+                updatePostLikesOnLike={updatePostLikesOnLike}
+                updatePostLikesOnUnlike={updatePostLikesOnUnlike}
+                updatePostCommentsOnComment={updatePostCommentsOnComment}
+                updatePostCommentsOnDelete={updatePostCommentsOnDelete}
+                updatePostsOnLikesThreshold={updatePostsOnLikesThreshold}
+                updateProjectsOnThreshold={updateProjectsOnThreshold}
+                updateUserOnSelfLikeThreshold={updateUserOnSelfLikeThreshold}
+                updateProjectPostLikesOnLike={updateProjectPostLikesOnLike}
+                updateProjectPostLikesOnUnlike={updateProjectPostLikesOnUnlike}
+                updateProjectPostCommentsOnComment={
+                  updateProjectPostCommentsOnComment
+                }
+                updateProjectPostCommentsOnDeletedComment={
+                  updateProjectPostCommentsOnDeletedComment
+                }
+              />
+            }
           />
           <Route
             exact

@@ -9,4 +9,8 @@ class Project < ApplicationRecord
     validates :likes_threshold, presence: true
     validates :status, presence: true
     validates :user_id, presence: true
+
+    def calculate_avg_likes
+        self.posts.map{|post| post.likes.length}.sum.to_f/self.posts.length.to_f
+    end
 end
