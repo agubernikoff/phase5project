@@ -16,7 +16,7 @@ function ProductPreview({ product }) {
         style={{ width: "100%" }}
       />
       <div className="productInfo">
-        <p>{product.seller.toUpperCase()}</p>
+        <p>{product.seller}</p>
         <p>{product.name}</p>
         <p>${product.price}</p>
       </div>
