@@ -4,14 +4,14 @@ class PostsController < ApplicationController
     
     def index
       # session.delete :number
-      session[:number] ||=3
+      session[:number] ||=25
       new_project_posts=Post.joins(:project).where(project: {status:'New Project'}).order(id: :desc)
       render json: new_project_posts.first(session[:number])
       
-      if session[:number] +3 > new_project_posts.length
+      if session[:number] +25 > new_project_posts.length
         session[:number]=new_project_posts.length
       elsif session[:number] < new_project_posts.length
-        session[:number]+=3
+        session[:number]+=25
       end
     end
 
