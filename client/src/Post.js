@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { NavLink } from "react-router-dom";
 import heartIcon from "./assets/heartIcon.png";
 import emptyHeartIcon from "./assets/emptyHeartIcon.png";
+import Carousel from "react-elastic-carousel";
 
 function Post({
   post,
@@ -133,6 +134,10 @@ function Post({
     );
   }
 
+  const inputEl = useRef(null);
+  const prev = "<";
+  const next = ">";
+  console.log(post.files.length);
   return (
     <div
       style={{
@@ -142,14 +147,15 @@ function Post({
         border: "solid 1px black",
       }}
     >
-      {accountHolder ? "something" : "nothing"}
       <div style={{ width: "fit-content" }}>
         <img
           src={post.user_profile_picture}
           alt={`${post.username}`}
           style={{ width: "5%", borderRadius: 20 }}
         />
-        <NavLink to={`/u/${post.user_id}`}>{post.username}</NavLink>
+        <NavLink to={`/u/${post.user_id}`}>
+          <strong>{post.username}</strong>
+        </NavLink>
         <span style={{ float: "right", color: "#807f7f" }}>
           {new Date(post.created_at)
             .toLocaleDateString(undefined, {
@@ -162,7 +168,27 @@ function Post({
             .toUpperCase()}
         </span>
       </div>
-      <div style={{ overflow: "auto", width: "100%" }}>{content}</div>
+      <div style={{ width: "100%" }}>
+        {post.files.length > 1 ? (
+          <>
+            <Carousel ref={inputEl}>{content}</Carousel>
+            <button
+              className="prevbtn"
+              onClick={() => inputEl.current.slidePrev()}
+            >
+              {prev}
+            </button>
+            <button
+              className="nextbtn"
+              onClick={() => inputEl.current.slideNext()}
+            >
+              {next}
+            </button>
+          </>
+        ) : (
+          content
+        )}
+      </div>
       <br />
       <img
         src={userLikesThisPost[0] ? heartIcon : emptyHeartIcon}

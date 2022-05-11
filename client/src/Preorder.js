@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { NavLink } from "react-router-dom";
 import Post from "./Post";
 import Update from "./Update";
 import ProductPreview from "./ProductPreview";
+import Carousel from "react-elastic-carousel";
 
 function Preorder({
   project,
@@ -53,6 +54,10 @@ function Preorder({
   const productPreviews = project.products.map((p) => (
     <ProductPreview key={p.id} product={p} />
   ));
+  const inputEl = useRef(null);
+  const inputEl2 = useRef(null);
+  const prev = "<";
+  const next = ">";
 
   return (
     <div>
@@ -64,28 +69,27 @@ function Preorder({
           style={{ width: "5%", borderRadius: 20 }}
         />
         <NavLink to={`/u/${project.user_id}`}>
-          {" "}
-          {project.posts[0].username}
+          <strong> {project.posts[0].username}</strong>
         </NavLink>
         <span>: {project.title}</span>
       </div>
       <div
         style={{
-          border: "1px solid black",
+          border: "3px solid black",
           width: "50%",
           display: "block",
           margin: "auto",
         }}
       >
         <span>
-          STATUS:{" "}
+          <strong>STATUS: </strong>
           {project.production_updates[0]
             ? project.production_updates[project.production_updates.length - 1]
                 .status
             : project.status}
         </span>
         <span style={{ float: "right" }}>
-          ETA:{" "}
+          <strong>ETA: </strong>
           {project.production_updates[0]
             ? project.production_updates[project.production_updates.length - 1]
                 .ETA
@@ -94,10 +98,34 @@ function Preorder({
         {project.description ? (
           <p>PROJECT DESCRIPTION: {project.description}</p>
         ) : null}
-        <p style={{ marginBottom: 0 }}>POSTS:</p>
-        {content}
+        <p style={{ marginBottom: 0 }}>
+          <strong>POSTS:</strong>
+        </p>
+        {project.posts.length > 1 ? (
+          <>
+            <Carousel ref={inputEl}>{content}</Carousel>
+            <button
+              className="prevbtn"
+              onClick={() => inputEl.current.slidePrev()}
+            >
+              {prev}
+            </button>
+            <button
+              className="nextbtn"
+              onClick={() => inputEl.current.slideNext()}
+            >
+              {next}
+            </button>
+            <br />
+          </>
+        ) : (
+          content
+        )}
         {project.production_updates[0] ? (
           <div>
+            <strong>
+              <p>UPDATES:</p>
+            </strong>
             {viewHistory ? (
               updates
             ) : (
@@ -126,16 +154,39 @@ function Preorder({
             </button>
           </div>
         ) : project.user_id === user.id ? (
-          "No updates yet. Please add an update."
+          <p>No updates yet. Please add an update.</p>
         ) : (
-          "No updates yet. Please check back later"
+          <p>No updates yet. Please check back later</p>
         )}
         {project.products[0] ? (
-          <div
-            style={{ margin: "auto", display: "flex", width: "fit-content" }}
-          >
-            {productPreviews}
-          </div>
+          project.products.length > 1 ? (
+            <>
+              <strong>
+                <p>PRODUCTS:</p>
+              </strong>
+              <Carousel ref={inputEl}>{productPreviews}</Carousel>
+              <button
+                className="prevbtn"
+                onClick={() => inputEl.current.slidePrev()}
+              >
+                {prev}
+              </button>
+              <button
+                className="nextbtn"
+                onClick={() => inputEl.current.slideNext()}
+              >
+                {next}
+              </button>
+              <br />
+            </>
+          ) : (
+            <>
+              <strong>
+                <p>PRODUCTS:</p>
+              </strong>
+              {productPreviews}
+            </>
+          )
         ) : null}
         {project.status === "Preorder" ? (
           <button

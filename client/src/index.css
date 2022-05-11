@@ -4,6 +4,25 @@ body {
   background-color: black; */
 }
 
+.rec.rec-arrow {
+  display: none;
+}
+
+.rec.rec-dot {
+  background-color: white;
+  margin-top: 5;
+  margin-bottom: 0;
+  box-shadow: 0 0 1px 3px;
+}
+.prevbtn {
+  background-color: transparent;
+}
+
+.nextbtn {
+  float: right;
+  background-color: transparent;
+}
+
 a {
   text-decoration: none;
   color: black;
