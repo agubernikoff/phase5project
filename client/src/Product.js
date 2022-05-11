@@ -21,6 +21,7 @@ function Product() {
   const mappedImages = product
     ? product.images.map((image) => (
         <img
+          key={image.url}
           src={image.url}
           alt={product.name}
           style={{ width: "75%", border: "1px solid black", padding: 1 }}
@@ -66,7 +67,7 @@ function Product() {
           <p>{formatter.format(product.price)}</p>
           <p>{product.description}</p>
           <br />
-          {product.one_size_fits_all ? (
+          {!product.one_size_fits_all ? (
             <div
               style={{
                 display: "flex",
