@@ -141,6 +141,11 @@ function Home({
         updatePostsOnLikesThreshold={updatePostsOnLikesThreshold}
         updateProjectsOnThreshold={updateProjectsOnThreshold}
         updateUserOnSelfLikeThreshold={updateUserOnSelfLikeThreshold}
+        accountHolder={true}
+        updateAccountOnLike={updateMostPopularOnLike}
+        updateAccountOnUnLike={updateMostPopularOnUnLike}
+        updateAccountOnComment={updateMostPopularOnComment}
+        updateAccountOnDeleteComment={updateMostPopularOnDeleteComment}
       />
     ) : p.status === "Preorder" ? (
       <Preorder
@@ -156,6 +161,11 @@ function Home({
         updatePostsOnLikesThreshold={updatePostsOnLikesThreshold}
         updateProjectsOnThreshold={updateProjectsOnThreshold}
         updateUserOnSelfLikeThreshold={updateUserOnSelfLikeThreshold}
+        accountHolder={true}
+        updateAccountOnLike={updateMostPopularOnLike}
+        updateAccountOnUnLike={updateMostPopularOnUnLike}
+        updateAccountOnComment={updateMostPopularOnComment}
+        updateAccountOnDeleteComment={updateMostPopularOnDeleteComment}
       />
     ) : (
       <Preorder
