@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import Post from "./Post";
 
 function Feed({
   posts,
+  loadMorePosts,
   user,
   updateUserLikesOnLike,
   updatePostLikesOnLike,
@@ -14,6 +15,8 @@ function Feed({
   updateProjectsOnThreshold,
   updateUserOnSelfLikeThreshold,
 }) {
+  const [message, setMessage] = useState("");
+  console.log(posts);
   const postCards = posts.map((post) => (
     <Post
       post={post}
@@ -30,7 +33,29 @@ function Feed({
       updateUserOnSelfLikeThreshold={updateUserOnSelfLikeThreshold}
     />
   ));
-  return <div>Feed{postCards}</div>;
+  return (
+    <div>
+      {postCards}
+      {message ? (
+        <p>{message}</p>
+      ) : (
+        <button
+          onClick={() => {
+            fetch("/posts")
+              .then((r) => r.json())
+              .then((data) => {
+                console.log(data);
+                loadMorePosts(data);
+                if (data.length === posts.length)
+                  setMessage("YOU'RE ALL CAUGHT UP.");
+              });
+          }}
+        >
+          LOAD MORE
+        </button>
+      )}
+    </div>
+  );
 }
 
 export default Feed;

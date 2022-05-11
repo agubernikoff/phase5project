@@ -119,6 +119,10 @@ function App() {
     setPosts([newPost, ...posts]);
   }
 
+  function loadMorePosts(posts) {
+    setPosts(posts);
+  }
+
   function updatePostLikesOnLike(like) {
     const likedPost = posts.find((p) => p.id === like.post_id);
     if (likedPost) {
@@ -364,6 +368,7 @@ function App() {
             element={
               <Feed
                 posts={posts}
+                loadMorePosts={loadMorePosts}
                 user={user}
                 updateUserLikesOnLike={updateUserLikesOnLike}
                 updateUserLikesOnUnlike={updateUserLikesOnUnlike}

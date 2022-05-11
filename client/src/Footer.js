@@ -23,6 +23,10 @@ function Footer({ user, logout }) {
         }
       : null;
 
+  function refreshPage() {
+    window.location.reload(false);
+  }
+
   return (
     <div style={{ width: "16.5%", textAlign: "right" }}>
       {/* <h3>FOOTER</h3> */}
@@ -85,7 +89,14 @@ function Footer({ user, logout }) {
           <br />
         </>
       )}
-      <NavLink to={"/login"} onClick={handleLogout} style={activeStyle}>
+      <NavLink
+        to={"/login"}
+        onClick={() => {
+          handleLogout();
+          setTimeout(() => refreshPage(), 500);
+        }}
+        style={activeStyle}
+      >
         LOGOUT
       </NavLink>
     </div>

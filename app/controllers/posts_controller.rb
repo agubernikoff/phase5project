@@ -3,7 +3,16 @@ class PostsController < ApplicationController
     rescue_from ActiveRecord::RecordNotFound,with: :render_not_found
     
     def index
-        render json: Post.joins(:project).where(project: {status:'New Project'}).order(id: :desc)
+      # session.delete :number
+      session[:number] ||=3
+      new_project_posts=Post.joins(:project).where(project: {status:'New Project'}).order(id: :desc)
+      render json: new_project_posts.first(session[:number])
+      
+      if session[:number] +3 > new_project_posts.length
+        session[:number]=new_project_posts.length
+      elsif session[:number] < new_project_posts.length
+        session[:number]+=3
+      end
     end
 
     def show
@@ -23,7 +32,7 @@ class PostsController < ApplicationController
         render json: post, status: :updated
     end
 
-    def destroy
+    def delete
         post = Post.find(params[:post_id])
         post.destroy
         head :no_content
