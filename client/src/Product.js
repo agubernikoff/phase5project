@@ -23,7 +23,7 @@ function Product() {
         <img
           src={image.url}
           alt={product.name}
-          style={{ width: "75%", border: "1px solid black" }}
+          style={{ width: "75%", border: "1px solid black", padding: 1 }}
           onClick={() => setMainImage(image.url)}
         />
       ))
@@ -59,6 +59,7 @@ function Product() {
             width: "35%",
             display: "flex",
             flexDirection: "column",
+            paddingLeft: "1%",
           }}
         >
           <h1>{product.name}</h1>

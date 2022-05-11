@@ -19,12 +19,17 @@ function App() {
   const [posts, setPosts] = useState([]);
   const [preOrderProjects, setPreOrderProjects] = useState([]);
   const [products, setProducts] = useState([]);
+  const [appLoading, setAppLoading] = useState(false);
 
   useEffect(() => {
+    setAppLoading(true);
     fetch("/me").then((r) => {
       if (r.ok) {
-        r.json().then((user) => setUser(user));
-      }
+        r.json().then((user) => {
+          setUser(user);
+          setAppLoading(false);
+        });
+      } else setAppLoading(false);
     });
   }, []);
 
@@ -338,7 +343,7 @@ function App() {
   if (!user)
     return (
       <div>
-        <Login onLogin={setUser} />
+        <Login onLogin={setUser} appLoading={appLoading} />
       </div>
     );
 
