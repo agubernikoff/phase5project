@@ -41,6 +41,7 @@ function Account({
         setBio(data.bio);
         setIsSeller(data.isSeller);
         setEditFormPicture(data.profile_picture);
+        window.scrollTo(0, 0);
       });
     fetch(`/liked_projects/${id}`)
       .then((r) => r.json())
@@ -414,7 +415,10 @@ function Account({
     <div>
       {accountHolder ? null : <Loading />}
       {accountHolder.id === user.id ? (
-        <button onClick={() => setDisplayOnly(!displayOnly)}>
+        <button
+          onClick={() => setDisplayOnly(!displayOnly)}
+          style={{ float: "right" }}
+        >
           {displayOnly ? "EDIT PROFILE" : "CANCEL"}
         </button>
       ) : null}

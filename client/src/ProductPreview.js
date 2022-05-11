@@ -1,9 +1,15 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 function ProductPreview({ product }) {
-  console.log(product);
+  const navigate = useNavigate();
   return (
-    <div className="productPreview">
+    <div
+      className="productPreview"
+      onClick={() => {
+        navigate(`/product/${product.id}`);
+      }}
+    >
       <img
         src={product.images[0].url}
         alt={product.name}

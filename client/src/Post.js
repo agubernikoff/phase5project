@@ -137,7 +137,6 @@ function Post({
   const inputEl = useRef(null);
   const prev = "<";
   const next = ">";
-  console.log(post.files.length);
   return (
     <div
       style={{

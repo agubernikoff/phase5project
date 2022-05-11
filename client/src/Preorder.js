@@ -164,16 +164,16 @@ function Preorder({
               <strong>
                 <p>PRODUCTS:</p>
               </strong>
-              <Carousel ref={inputEl}>{productPreviews}</Carousel>
+              <Carousel ref={inputEl2}>{productPreviews}</Carousel>
               <button
                 className="prevbtn"
-                onClick={() => inputEl.current.slidePrev()}
+                onClick={() => inputEl2.current.slidePrev()}
               >
                 {prev}
               </button>
               <button
                 className="nextbtn"
-                onClick={() => inputEl.current.slideNext()}
+                onClick={() => inputEl2.current.slideNext()}
               >
                 {next}
               </button>

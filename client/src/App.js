@@ -6,6 +6,7 @@ import Home from "./Home";
 import Feed from "./Feed";
 import ComingSoon from "./ComingSoon";
 import Marketplace from "./Marketplace";
+import Product from "./Product";
 import Footer from "./Footer";
 import Account from "./Account";
 import NewProjectForm from "./NewProjectForm";
@@ -396,6 +397,7 @@ function App() {
             path="/marketplace"
             element={<Marketplace products={products} />}
           />
+          <Route exact path="/product/:id" element={<Product />} />
           <Route
             exact
             path="/newprojectform"

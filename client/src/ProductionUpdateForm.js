@@ -63,8 +63,8 @@ function ProductionUpdateForm({
             if (status === "Completed") {
               updateProjectsOnProductionComplete(data);
               updateUserProjectsOnProductionComplete(data);
-            }
-            navigate("/");
+              navigate("/newproduct");
+            } else navigate("/");
           });
         } else {
           r.json().then((data) => {
