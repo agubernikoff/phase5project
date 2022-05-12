@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
   
+  resources :order_items
+  resources :orders
   # Routing logic: fallback requests for React Router.
   # Leave this here to help deploy your app later!
   post "/login", to: 'sessions#create'

@@ -76,24 +76,78 @@ function Product() {
               }}
             >
               <label>SIZE:</label>
-              <button style={{ width: "fit-content", margin: "auto" }}>
-                XS
-              </button>
-              <button style={{ width: "fit-content", margin: "auto" }}>
-                S
-              </button>
-              <button style={{ width: "fit-content", margin: "auto" }}>
-                M
-              </button>
-              <button style={{ width: "fit-content", margin: "auto" }}>
-                L
-              </button>
-              <button style={{ width: "fit-content", margin: "auto" }}>
-                XL
-              </button>
-              <button style={{ width: "fit-content", margin: "auto" }}>
-                XXL
-              </button>
+              {product.xs ? (
+                <button style={{ width: "fit-content", margin: "auto" }}>
+                  XS
+                </button>
+              ) : (
+                <button
+                  style={{ width: "fit-content", margin: "auto" }}
+                  disabled
+                >
+                  XS
+                </button>
+              )}
+              {product.s ? (
+                <button style={{ width: "fit-content", margin: "auto" }}>
+                  S
+                </button>
+              ) : (
+                <button
+                  style={{ width: "fit-content", margin: "auto" }}
+                  disabled
+                >
+                  S
+                </button>
+              )}
+              {product.m ? (
+                <button style={{ width: "fit-content", margin: "auto" }}>
+                  M
+                </button>
+              ) : (
+                <button
+                  style={{ width: "fit-content", margin: "auto" }}
+                  disabled
+                >
+                  M
+                </button>
+              )}
+              {product.l ? (
+                <button style={{ width: "fit-content", margin: "auto" }}>
+                  L
+                </button>
+              ) : (
+                <button
+                  style={{ width: "fit-content", margin: "auto" }}
+                  disabled
+                >
+                  L
+                </button>
+              )}
+              {product.xl ? (
+                <button style={{ width: "fit-content", margin: "auto" }}>
+                  XL
+                </button>
+              ) : (
+                <button
+                  style={{ width: "fit-content", margin: "auto" }}
+                  disabled
+                >
+                  XL
+                </button>
+              )}
+              {product.xxl ? (
+                <button style={{ width: "fit-content", margin: "auto" }}>
+                  XXL
+                </button>
+              ) : (
+                <button
+                  style={{ width: "fit-content", margin: "auto" }}
+                  disabled
+                >
+                  XXL
+                </button>
+              )}
             </div>
           ) : (
             <div
