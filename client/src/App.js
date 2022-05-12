@@ -253,6 +253,7 @@ function App() {
       ...data.updated_project,
       posts: updatedFilteredProjectPosts,
       production_updates: [],
+      products: [],
     };
     setPreOrderProjects([...preOrderProjects, newProject]);
   }

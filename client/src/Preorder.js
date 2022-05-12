@@ -51,9 +51,10 @@ function Preorder({
     <Update update={update} key={update.id} />
   ));
 
-  const productPreviews = project.products.map((p) => (
-    <ProductPreview key={p.id} product={p} />
-  ));
+  console.log(project.products);
+  const productPreviews = project.products[0]
+    ? project.products.map((p) => <ProductPreview key={p.id} product={p} />)
+    : null;
   const inputEl = useRef(null);
   const inputEl2 = useRef(null);
   const prev = "<";

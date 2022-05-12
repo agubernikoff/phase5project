@@ -11,6 +11,9 @@ class Project < ApplicationRecord
     validates :user_id, presence: true
 
     def calculate_avg_likes
+        if self.posts.length>0
         self.posts.map{|post| post.likes.length}.sum.to_f/self.posts.length.to_f
+        else 0
+        end
     end
 end
