@@ -1,6 +1,6 @@
 class User < ApplicationRecord
     has_secure_password
-    validates :username, presence: true
+    validates :username, presence: true,uniqueness: true
     validates :password, presence: true,length:{minimum:8},on: :create
     has_many :projects,dependent: :destroy
     has_many :posts, through: :projects
