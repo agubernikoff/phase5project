@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { NavLink } from "react-router-dom";
 import Loading from "./Loading";
 
 function Cart({ putCurrentOrder, currentOrder }) {
@@ -43,6 +44,14 @@ function Cart({ putCurrentOrder, currentOrder }) {
         </div>
       ))
     : null;
+
+  const activeStyle = ({ isActive }) =>
+    isActive
+      ? {
+          textDecoration: "underline",
+        }
+      : null;
+
   return (
     <div>
       {loading ? <Loading /> : null}
@@ -76,8 +85,11 @@ function Cart({ putCurrentOrder, currentOrder }) {
         </>
       ) : (
         <p style={{ textAlign: "center" }}>
-          YOUR CART IS EMPTY. PLEASE VISIT THE MARKETPLACE TO BROWSE AVAILABLE
-          PRODUCTS
+          YOUR CART IS EMPTY. PLEASE VISIT THE{" "}
+          <NavLink to={"/marketplace"} style={activeStyle}>
+            MARKETPLACE
+          </NavLink>{" "}
+          TO BROWSE AVAILABLE PRODUCTS
         </p>
       )}
     </div>
