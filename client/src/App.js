@@ -429,7 +429,7 @@ function App() {
             path="/marketplace"
             element={<Marketplace products={products} />}
           />
-          <Route exact path="/product/:id" element={<Product />} />
+          <Route exact path="/product/:id" element={<Product user={user} />} />
           <Route
             exact
             path="/newprojectform"

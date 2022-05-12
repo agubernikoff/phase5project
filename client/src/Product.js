@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useParams, NavLink } from "react-router-dom";
+import Loading from "./Loading";
 
-function Product() {
+function Product({ user }) {
   const [product, setProduct] = useState("");
   const [mainImage, setMainImage] = useState("");
   const [quantity, setQuantity] = useState(1);
+  const [size, setSize] = useState("");
+  const [errors, setErrors] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [currentOrder, setCurrentOrder] = useState("");
 
   let { id } = useParams();
 
@@ -34,6 +39,30 @@ function Product() {
     style: "currency",
     currency: "USD",
   });
+
+  console.log(product.price * quantity);
+
+  function handleAddToCart() {
+    setLoading(true);
+    if (!size) {
+      setErrors(["Please select a size"]);
+      setLoading(false);
+    } else {
+      fetch("/orders", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ user_id: user.id }),
+      }).then((r) => {
+        if (r.ok) {
+          r.json().then((data) => console.log(data));
+          setLoading(false);
+        } else {
+          r.json().then((data) => console.log(data));
+          setLoading(false);
+        }
+      });
+    }
+  }
 
   return (
     <div>
@@ -77,7 +106,20 @@ function Product() {
             >
               <label>SIZE:</label>
               {product.xs ? (
-                <button style={{ width: "fit-content", margin: "auto" }}>
+                <button
+                  style={
+                    size === "xs"
+                      ? {
+                          width: "fit-content",
+                          margin: "auto",
+                          backgroundColor: "green",
+                          color: "white",
+                        }
+                      : { width: "fit-content", margin: "auto" }
+                  }
+                  value={"xs"}
+                  onClick={(e) => setSize(e.target.value)}
+                >
                   XS
                 </button>
               ) : (
@@ -89,7 +131,20 @@ function Product() {
                 </button>
               )}
               {product.s ? (
-                <button style={{ width: "fit-content", margin: "auto" }}>
+                <button
+                  style={
+                    size === "s"
+                      ? {
+                          width: "fit-content",
+                          margin: "auto",
+                          backgroundColor: "green",
+                          color: "white",
+                        }
+                      : { width: "fit-content", margin: "auto" }
+                  }
+                  value={"s"}
+                  onClick={(e) => setSize(e.target.value)}
+                >
                   S
                 </button>
               ) : (
@@ -101,7 +156,20 @@ function Product() {
                 </button>
               )}
               {product.m ? (
-                <button style={{ width: "fit-content", margin: "auto" }}>
+                <button
+                  style={
+                    size === "m"
+                      ? {
+                          width: "fit-content",
+                          margin: "auto",
+                          backgroundColor: "green",
+                          color: "white",
+                        }
+                      : { width: "fit-content", margin: "auto" }
+                  }
+                  value={"m"}
+                  onClick={(e) => setSize(e.target.value)}
+                >
                   M
                 </button>
               ) : (
@@ -113,7 +181,20 @@ function Product() {
                 </button>
               )}
               {product.l ? (
-                <button style={{ width: "fit-content", margin: "auto" }}>
+                <button
+                  style={
+                    size === "l"
+                      ? {
+                          width: "fit-content",
+                          margin: "auto",
+                          backgroundColor: "green",
+                          color: "white",
+                        }
+                      : { width: "fit-content", margin: "auto" }
+                  }
+                  value={"l"}
+                  onClick={(e) => setSize(e.target.value)}
+                >
                   L
                 </button>
               ) : (
@@ -125,7 +206,20 @@ function Product() {
                 </button>
               )}
               {product.xl ? (
-                <button style={{ width: "fit-content", margin: "auto" }}>
+                <button
+                  style={
+                    size === "xl"
+                      ? {
+                          width: "fit-content",
+                          margin: "auto",
+                          backgroundColor: "green",
+                          color: "white",
+                        }
+                      : { width: "fit-content", margin: "auto" }
+                  }
+                  value={"xl"}
+                  onClick={(e) => setSize(e.target.value)}
+                >
                   XL
                 </button>
               ) : (
@@ -137,7 +231,20 @@ function Product() {
                 </button>
               )}
               {product.xxl ? (
-                <button style={{ width: "fit-content", margin: "auto" }}>
+                <button
+                  style={
+                    size === "xxl"
+                      ? {
+                          width: "fit-content",
+                          margin: "auto",
+                          backgroundColor: "green",
+                          color: "white",
+                        }
+                      : { width: "fit-content", margin: "auto" }
+                  }
+                  value={"xxl"}
+                  onClick={(e) => setSize(e.target.value)}
+                >
                   XXL
                 </button>
               ) : (
@@ -158,7 +265,20 @@ function Product() {
               }}
             >
               <label>Size:</label>
-              <button style={{ width: "fit-content", marginLeft: 5 }}>
+              <button
+                style={
+                  size === "one_size_fits_all"
+                    ? {
+                        width: "fit-content",
+                        marginLeft: 5,
+                        backgroundColor: "green",
+                        color: "white",
+                      }
+                    : { width: "fit-content", marginLeft: 5 }
+                }
+                value={"one_size_fits_all"}
+                onClick={(e) => setSize(e.target.value)}
+              >
                 ONE SIZE FITS ALL
               </button>
             </div>
@@ -179,7 +299,17 @@ function Product() {
           </div>
           <br />
           <br />
-          <button>ADD TO CART</button>
+          <button onClick={handleAddToCart}>
+            {loading ? <Loading /> : "ADD TO CART"}
+          </button>
+          {errors.map((err) => (
+            <h3
+              key={err}
+              style={{ display: "block", margin: "auto", marginTop: 10 }}
+            >
+              {err}
+            </h3>
+          ))}
         </div>
       </div>
     </div>

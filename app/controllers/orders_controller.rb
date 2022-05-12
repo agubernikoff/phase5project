@@ -18,6 +18,7 @@ class OrdersController < ApplicationController
   # POST /orders
   def create
     @order = Order.create!(order_params)
+    session[:current_order_id] = @order.id
       render json: @order, status: :created, location: @order
   end
 
@@ -40,7 +41,7 @@ class OrdersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def order_params
-      params.params(:subtotal,:user_id)
+      params.permit(:subtotal,:user_id)
     end
 
     def render_unprocessable_entity invalid
