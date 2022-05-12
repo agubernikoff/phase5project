@@ -7,7 +7,7 @@ class ProjectsController < ApplicationController
     end
 
     def most_popular
-      render json: Project.all.sort_by{|p| -p.calculate_avg_likes}.filter{|p|p.calculate_avg_likes>0}
+      render json: Project.all.sort_by{|p| -p.calculate_avg_likes}.filter{|p|p.calculate_avg_likes>0}.first(10)
     end
 
     def liked_projects
