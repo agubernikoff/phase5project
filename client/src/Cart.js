@@ -2,14 +2,20 @@ import React, { useState, useEffect } from "react";
 import Loading from "./Loading";
 
 function Cart({ putCurrentOrder, currentOrder }) {
-  //   const [currentOrder, setCurrentOrder] = useState("");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetch("/current_order").then((r) => {
       if (r.ok) {
-        r.json().then((data) => putCurrentOrder(data));
+        r.json().then((data) => {
+          putCurrentOrder(data);
+          setLoading(false);
+        });
       } else {
-        r.json().then((data) => console.log(data));
+        r.json().then((data) => {
+          console.log(data);
+          setLoading(false);
+        });
       }
     });
   }, [putCurrentOrder]);
@@ -39,32 +45,41 @@ function Cart({ putCurrentOrder, currentOrder }) {
     : null;
   return (
     <div>
-      {currentOrder ? null : <Loading />}
-      <h1>ORDER SUMMARY:</h1>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row-reverse",
-          justifyContent: "space-between",
-          width: "50%",
-          position: "relative",
-          left: "50%",
-        }}
-      >
-        <p>
-          <strong>TOTAL PRICE</strong>
+      {loading ? <Loading /> : null}
+      {currentOrder ? (
+        <>
+          <h1>ORDER SUMMARY:</h1>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row-reverse",
+              justifyContent: "space-between",
+              width: "50%",
+              position: "relative",
+              left: "50%",
+            }}
+          >
+            <p>
+              <strong>TOTAL PRICE</strong>
+            </p>
+            <p>
+              <strong>QUANTITY</strong>
+            </p>
+            <p>
+              <strong>ITEM PRICE</strong>
+            </p>
+            <p>
+              <strong>ITEM</strong>
+            </p>
+          </div>
+          {mappedItems}
+        </>
+      ) : (
+        <p style={{ textAlign: "center" }}>
+          YOUR CART IS EMPTY. PLEASE VISIT THE MARKETPLACE TO BROWSE AVAILABLE
+          PRODUCTS
         </p>
-        <p>
-          <strong>QUANTITY</strong>
-        </p>
-        <p>
-          <strong>ITEM PRICE</strong>
-        </p>
-        <p>
-          <strong>ITEM</strong>
-        </p>
-      </div>
-      {mappedItems}
+      )}
     </div>
   );
 }
