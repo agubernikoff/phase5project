@@ -56,12 +56,27 @@ function App() {
   function putCurrentOrder(data) {
     setCurrentOrder(data);
   }
+  function adjustForQuantity(data) {
+    const array = [];
+    for (let i = 0; i < data.quantity; i++) {
+      array.push(data);
+    }
+    return array;
+  }
 
   function updateCurrentOrder(data) {
+    console.log(currentOrder);
+    const updatedSub = currentOrder.subtotal
+      ? currentOrder.subtotal + data.price
+      : data.price;
+    const updatedItems = adjustForQuantity(data);
     setCurrentOrder({
       ...currentOrder,
-      subtotal: currentOrder.subtotal + data.price,
-      items: [...currentOrder.items, data],
+      id: data.order_id,
+      subtotal: updatedSub,
+      items: currentOrder.items
+        ? [...currentOrder.items, ...updatedItems]
+        : [...updatedItems],
     });
   }
 
