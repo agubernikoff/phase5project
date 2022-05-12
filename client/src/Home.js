@@ -21,6 +21,8 @@ function Home({
 }) {
   // const navigate = useNavigate();
   const [mostPopular, setMostPopular] = useState([]);
+  const [index1, setIndex1] = useState(0);
+  const [index2, setIndex2] = useState(0);
 
   function calculateAvgLikes(project) {
     return (
@@ -189,10 +191,76 @@ function Home({
       />
     )
   );
+  const arrayOfArraysOfURLs = mostPopular.map((p) =>
+    p.posts.map((p) => p.files.map((f) => f.url))
+  );
+
+  const previews = [];
+  for (let i = 0; i < arrayOfArraysOfURLs.length; i++) {
+    // get the size of the inner array
+    var innerArrayLength = arrayOfArraysOfURLs[i].length;
+    // loop the inner array
+    for (let j = 0; j < innerArrayLength; j++) {
+      var innermostArrayLength = arrayOfArraysOfURLs[i][j].length;
+
+      for (let k = 0; k < innermostArrayLength; k++)
+        previews.push(arrayOfArraysOfURLs[i][j][k]);
+    }
+  }
+  const middle = Math.floor(previews.length / 2);
+  const firstHalf = previews.slice(0, middle);
+  const secondHalf = previews.slice(middle);
+
+  useEffect(() => {
+    let timer = setTimeout(() => {
+      if (index1 > -1 && index1 < firstHalf.length - 1)
+        setIndex1(Math.floor(Math.random() * (firstHalf.length - 1)));
+      else if (index1 === firstHalf.length - 1) setIndex1(0);
+    }, 2000);
+    let timer2 = setTimeout(() => {
+      if (index2 > -1 && index2 < secondHalf.length - 1)
+        setIndex2(Math.floor(Math.random() * (secondHalf.length - 1)));
+      else if (index2 === secondHalf.length - 1) setIndex2(0);
+    }, 2000);
+    return function cleanup() {
+      clearTimeout(timer);
+      clearTimeout(timer2);
+    };
+  });
+  console.log(index1);
   return (
     <div>
       <p style={{ textAlign: "center" }}>HOME</p>
-      {/* IDK SOMETHING */}
+      <div style={{ display: "flex", alignItems: "center" }}>
+        <div
+          style={{
+            width: "50%",
+            height: "90vh",
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
+          <img
+            src={firstHalf[index1]}
+            alt={"most popular"}
+            style={{ width: "100%" }}
+          />
+        </div>
+        <div
+          style={{
+            width: "50%",
+            height: "90vh",
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
+          <img
+            src={secondHalf[index2]}
+            alt={"most popular"}
+            style={{ width: "100%" }}
+          />
+        </div>
+      </div>
       <p>
         <strong>MOST POPULAR PROJECTS:</strong>
       </p>

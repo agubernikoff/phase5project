@@ -3,12 +3,14 @@ body {
   /* color: white;
   background-color: black; */
 }
-
+.rec-carousel-item-hidden {
+  height: 0;
+}
 .rec.rec-arrow {
   display: none;
 }
 
-.rec.rec-dot {
+.rec.rec-dot_active {
   background-color: white;
   margin-top: 5;
   margin-bottom: 0;
