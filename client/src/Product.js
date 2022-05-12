@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams, NavLink } from "react-router-dom";
+import { useParams, NavLink, useNavigate } from "react-router-dom";
 import Loading from "./Loading";
 
 function Product({ user, currentOrder, setCurrentOrder, updateCurrentOrder }) {
@@ -9,6 +9,7 @@ function Product({ user, currentOrder, setCurrentOrder, updateCurrentOrder }) {
   const [size, setSize] = useState("");
   const [errors, setErrors] = useState([]);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   let { id } = useParams();
 
@@ -71,6 +72,7 @@ function Product({ user, currentOrder, setCurrentOrder, updateCurrentOrder }) {
                   console.log(data, "this");
                   updateCurrentOrder(data);
                   setLoading(false);
+                  navigate("/cart");
                 });
               } else {
                 r.json().then((data) => {
@@ -103,6 +105,7 @@ function Product({ user, currentOrder, setCurrentOrder, updateCurrentOrder }) {
             console.log(data, "that");
             updateCurrentOrder(data);
             setLoading(false);
+            navigate("/cart");
           });
         } else {
           r.json().then((data) => {

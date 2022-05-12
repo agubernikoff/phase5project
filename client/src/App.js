@@ -8,6 +8,7 @@ import ComingSoon from "./ComingSoon";
 import Marketplace from "./Marketplace";
 import Product from "./Product";
 import Footer from "./Footer";
+import Cart from "./Cart";
 import Account from "./Account";
 import NewProjectForm from "./NewProjectForm";
 import NewPost from "./NewPost";
@@ -555,6 +556,7 @@ function App() {
               />
             }
           />
+          <Route exact path="/cart" element={<Cart user={user} />} />
         </Routes>
       </div>
       <Footer user={user} logout={logout} currentOrder={currentOrder} />

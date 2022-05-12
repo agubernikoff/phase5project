@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import Preorder from "./Preorder";
-// import { useNavigate } from "react-router-dom";
 
 function Home({
   logout,
@@ -19,7 +18,6 @@ function Home({
   updateProjectPostCommentsOnComment,
   updateProjectPostCommentsOnDeletedComment,
 }) {
-  // const navigate = useNavigate();
   const [mostPopular, setMostPopular] = useState([]);
   const [index1, setIndex1] = useState(0);
   const [index2, setIndex2] = useState(0);

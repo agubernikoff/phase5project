@@ -41,7 +41,7 @@ function Footer({ user, logout, currentOrder }) {
       </div>
       {user.isSeller ? (
         <>
-          <NavLink to={`/`} style={activeStyle}>
+          <NavLink to={`/cart`} style={activeStyle}>
             CART {currentOrder ? `(${currentOrder.items.length})` : null}
           </NavLink>
           <br />

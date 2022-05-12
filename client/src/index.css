@@ -63,3 +63,6 @@ a:visited {
   float: bottom;
   height: fit-content;
 }
+th {
+  margin: auto;
+}
