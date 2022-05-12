@@ -53,6 +53,6 @@ class LikesController < ApplicationController
     end
     
     def render_not_found
-      render json: {error: "User not found"}, status: 404
+      render json: {error: "Like not found"}, status: 404
     end
 end
