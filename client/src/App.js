@@ -556,7 +556,17 @@ function App() {
               />
             }
           />
-          <Route exact path="/cart" element={<Cart user={user} />} />
+          <Route
+            exact
+            path="/cart"
+            element={
+              <Cart
+                user={user}
+                putCurrentOrder={putCurrentOrder}
+                currentOrder={currentOrder}
+              />
+            }
+          />
         </Routes>
       </div>
       <Footer user={user} logout={logout} currentOrder={currentOrder} />

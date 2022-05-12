@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from "react";
 import Loading from "./Loading";
 
-function Cart() {
-  const [currentOrder, setCurrentOrder] = useState("");
+function Cart({ putCurrentOrder, currentOrder }) {
+  //   const [currentOrder, setCurrentOrder] = useState("");
 
   useEffect(() => {
     fetch("/current_order").then((r) => {
       if (r.ok) {
-        r.json().then((data) => setCurrentOrder(data));
+        r.json().then((data) => putCurrentOrder(data));
       } else {
         r.json().then((data) => console.log(data));
       }
     });
-  }, []);
+  }, [putCurrentOrder]);
   console.log(currentOrder);
   const formatter = new Intl.NumberFormat(undefined, {
     style: "currency",
