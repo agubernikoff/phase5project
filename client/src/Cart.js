@@ -19,7 +19,7 @@ function Cart({ putCurrentOrder, currentOrder }) {
         });
       }
     });
-  }, [putCurrentOrder]);
+  }, []);
   console.log(currentOrder);
   const formatter = new Intl.NumberFormat(undefined, {
     style: "currency",
@@ -32,7 +32,11 @@ function Cart({ putCurrentOrder, currentOrder }) {
           key={item.id}
           style={{ display: "flex", justifyContent: "space-between" }}
         >
-          <img alt={item.product.name} src={item.product.image} />
+          <img
+            alt={item.product.name}
+            src={item.product.image}
+            style={{ width: "30%" }}
+          />
           <div>
             <p>{item.product.name}</p>
             <p>{item.product.seller.toUpperCase()}</p>
