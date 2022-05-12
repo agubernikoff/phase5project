@@ -32,9 +32,13 @@ function App() {
         });
       } else setAppLoading(false);
     });
-    fetch("/current_order")
-      .then((r) => r.json())
-      .then((data) => console.log(data));
+    fetch("/current_order").then((r) => {
+      if (r.ok) {
+        r.json().then((data) => setCurrentOrder(data));
+      } else {
+        r.json().then((data) => console.log(data));
+      }
+    });
   }, []);
 
   useEffect(() => {
@@ -48,6 +52,18 @@ function App() {
       .then((r) => r.json())
       .then((data) => setProducts(data));
   }, []);
+
+  function putCurrentOrder(data) {
+    setCurrentOrder(data);
+  }
+
+  function updateCurrentOrder(data) {
+    setCurrentOrder({
+      ...currentOrder,
+      subtotal: currentOrder.subtotal + data.price,
+      items: [...currentOrder.items, data],
+    });
+  }
 
   function logout() {
     setUser("");
@@ -433,7 +449,18 @@ function App() {
             path="/marketplace"
             element={<Marketplace products={products} />}
           />
-          <Route exact path="/product/:id" element={<Product user={user} />} />
+          <Route
+            exact
+            path="/product/:id"
+            element={
+              <Product
+                user={user}
+                currentOrder={currentOrder}
+                setCurrentOrder={putCurrentOrder}
+                updateCurrentOrder={updateCurrentOrder}
+              />
+            }
+          />
           <Route
             exact
             path="/newprojectform"
@@ -515,7 +542,7 @@ function App() {
           />
         </Routes>
       </div>
-      <Footer user={user} logout={logout} />
+      <Footer user={user} logout={logout} currentOrder={currentOrder} />
     </div>
   );
 }

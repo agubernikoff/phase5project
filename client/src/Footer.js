@@ -1,7 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 
-function Footer({ user, logout }) {
+function Footer({ user, logout, currentOrder }) {
   function handleLogout() {
     fetch("/logout", {
       method: "DELETE",
@@ -29,7 +29,6 @@ function Footer({ user, logout }) {
 
   return (
     <div style={{ width: "16.5%", textAlign: "right" }}>
-      {/* <h3>FOOTER</h3> */}
       <div>
         <h3 style={{ display: "inline-block" }}>
           {user.username.toUpperCase()}
@@ -42,6 +41,11 @@ function Footer({ user, logout }) {
       </div>
       {user.isSeller ? (
         <>
+          <NavLink to={`/`} style={activeStyle}>
+            CART ({currentOrder.items.length})
+          </NavLink>
+          <br />
+          <br />
           <NavLink to={`/u/${user.id}`} style={activeStyle}>
             MY STORE
           </NavLink>

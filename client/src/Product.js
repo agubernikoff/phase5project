@@ -2,14 +2,13 @@ import React, { useState, useEffect } from "react";
 import { useParams, NavLink } from "react-router-dom";
 import Loading from "./Loading";
 
-function Product({ user }) {
+function Product({ user, currentOrder, setCurrentOrder, updateCurrentOrder }) {
   const [product, setProduct] = useState("");
   const [mainImage, setMainImage] = useState("");
   const [quantity, setQuantity] = useState(1);
   const [size, setSize] = useState("");
   const [errors, setErrors] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [currentOrder, setCurrentOrder] = useState("");
 
   let { id } = useParams();
 
@@ -40,25 +39,76 @@ function Product({ user }) {
     currency: "USD",
   });
 
-  console.log(product.price * quantity);
+  console.log(currentOrder);
 
   function handleAddToCart() {
     setLoading(true);
     if (!size) {
       setErrors(["Please select a size"]);
       setLoading(false);
-    } else {
+    } else if (!currentOrder) {
       fetch("/orders", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ user_id: user.id }),
       }).then((r) => {
         if (r.ok) {
-          r.json().then((data) => console.log(data));
+          r.json().then((data) => {
+            setCurrentOrder(data);
+            fetch("/order_items", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                quantity: parseInt(quantity),
+                price: parseInt(quantity) * product.price,
+                size: size,
+                order_id: data.id,
+                product_id: product.id,
+              }),
+            }).then((r) => {
+              if (r.ok) {
+                r.json().then((data) => {
+                  console.log(data, "this");
+                  updateCurrentOrder(data);
+                  setLoading(false);
+                });
+              } else {
+                r.json().then((data) => {
+                  console.log(data, "this");
+                  setLoading(false);
+                });
+              }
+            });
+          });
           setLoading(false);
         } else {
           r.json().then((data) => console.log(data));
           setLoading(false);
+        }
+      });
+    } else {
+      fetch("/order_items", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          quantity: parseInt(quantity),
+          price: parseInt(quantity) * product.price,
+          size: size,
+          order_id: currentOrder.id,
+          product_id: product.id,
+        }),
+      }).then((r) => {
+        if (r.ok) {
+          r.json().then((data) => {
+            console.log(data, "that");
+            updateCurrentOrder(data);
+            setLoading(false);
+          });
+        } else {
+          r.json().then((data) => {
+            console.log(data, "that");
+            setLoading(false);
+          });
         }
       });
     }

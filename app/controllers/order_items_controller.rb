@@ -18,6 +18,11 @@ class OrderItemsController < ApplicationController
   # POST /order_items
   def create
     @order_item = OrderItem.create!(order_item_params)
+    order=Order.find(params[:order_id])
+    order.update(id: params[:order_id])
+    product=Product.find(params[:product_id])
+    product[params[:size].to_sym]-= params[:quantity]
+    product.save
       render json: @order_item, status: :created, location: @order_item
   end
 
@@ -40,7 +45,7 @@ class OrderItemsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def order_item_params
-      params.permit(:quantity, :price,:order_id,:product_id)
+      params.permit(:quantity,:size,:price,:order_id,:product_id)
     end
 
     def render_unprocessable_entity invalid
