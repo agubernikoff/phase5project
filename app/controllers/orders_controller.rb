@@ -15,6 +15,11 @@ class OrdersController < ApplicationController
     render json: @order
   end
 
+  def current_order
+    current_order=Order.find(session[:current_order_id])
+    render json: current_order
+  end
+
   # POST /orders
   def create
     @order = Order.create!(order_params)
@@ -49,6 +54,6 @@ class OrdersController < ApplicationController
     end
     
     def render_not_found
-      render json: {error: "User not found"}, status: 404
+      render json: {error: "Order not found"}, status: 404
     end
 end

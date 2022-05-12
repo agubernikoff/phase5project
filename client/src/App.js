@@ -20,6 +20,7 @@ function App() {
   const [preOrderProjects, setPreOrderProjects] = useState([]);
   const [products, setProducts] = useState([]);
   const [appLoading, setAppLoading] = useState(false);
+  const [currentOrder, setCurrentOrder] = useState("");
 
   useEffect(() => {
     setAppLoading(true);
@@ -31,6 +32,9 @@ function App() {
         });
       } else setAppLoading(false);
     });
+    fetch("/current_order")
+      .then((r) => r.json())
+      .then((data) => console.log(data));
   }, []);
 
   useEffect(() => {

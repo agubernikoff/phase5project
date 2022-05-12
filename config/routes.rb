@@ -1,7 +1,5 @@
 Rails.application.routes.draw do
   
-  resources :order_items
-  resources :orders
   # Routing logic: fallback requests for React Router.
   # Leave this here to help deploy your app later!
   post "/login", to: 'sessions#create'
@@ -19,6 +17,9 @@ Rails.application.routes.draw do
   resources :likes, only:[:index, :create, :destroy]
   resources :comments, only: [:index, :create, :destroy]
   resources :products
+  resources :orders
+  get '/current_order', to: 'orders#current_order'
+  resources :order_items
   post '/production_updates',to: 'production_updates#create'
   delete '/production_updates',to: 'production_updates#destroy'
   get "*path", to: "fallback#index", constraints: ->(req) { !req.xhr? && req.format.html? }
