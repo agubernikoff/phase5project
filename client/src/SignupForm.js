@@ -132,13 +132,13 @@ function SignUpForm({ onLogin }) {
               }}
               style={{ display: "block", margin: "auto" }}
             >
-              sell some stuff
+              SELLING
             </button>
             <button
               onClick={() => setDecided(true)}
               style={{ display: "block", margin: "auto" }}
             >
-              just browsing...maybe buy something idk
+              BUYING
             </button>
           </div>
         </div>

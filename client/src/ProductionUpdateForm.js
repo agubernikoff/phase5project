@@ -9,15 +9,19 @@ function ProductionUpdateForm({
   updateProjectsOnProductionComplete,
   updateUserProjectsOnProductionComplete,
 }) {
+  const navigate = useNavigate();
   const preorderProjects = user.projects.filter(
     (project) => project.status === "Preorder"
   );
-  const [project_id, setProjectId] = useState(preorderProjects[0].id);
+  if (!preorderProjects) navigate("/");
+  const [project_id, setProjectId] = useState(
+    preorderProjects[0] ? preorderProjects[0].id : null
+  );
   const selectedProject = preorderProjects.find(
     (p) => p.id === preorderProjects[0].id
   );
   const [ETA, setETA] = useState(
-    selectedProject.production_updates[0]
+    selectedProject && selectedProject.production_updates.length > 0
       ? selectedProject.production_updates[
           selectedProject.production_updates.length - 1
         ].ETA
@@ -28,7 +32,6 @@ function ProductionUpdateForm({
   const [files, setFiles] = useState("");
   const [errors, setErrors] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const navigate = useNavigate();
 
   const formData = new FormData();
   formData.append("project_id", project_id);
@@ -124,7 +127,9 @@ function ProductionUpdateForm({
           {statusOptions}
         </select>
         <br />
-        {selectedProject.production_updates[0] && status === "On Schedule" ? (
+        {selectedProject &&
+        selectedProject.production_updates[0] &&
+        status === "On Schedule" ? (
           <>
             <label htmlFor="username">
               When will your product be available to purchase?
