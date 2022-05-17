@@ -3,6 +3,14 @@ import { useNavigate } from "react-router-dom";
 
 function ProductPreview({ product }) {
   const navigate = useNavigate();
+  const formatter = new Intl.NumberFormat(undefined, {
+    style: "currency",
+    currency: "USD",
+  });
+  const totalInventory = product.colors
+    .map((c) => c.inventory)
+    .reduce((partialSum, a) => partialSum + a, 0);
+
   return (
     <div
       className="productPreview"
@@ -12,14 +20,18 @@ function ProductPreview({ product }) {
       style={{ display: "block", margin: "auto" }}
     >
       <img
-        src={product.images[0].url}
+        src={product.main_image}
         alt={product.name}
         style={{ width: "100%" }}
       />
       <div className="productInfo">
         <p>{product.seller}</p>
         <p>{product.name}</p>
-        <p>${product.price}</p>
+        {totalInventory ? (
+          <p>{formatter.format(product.price)}</p>
+        ) : (
+          <p>SOLD OUT</p>
+        )}
       </div>
     </div>
   );

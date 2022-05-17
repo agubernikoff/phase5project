@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { HexColorPicker, HexColorInput } from "react-colorful";
 import Loading from "./Loading";
 
 function ListAProduct({ user, updateProductsOnNewListing }) {
@@ -17,7 +18,10 @@ function ListAProduct({ user, updateProductsOnNewListing }) {
   const [xl, setXL] = useState(0);
   const [xxl, setXXL] = useState(0);
   const [oneSizeFitsAll, setOneSizeFitsAll] = useState(0);
+  const [main_image, setMainImage] = useState("");
   const [images, setImages] = useState([]);
+  const [color, setColor] = useState("#ffffff");
+  const [colors, setColors] = useState([]);
   const [errors, setErrors] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [displaySizes, setDisplaySizes] = useState(true);
@@ -41,9 +45,11 @@ function ListAProduct({ user, updateProductsOnNewListing }) {
   formData.append("xl", xl);
   formData.append("xxl", xxl);
   formData.append("one_size_fits_all", oneSizeFitsAll);
+  formData.append("main_image", main_image);
   for (let i = 0; i < images.length; i++) {
     formData.append("images[]", images[i]);
   }
+  formData.append("colors", colors);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -51,8 +57,11 @@ function ListAProduct({ user, updateProductsOnNewListing }) {
     if (images.length > 10) {
       setErrors(["Too many files. Maximum allowed is 10"]);
       setIsLoading(false);
-    } else if (images.length < 1) {
+    } else if (!main_image && images.length < 1) {
       setErrors(["Please upload at least one photo"]);
+      setIsLoading(false);
+    } else if (colors.length === 0) {
+      setErrors(["Please select at least one color"]);
       setIsLoading(false);
     } else {
       fetch("/products", {
@@ -73,7 +82,20 @@ function ListAProduct({ user, updateProductsOnNewListing }) {
       });
     }
   }
-  console.log(displaySizes);
+
+  const mappedColors = colors.map((c) => (
+    <div
+      key={c}
+      style={{
+        width: "5vw",
+        height: "5vw",
+        borderRadius: 100,
+        border: "1px solid black",
+        backgroundColor: `${c}`,
+        margin: "5px",
+      }}
+    ></div>
+  ));
 
   return (
     <div>
@@ -239,7 +261,29 @@ function ListAProduct({ user, updateProductsOnNewListing }) {
           onChange={(e) => setDescription(e.target.value)}
         />
         <br />
-        <label htmlFor="images">Upload product photos:</label>
+        <div>
+          <label htmlFor="main_image">Main Image:</label>
+          <em
+            style={{
+              border: "1px solid grey",
+              color: "grey",
+              borderRadius: 10,
+              width: 10,
+              textAlign: "center",
+              margin: 5,
+            }}
+          >
+            This image will be used as a preview for your product
+          </em>
+        </div>
+        <input
+          type="file"
+          accept=".jpeg,.png"
+          name="files"
+          onChange={(e) => setMainImage(e.target.files[0])}
+        ></input>
+        <br />
+        <label htmlFor="images">Upload product images:</label>
         <input
           type="file"
           accept=".jpeg,.png"
@@ -247,6 +291,43 @@ function ListAProduct({ user, updateProductsOnNewListing }) {
           multiple
           onChange={(e) => setImages(e.target.files)}
         ></input>
+        <br />
+        <label>Colors:</label>
+        <div style={{ display: "flex", flexDirection: "row" }}>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              width: "fit-content",
+              alignItems: "center",
+            }}
+          >
+            <p>Select which colors your product is offered in:</p>
+            <HexColorPicker color={color} onChange={setColor} />
+            <HexColorInput color={color} onChange={setColor} />
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                e.preventDefault();
+                if (!colors.includes(color)) setColors([...colors, color]);
+                else setErrors(["Please select a new color."]);
+              }}
+            >
+              SELECT A COLOR
+            </button>
+          </div>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              flexWrap: "wrap",
+              justifyContent: "center",
+            }}
+          >
+            {mappedColors}
+          </div>
+        </div>
         <br />
         <button variant="fill" type="submit" style={{ marginTop: 10 }}>
           {isLoading ? <Loading /> : "SUBMIT"}

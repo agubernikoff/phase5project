@@ -18,8 +18,8 @@ class ProductsController < ApplicationController
   # POST /products
   def create
     @product = Product.create!(product_params)
+    colors= params[:colors].split(',').each {|c| Color.create(product_id: @product.id,color: c,xs: params[:xs],s: params[:s], m: params[:m],l: params[:l],xl: params[:xl],xxl: params[:xxl],one_size_fits_all: params[:one_size_fits_all])}
     render json: @product, status: :created, location: @product
-    
   end
 
   # PATCH/PUT /products/1
@@ -41,7 +41,7 @@ class ProductsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def product_params
-      params.permit(:id,:name,:description,:price,:inventory,:xs,:s,:m,:l,:xl,:xxl,:one_size_fits_all,:project_id,images:[])
+      params.permit(:id,:name,:description,:price,:project_id,:main_image,images:[])
     end
 
     def render_unprocessable_entity invalid

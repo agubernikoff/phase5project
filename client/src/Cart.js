@@ -34,13 +34,22 @@ function Cart({ putCurrentOrder, currentOrder }) {
         >
           <img
             alt={item.product.name}
-            src={item.product.image}
+            src={item.product.main_image}
             style={{ width: "30%" }}
           />
           <div>
             <p>{item.product.name}</p>
             <p>{item.product.seller.toUpperCase()}</p>
             <p>{item.size.toUpperCase()}</p>
+            <div
+              style={{
+                width: "2.5vw",
+                height: "2.5vw",
+                borderRadius: 100,
+                border: "1px solid black",
+                backgroundColor: `${item.color}`,
+              }}
+            ></div>
           </div>
           <p>{formatter.format(item.product.price)}</p>
           <p>{item.quantity}</p>

@@ -9,6 +9,7 @@ function Product({ user, currentOrder, setCurrentOrder, updateCurrentOrder }) {
   const [size, setSize] = useState("");
   const [errors, setErrors] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [color, setColor] = useState("");
   const navigate = useNavigate();
 
   let { id } = useParams();
@@ -18,7 +19,7 @@ function Product({ user, currentOrder, setCurrentOrder, updateCurrentOrder }) {
       .then((r) => r.json())
       .then((data) => {
         setProduct(data);
-        setMainImage(data.images[0].url);
+        setMainImage(data.main_image);
         window.scrollTo(0, 0);
       });
   }, [id]);
@@ -65,6 +66,7 @@ function Product({ user, currentOrder, setCurrentOrder, updateCurrentOrder }) {
                 size: size,
                 order_id: data.id,
                 product_id: product.id,
+                color: color.color,
               }),
             }).then((r) => {
               if (r.ok) {
@@ -98,6 +100,7 @@ function Product({ user, currentOrder, setCurrentOrder, updateCurrentOrder }) {
           size: size,
           order_id: currentOrder.id,
           product_id: product.id,
+          color: color.color,
         }),
       }).then((r) => {
         if (r.ok) {
@@ -117,6 +120,42 @@ function Product({ user, currentOrder, setCurrentOrder, updateCurrentOrder }) {
     }
   }
 
+  const mappedColors = product
+    ? product.colors.map((c) => (
+        <div
+          key={c.color}
+          style={
+            color.color === c.color
+              ? {
+                  width: "5vw",
+                  height: "5vw",
+                  borderRadius: 100,
+                  border: "3px solid black",
+                  backgroundColor: `${c.color}`,
+                  margin: "5px",
+                }
+              : {
+                  width: "5vw",
+                  height: "5vw",
+                  borderRadius: 100,
+                  border: "1px solid black",
+                  backgroundColor: `${c.color}`,
+                  margin: "5px",
+                }
+          }
+          onClick={() => {
+            setColor(product.colors.find((color) => color.color === c.color));
+          }}
+        ></div>
+      ))
+    : null;
+
+  const totalInventory = product
+    ? product.colors
+        .map((c) => c.inventory)
+        .reduce((partialSum, a) => partialSum + a, 0)
+    : null;
+
   return (
     <div>
       <img
@@ -132,6 +171,12 @@ function Product({ user, currentOrder, setCurrentOrder, updateCurrentOrder }) {
       <br />
       <div style={{ display: "flex", flexDirection: "row" }}>
         <div style={{ width: "20%", display: "flex", flexDirection: "column" }}>
+          <img
+            src={product.main_image}
+            alt={product.name}
+            style={{ width: "75%", border: "1px solid black", padding: 1 }}
+            onClick={() => setMainImage(product.main_image)}
+          />
           {mappedImages}
         </div>
         <div style={{ width: "45%" }}>
@@ -145,11 +190,27 @@ function Product({ user, currentOrder, setCurrentOrder, updateCurrentOrder }) {
             paddingLeft: "1%",
           }}
         >
-          <h1>{product.name}</h1>
-          <p>{formatter.format(product.price)}</p>
+          <h1 style={{ marginTop: 0 }}>{product.name}</h1>
+          {totalInventory ? (
+            <p>{formatter.format(product.price)}</p>
+          ) : (
+            <p>SOLD OUT</p>
+          )}
           <p>{product.description}</p>
           <br />
-          {!product.one_size_fits_all ? (
+          <label>COLOR:</label>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              flexWrap: "wrap",
+              justifyContent: "center",
+            }}
+          >
+            {mappedColors}
+          </div>
+          <br />
+          {!color.one_size_fits_all ? (
             <div
               style={{
                 display: "flex",
@@ -158,7 +219,7 @@ function Product({ user, currentOrder, setCurrentOrder, updateCurrentOrder }) {
               }}
             >
               <label>SIZE:</label>
-              {product.xs ? (
+              {color.xs ? (
                 <button
                   style={
                     size === "xs"
@@ -183,7 +244,7 @@ function Product({ user, currentOrder, setCurrentOrder, updateCurrentOrder }) {
                   XS
                 </button>
               )}
-              {product.s ? (
+              {color.s ? (
                 <button
                   style={
                     size === "s"
@@ -208,7 +269,7 @@ function Product({ user, currentOrder, setCurrentOrder, updateCurrentOrder }) {
                   S
                 </button>
               )}
-              {product.m ? (
+              {color.m ? (
                 <button
                   style={
                     size === "m"
@@ -233,7 +294,7 @@ function Product({ user, currentOrder, setCurrentOrder, updateCurrentOrder }) {
                   M
                 </button>
               )}
-              {product.l ? (
+              {color.l ? (
                 <button
                   style={
                     size === "l"
@@ -258,7 +319,7 @@ function Product({ user, currentOrder, setCurrentOrder, updateCurrentOrder }) {
                   L
                 </button>
               )}
-              {product.xl ? (
+              {color.xl ? (
                 <button
                   style={
                     size === "xl"
@@ -283,7 +344,7 @@ function Product({ user, currentOrder, setCurrentOrder, updateCurrentOrder }) {
                   XL
                 </button>
               )}
-              {product.xxl ? (
+              {color.xxl ? (
                 <button
                   style={
                     size === "xxl"
@@ -352,9 +413,13 @@ function Product({ user, currentOrder, setCurrentOrder, updateCurrentOrder }) {
           </div>
           <br />
           <br />
-          <button onClick={handleAddToCart}>
-            {loading ? <Loading /> : "ADD TO CART"}
-          </button>
+          {totalInventory ? (
+            <button onClick={handleAddToCart}>
+              {loading ? <Loading /> : "ADD TO CART"}
+            </button>
+          ) : (
+            <button>SOLD OUT</button>
+          )}
           {errors.map((err) => (
             <h3
               key={err}

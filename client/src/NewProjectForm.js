@@ -68,7 +68,7 @@ function NewProjectForm({ user, updateUserProjects }) {
         <br />
         <div>
           <label htmlFor="likes_threshold">Likes Threshold:</label>
-          <span
+          <em
             style={{
               border: "1px solid grey",
               color: "grey",
@@ -80,7 +80,7 @@ function NewProjectForm({ user, updateUserProjects }) {
           >
             The average number of likes per post for this project to be sent to
             production
-          </span>
+          </em>
         </div>
         <input
           type="number"

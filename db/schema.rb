@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_12_053744) do
+ActiveRecord::Schema.define(version: 2022_05_16_231520) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -43,6 +43,22 @@ ActiveRecord::Schema.define(version: 2022_05_12_053744) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "colors", force: :cascade do |t|
+    t.string "color"
+    t.integer "inventory"
+    t.integer "xs"
+    t.integer "s"
+    t.integer "m"
+    t.integer "l"
+    t.integer "xl"
+    t.integer "xxl"
+    t.integer "one_size_fits_all"
+    t.bigint "product_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["product_id"], name: "index_colors_on_product_id"
+  end
+
   create_table "comments", force: :cascade do |t|
     t.string "comment"
     t.bigint "post_id", null: false
@@ -67,11 +83,12 @@ ActiveRecord::Schema.define(version: 2022_05_12_053744) do
   create_table "order_items", force: :cascade do |t|
     t.integer "quantity"
     t.float "price"
+    t.string "size"
     t.bigint "order_id", null: false
     t.bigint "product_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "size"
+    t.string "color"
     t.index ["order_id"], name: "index_order_items_on_order_id"
     t.index ["product_id"], name: "index_order_items_on_product_id"
   end
@@ -109,14 +126,6 @@ ActiveRecord::Schema.define(version: 2022_05_12_053744) do
     t.string "name"
     t.string "description"
     t.float "price"
-    t.integer "inventory"
-    t.integer "xs"
-    t.integer "s"
-    t.integer "m"
-    t.integer "l"
-    t.integer "xl"
-    t.integer "xxl"
-    t.integer "one_size_fits_all"
     t.bigint "project_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -145,6 +154,7 @@ ActiveRecord::Schema.define(version: 2022_05_12_053744) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "colors", "products"
   add_foreign_key "comments", "posts"
   add_foreign_key "comments", "users"
   add_foreign_key "likes", "posts"
