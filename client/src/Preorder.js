@@ -84,7 +84,7 @@ function Preorder({
       >
         <span>
           <strong>STATUS: </strong>
-          {project.production_updates[0]
+          {project.production_updates[0] && project.status === "Preorder"
             ? project.production_updates[project.production_updates.length - 1]
                 .status
             : project.status}
