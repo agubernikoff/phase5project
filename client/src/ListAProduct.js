@@ -22,6 +22,7 @@ function ListAProduct({ user, updateProductsOnNewListing }) {
   const [images, setImages] = useState([]);
   const [color, setColor] = useState("#ffffff");
   const [colors, setColors] = useState([]);
+  const [hoveredColor, setHoveredColor] = useState("");
   const [errors, setErrors] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [displaySizes, setDisplaySizes] = useState(true);
@@ -93,9 +94,38 @@ function ListAProduct({ user, updateProductsOnNewListing }) {
         border: "1px solid black",
         backgroundColor: `${c}`,
         margin: "5px",
+        position: "relative",
       }}
-    ></div>
+      onMouseEnter={() => {
+        setHoveredColor(c);
+      }}
+      onMouseLeave={() => {
+        setHoveredColor("");
+      }}
+    >
+      <button
+        style={
+          hoveredColor === c
+            ? {
+                position: "absolute",
+                top: 0,
+                right: 0,
+                backgroundColor: "white",
+                borderRadius: 50,
+              }
+            : { display: "none" }
+        }
+        onClick={(e) => {
+          e.stopPropagation();
+          e.preventDefault();
+          setColors(colors.filter((color) => color !== c));
+        }}
+      >
+        x
+      </button>
+    </div>
   ));
+  console.log(colors);
 
   return (
     <div>
