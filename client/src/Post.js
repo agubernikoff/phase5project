@@ -146,6 +146,7 @@ function Post({
       style={{
         display: "block",
         margin: "auto",
+        marginBottom: "1vw",
         width: "50%",
         border: "solid 1px black",
       }}
