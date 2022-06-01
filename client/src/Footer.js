@@ -55,7 +55,7 @@ function Footer({ user, logout, currentOrder }) {
           {user.projects[0] ? (
             <>
               <NavLink to={"/newpost"} style={activeStyle}>
-                ADD TO A PROJECT
+                ADD A POST TO A PROJECT
               </NavLink>
               <br />
               <br />

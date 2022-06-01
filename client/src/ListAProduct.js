@@ -295,9 +295,7 @@ function ListAProduct({ user, updateProductsOnNewListing }) {
           <label htmlFor="main_image">Main Image:</label>
           <em
             style={{
-              border: "1px solid grey",
               color: "grey",
-              borderRadius: 10,
               width: 10,
               textAlign: "center",
               margin: 5,

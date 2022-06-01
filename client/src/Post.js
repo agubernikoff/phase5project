@@ -151,7 +151,7 @@ function Post({
         border: "solid 1px black",
       }}
     >
-      <div style={{ width: "fit-content" }}>
+      <div>
         <img
           src={post.user_profile_picture}
           alt={`${post.username}`}
@@ -160,7 +160,7 @@ function Post({
         <NavLink to={`/u/${post.user_id}`}>
           <strong>{post.username}</strong>
         </NavLink>
-        <span style={{ float: "right", color: "#807f7f" }}>
+        <span style={{ float: "right", color: "#807f7f", fontSize: "50%" }}>
           {new Date(post.created_at)
             .toLocaleDateString(undefined, {
               day: "numeric",

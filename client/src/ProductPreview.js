@@ -17,7 +17,7 @@ function ProductPreview({ product }) {
       onClick={() => {
         navigate(`/product/${product.id}`);
       }}
-      style={{ display: "block", margin: "auto" }}
+      style={{ display: "block", margin: "auto", cursor: "pointer" }}
     >
       <img
         src={product.main_image}

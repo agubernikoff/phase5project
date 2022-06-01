@@ -70,9 +70,7 @@ function NewProjectForm({ user, updateUserProjects }) {
           <label htmlFor="likes_threshold">Likes Threshold:</label>
           <em
             style={{
-              border: "1px solid grey",
               color: "grey",
-              borderRadius: 10,
               width: 10,
               textAlign: "center",
               margin: 5,
@@ -101,7 +99,9 @@ function NewProjectForm({ user, updateUserProjects }) {
           readOnly
         />
         <br />
-        <input type="submit" value="Submit" />
+        <button variant="fill" type="submit" style={{ marginTop: 10 }}>
+          SUBMIT
+        </button>
         {errors.map((err) => (
           <h3
             key={err}

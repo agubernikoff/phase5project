@@ -51,7 +51,6 @@ function Preorder({
     <Update update={update} key={update.id} />
   ));
 
-  console.log(project.products);
   const productPreviews = project.products[0]
     ? project.products.map((p) => <ProductPreview key={p.id} product={p} />)
     : null;
@@ -82,8 +81,24 @@ function Preorder({
           margin: "auto",
         }}
       >
-        <span>
-          <strong>STATUS: </strong>
+        <span
+          style={
+            project.production_updates[0] && project.status === "Preorder"
+              ? project.production_updates[
+                  project.production_updates.length - 1
+                ].status === "On Schedule"
+                ? {
+                    color: "green",
+                  }
+                : {
+                    color: "red",
+                  }
+              : {
+                  color: "black",
+                }
+          }
+        >
+          <strong style={{ color: "black" }}>STATUS: </strong>
           {project.production_updates[0] && project.status === "Preorder"
             ? project.production_updates[project.production_updates.length - 1]
                 .status
@@ -141,10 +156,7 @@ function Preorder({
             <button
               onClick={toggleHistory}
               style={{
-                border: "1px solid black",
-                borderRadius: 20,
                 backgroundColor: "white",
-                color: "grey",
                 display: "block",
                 margin: "auto",
                 position: "relative",

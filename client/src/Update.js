@@ -3,17 +3,30 @@ import React from "react";
 function Update({ update }) {
   return (
     <div
-      style={{
-        border: "1px solid black",
-        borderRight: "none",
-        borderLeft: "none",
-        margin: "auto",
-        marginTop: 5,
-        width: "100%",
-      }}
+      style={
+        update.status === "On Schedule"
+          ? {
+              margin: "auto",
+              marginTop: 5,
+              width: "100%",
+            }
+          : {
+              margin: "auto",
+              marginTop: 5,
+              width: "100%",
+            }
+      }
     >
-      <span>STATUS: {update.status}</span>
-      <span style={{ float: "right" }}>
+      <span
+        style={
+          update.status === "On Schedule"
+            ? { color: "green" }
+            : { color: "red" }
+        }
+      >
+        <strong style={{ color: "black" }}>STATUS: </strong> {update.status}
+      </span>
+      <span style={{ float: "right", fontSize: ".75vw", color: "grey" }}>
         {new Date(update.created_at)
           .toLocaleDateString(undefined, {
             day: "numeric",
@@ -34,7 +47,7 @@ function Update({ update }) {
             />
           ))
         : null}
-      <p>{update.caption}</p>
+      <p style={{ marginLeft: "1vw" }}>{update.caption}</p>
     </div>
   );
 }

@@ -1,7 +1,12 @@
-body {
+body,
+textarea {
   font-family: "Arial", Helvetica, Arial;
   /* color: white;
   background-color: black; */
+}
+button {
+  background-color: white;
+  cursor: pointer;
 }
 .rec-carousel-item-hidden {
   height: 0;
