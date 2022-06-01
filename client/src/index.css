@@ -66,3 +66,49 @@ a:visited {
 th {
   margin: auto;
 }
+.green {
+  animation: coming-soon-green;
+  animation-duration: 2s;
+  font-size: 1.2vw;
+}
+.post-green {
+  animation: post-green;
+  animation-duration: 5s;
+}
+@keyframes coming-soon-green {
+  0% {
+    background: black;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 1.2vw;
+  }
+  50% {
+    background: green;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: bold;
+    font-size: 1.5vw;
+  }
+  100% {
+    background: black;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 1.2vw;
+  }
+}
+@keyframes post-green {
+  0% {
+    background: white;
+    transform: scale(1);
+  }
+  50% {
+    background: green;
+    border-color: green;
+    transform: scale(1);
+  }
+  100% {
+    background: white;
+    border-color: green;
+    transform: scale(0);
+  }
+}

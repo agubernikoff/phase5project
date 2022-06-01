@@ -21,6 +21,7 @@ function Post({
   updateAccountOnUnLike,
   updateAccountOnComment,
   updateAccountOnDeleteComment,
+  postClass,
 }) {
   const [comment, setComment] = useState("");
   const content = post.files.map((f) => (
@@ -137,8 +138,11 @@ function Post({
   const inputEl = useRef(null);
   const prev = "<";
   const next = ">";
+
   return (
     <div
+      id={`post${post.id}`}
+      className={postClass}
       style={{
         display: "block",
         margin: "auto",
@@ -196,7 +200,13 @@ function Post({
         onClick={handleLikeClick}
       />
       <span style={{ float: "right" }}>{`${post.likes.length} LIKES`}</span>
-      {post.message ? post.message.map((pm) => <p key={pm}>{pm}</p>) : null}
+      {post.message
+        ? post.message.map((pm) => (
+            <p key={pm} style={{ textAlign: "center", color: "white" }}>
+              {pm}
+            </p>
+          ))
+        : null}
       <p>{post.caption}</p>
       {comments}
       <br />

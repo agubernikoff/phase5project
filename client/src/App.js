@@ -22,6 +22,8 @@ function App() {
   const [products, setProducts] = useState([]);
   const [appLoading, setAppLoading] = useState(false);
   const [currentOrder, setCurrentOrder] = useState("");
+  const [postClass, setPostClass] = useState("");
+  const [comingSoonClass, setComingSoonClass] = useState("");
 
   useEffect(() => {
     setAppLoading(true);
@@ -83,6 +85,7 @@ function App() {
 
   function logout() {
     setUser("");
+    setCurrentOrder("");
   }
 
   function updateUserOnEdit(user) {
@@ -188,7 +191,13 @@ function App() {
     const updatedPosts = [...filteredPosts, ...updatedProjectPosts];
     const sorted = updatedPosts.sort((a, b) => b.id - a.id);
     setPosts(sorted);
-    setTimeout(() => setPosts(filteredPosts), 5000);
+    // setPostClass("post-green");
+    document.getElementById(`post${data.like.post_id}`).className =
+      "post-green";
+    setTimeout(() => {
+      setPosts(filteredPosts);
+      setComingSoonClass("green");
+    }, 5000);
   }
 
   function updatePostLikesOnUnlike(unlike) {
@@ -390,7 +399,7 @@ function App() {
 
   return (
     <div className="App" style={{ display: "flex", flexDirection: "row" }}>
-      <Header />
+      <Header comingSoonClass={comingSoonClass} />
       <div style={{ width: "66%" }}>
         <Routes>
           <Route exact path="/login" element={<Login onLogin={setUser} />} />
@@ -427,6 +436,7 @@ function App() {
             element={
               <Feed
                 posts={posts}
+                postClass={postClass}
                 loadMorePosts={loadMorePosts}
                 user={user}
                 updateUserLikesOnLike={updateUserLikesOnLike}

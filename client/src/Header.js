@@ -1,7 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 
-function Header() {
+function Header({ comingSoonClass }) {
   const activeStyle = ({ isActive }) =>
     isActive
       ? {
@@ -21,7 +21,11 @@ function Header() {
       </NavLink>
       <br />
       <br />
-      <NavLink to={"/comingsoon"} style={activeStyle}>
+      <NavLink
+        className={comingSoonClass}
+        to={"/comingsoon"}
+        style={activeStyle}
+      >
         COMING SOON
       </NavLink>
       <br />

@@ -23,10 +23,6 @@ function Footer({ user, logout, currentOrder }) {
         }
       : null;
 
-  function refreshPage() {
-    window.location.reload(false);
-  }
-
   return (
     <div style={{ width: "16.5%", textAlign: "right" }}>
       <div>
@@ -97,7 +93,6 @@ function Footer({ user, logout, currentOrder }) {
         to={"/login"}
         onClick={() => {
           handleLogout();
-          setTimeout(() => refreshPage(), 500);
         }}
         style={activeStyle}
       >
