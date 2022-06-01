@@ -22,7 +22,6 @@ function App() {
   const [products, setProducts] = useState([]);
   const [appLoading, setAppLoading] = useState(false);
   const [currentOrder, setCurrentOrder] = useState("");
-  const [postClass, setPostClass] = useState("");
   const [comingSoonClass, setComingSoonClass] = useState("");
 
   useEffect(() => {
@@ -191,7 +190,6 @@ function App() {
     const updatedPosts = [...filteredPosts, ...updatedProjectPosts];
     const sorted = updatedPosts.sort((a, b) => b.id - a.id);
     setPosts(sorted);
-    // setPostClass("post-green");
     document.getElementById(`post${data.like.post_id}`).className =
       "post-green";
     setTimeout(() => {
@@ -436,7 +434,6 @@ function App() {
             element={
               <Feed
                 posts={posts}
-                postClass={postClass}
                 loadMorePosts={loadMorePosts}
                 user={user}
                 updateUserLikesOnLike={updateUserLikesOnLike}
