@@ -17,6 +17,7 @@ function Home({
   updateProjectPostLikesOnUnlike,
   updateProjectPostCommentsOnComment,
   updateProjectPostCommentsOnDeletedComment,
+  updateProjectsOnPreorder,
 }) {
   const [mostPopular, setMostPopular] = useState([]);
   const [index1, setIndex1] = useState(0);
@@ -126,6 +127,17 @@ function Home({
     setMostPopular(sortedProjects);
   }
 
+  function updateMostPopularOnPreorder(newPre) {
+    console.log(newPre);
+    const project = mostPopular.find((pop) => pop.id === newPre.project_id);
+    const updatedPreorders = [...project.preorders, newPre];
+    const updatedProject = { ...project, preorders: updatedPreorders };
+    const filteredProjects = mostPopular.filter((pop) => pop.id !== project.id);
+    const updatedProjects = [...filteredProjects, updatedProject];
+    const sortedProjects = updatedProjects.sort((a, b) => a.id - b.id);
+    setMostPopular(sortedProjects);
+  }
+
   const mappedProjects = mostPopular.map((p) =>
     p.status === "New Project" ? (
       <Preorder
@@ -166,6 +178,8 @@ function Home({
         updateAccountOnUnLike={updateMostPopularOnUnLike}
         updateAccountOnComment={updateMostPopularOnComment}
         updateAccountOnDeleteComment={updateMostPopularOnDeleteComment}
+        updateProjectsOnPreorder={updateProjectsOnPreorder}
+        updateProjectsOnPreorder2={updateMostPopularOnPreorder}
       />
     ) : (
       <Preorder

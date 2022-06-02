@@ -21,8 +21,11 @@ function Preorder({
   updateAccountOnUnLike,
   updateAccountOnComment,
   updateAccountOnDeleteComment,
+  updateProjectsOnPreorder,
+  updateProjectsOnPreorder2,
 }) {
   const [viewHistory, setViewHistory] = useState(false);
+  const [error, setError] = useState("");
   function toggleHistory() {
     setViewHistory(!viewHistory);
   }
@@ -66,12 +69,18 @@ function Preorder({
       body: JSON.stringify({ user_id: user.id, project_id: project.id }),
     }).then((r) => {
       if (r.ok) {
-        r.json().then((data) => console.log(data));
+        r.json().then((data) => {
+          updateProjectsOnPreorder(data);
+          if (accountHolder) updateProjectsOnPreorder2(data);
+        });
       } else {
-        r.json().then((data) => console.log(data));
+        r.json().then((data) => {
+          if (data.error[0].includes("UNAUTHORIZED")) setError(data.error);
+        });
       }
     });
   }
+  console.log(project);
 
   return (
     <div>
@@ -215,19 +224,60 @@ function Preorder({
             </>
           )
         ) : null}
-        {project.status === "Preorder" ? (
+        {project.status === "Preorder" && !error ? (
           <button
-            style={{
-              margin: "auto",
-              marginTop: 5,
-              marginBottom: 5,
-              display: "block",
-            }}
+            style={
+              project.preorders.map((p) => p.user_id).includes(user.id)
+                ? {
+                    margin: "auto",
+                    marginTop: 5,
+                    marginBottom: 5,
+                    display: "block",
+                    background: "green",
+                    color: "white",
+                  }
+                : {
+                    margin: "auto",
+                    marginTop: 5,
+                    marginBottom: 5,
+                    display: "block",
+                  }
+            }
             onClick={handlePreorder}
           >
-            PREORDER
+            {project.preorders.map((p) => p.user_id).includes(user.id)
+              ? "PREORDERED"
+              : project.preorders.length >= project.likes_threshold
+              ? "SOLD OUT"
+              : "PREORDER"}
           </button>
-        ) : null}
+        ) : (
+          <p
+            style={{
+              textAlign: "center",
+              width: "95%",
+              margin: "auto",
+              marginBottom: "1vw",
+            }}
+          >
+            <strong>{error[0]}</strong>
+            {error[1] +
+              error[2] +
+              new Date(error[3])
+                .toLocaleDateString("en-US", {
+                  weekday: "long",
+                  day: "numeric",
+                  month: "long",
+                  year: "numeric",
+                })
+                .toUpperCase() +
+              " AT " +
+              new Date(error[3]).toLocaleTimeString([], {
+                hour: "2-digit",
+                minute: "2-digit",
+              })}
+          </p>
+        )}
       </div>
     </div>
   );

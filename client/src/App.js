@@ -265,6 +265,21 @@ function App() {
     setPreOrderProjects([...preOrderProjects, newProject]);
   }
 
+  function updateProjectsOnPreorder(newPre) {
+    console.log(newPre);
+    const project = preOrderProjects.find(
+      (pop) => pop.id === newPre.project_id
+    );
+    const updatedPreorders = [...project.preorders, newPre];
+    const updatedProject = { ...project, preorders: updatedPreorders };
+    const filteredProjects = preOrderProjects.filter(
+      (pop) => pop.id !== project.id
+    );
+    const updatedProjects = [...filteredProjects, updatedProject];
+    const sortedProjects = updatedProjects.sort((a, b) => a.id - b.id);
+    setPreOrderProjects(sortedProjects);
+  }
+
   function updateProjectsOnProductionUpdate(newUpdate) {
     const project = preOrderProjects.find((p) => p.id === newUpdate.project_id);
     const filteredProjects = preOrderProjects.filter(
@@ -425,6 +440,7 @@ function App() {
                 updateProjectPostCommentsOnDeletedComment={
                   updateProjectPostCommentsOnDeletedComment
                 }
+                updateProjectsOnPreorder={updateProjectsOnPreorder}
               />
             }
           />
@@ -465,6 +481,7 @@ function App() {
                 }
                 updatePostsOnLikesThreshold={updatePostsOnLikesThreshold}
                 updateProjectsOnThreshold={updateProjectsOnThreshold}
+                updateProjectsOnPreorder={updateProjectsOnPreorder}
               />
             }
           />
@@ -561,6 +578,7 @@ function App() {
                 updatePostsOnLikesThreshold={updatePostsOnLikesThreshold}
                 updateProjectsOnThreshold={updateProjectsOnThreshold}
                 updateUserOnSelfLikeThreshold={updateUserOnSelfLikeThreshold}
+                updateProjectsOnPreorder={updateProjectsOnPreorder}
               />
             }
           />

@@ -12,6 +12,7 @@ function ComingSoon({
   updatePostCommentsOnDelete,
   updatePostsOnLikesThreshold,
   updateProjectsOnThreshold,
+  updateProjectsOnPreorder,
 }) {
   const projectsWithoutUpdates = [...preOrderProjects].filter(
     (p) => !p.production_updates[0]
@@ -45,6 +46,7 @@ function ComingSoon({
         updatePostCommentsOnDelete={updatePostCommentsOnDelete}
         updatePostsOnLikesThreshold={updatePostsOnLikesThreshold}
         updateProjectsOnThreshold={updateProjectsOnThreshold}
+        updateProjectsOnPreorder={updateProjectsOnPreorder}
       />
     )
   );

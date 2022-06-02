@@ -19,6 +19,7 @@ function Account({
   updatePostsOnLikesThreshold,
   updateProjectsOnThreshold,
   updateUserOnSelfLikeThreshold,
+  updateProjectsOnPreorder,
 }) {
   const [accountHolder, setAccountHolder] = useState("");
   const [username, setUsername] = useState("");
@@ -139,6 +140,25 @@ function Account({
     setAccountHolder({ ...accountHolder, projects: sortedProjects });
   }
 
+  function updateAccountHolderOnPreorder(newPre) {
+    console.log(newPre);
+    const project = accountHolder.projects.find(
+      (pop) => pop.id === newPre.project_id
+    );
+    const updatedPreorders = [...project.preorders, newPre];
+    const updatedProject = { ...project, preorders: updatedPreorders };
+    const filteredProjects = accountHolder.projects.filter(
+      (pop) => pop.id !== project.id
+    );
+    const updatedProjects = [...filteredProjects, updatedProject];
+    const sortedProjects = updatedProjects.sort((a, b) => a.id - b.id);
+    setAccountHolder({ ...accountHolder, projects: sortedProjects });
+    const likedProject = likedProjects.find(
+      (pop) => pop.id === newPre.project_id
+    );
+    if (likedProject) setLikedProjects(sortedProjects);
+  }
+
   const newProjects = accountHolder.projects
     ? accountHolder.projects.filter((p) => p.status === "New Project")
     : [];
@@ -196,6 +216,8 @@ function Account({
           updateAccountOnUnLike={updateAccountHolderOnUnLike}
           updateAccountOnComment={updateAccountHolderOnComment}
           updateAccountOnDeleteComment={updateAccountHolderOnDeleteComment}
+          updateProjectsOnPreorder={updateProjectsOnPreorder}
+          updateProjectsOnPreorder2={updateAccountHolderOnPreorder}
         />
       ))
     : null;
@@ -329,6 +351,24 @@ function Account({
     setLikedProjects(sortedProjects);
   }
 
+  function updateLikedProjectsOnPreorder(newPre) {
+    console.log(newPre);
+    const project = likedProjects.find((pop) => pop.id === newPre.project_id);
+    const updatedPreorders = [...project.preorders, newPre];
+    const updatedProject = { ...project, preorders: updatedPreorders };
+    const filteredProjects = likedProjects.filter(
+      (pop) => pop.id !== project.id
+    );
+    const updatedProjects = [...filteredProjects, updatedProject];
+    const sortedProjects = updatedProjects.sort((a, b) => a.id - b.id);
+    setLikedProjects(sortedProjects);
+    const AHproject = accountHolder.projects.find(
+      (pop) => pop.id === newPre.project_id
+    );
+    if (AHproject)
+      setAccountHolder({ ...accountHolder, projects: sortedProjects });
+  }
+
   const likedNewProjects = likedProjects
     ? likedProjects.filter((p) => p.status === "New Project")
     : [];
@@ -380,6 +420,8 @@ function Account({
       updateAccountOnUnLike={updateLikedProjectsOnUnLike}
       updateAccountOnComment={updateLikedProjectsOnComment}
       updateAccountOnDeleteComment={updateLikedProjectsOnDeleteComment}
+      updateProjectsOnPreorder={updateProjectsOnPreorder}
+      updateProjectsOnPreorder2={updateLikedProjectsOnPreorder}
     />
   ));
 

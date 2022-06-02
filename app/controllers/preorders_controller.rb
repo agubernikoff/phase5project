@@ -65,7 +65,7 @@ class PreordersController < ApplicationController
       nested.each{|array|array.each{|user_id| all_users_who_like<<user_id }}
       
       unless Time.current > project.updated_at + 1.day || all_users_who_like.include?(params[:user_id])
-        render json:{error:'unauthorized'},status: :unauthorized
+        render json:{error:["UNAUTHORIZED:"," THIS ACTION IS CURRENTLY RESERVED FOR USERS WHO HELPED THE PROJECT MEET ITS LIKES THRESHOLD. ", "PLEASE TRY AGAIN ON ","#{project.updated_at + 1.day}"]},status: :unauthorized
       end
     end
 end
