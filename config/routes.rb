@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   resources :likes, only:[:index, :create, :destroy]
   resources :comments, only: [:index, :create, :destroy]
   resources :products
+  resources :preorders, only: [:index, :create, :destroy]
   resources :orders
   get '/current_order', to: 'orders#current_order'
   resources :order_items

@@ -225,7 +225,7 @@ function Home({
       clearTimeout(timer2);
     };
   });
-  console.log(index1);
+
   return (
     <div>
       <p style={{ textAlign: "center" }}>HOME</p>

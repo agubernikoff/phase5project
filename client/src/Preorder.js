@@ -59,6 +59,20 @@ function Preorder({
   const prev = "<";
   const next = ">";
 
+  function handlePreorder() {
+    fetch("/preorders", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ user_id: user.id, project_id: project.id }),
+    }).then((r) => {
+      if (r.ok) {
+        r.json().then((data) => console.log(data));
+      } else {
+        r.json().then((data) => console.log(data));
+      }
+    });
+  }
+
   return (
     <div>
       <div style={{ width: "fit-content" }}>
@@ -209,6 +223,7 @@ function Preorder({
               marginBottom: 5,
               display: "block",
             }}
+            onClick={handlePreorder}
           >
             PREORDER
           </button>

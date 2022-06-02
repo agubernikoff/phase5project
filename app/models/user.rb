@@ -7,6 +7,7 @@ class User < ApplicationRecord
     has_many :production_updates,through: :projects
     has_many :likes
     has_many :comments
+    has_many :preorders
 
     has_one_attached :profile_picture
 

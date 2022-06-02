@@ -4,6 +4,7 @@ class Project < ApplicationRecord
     has_many :likes, through: :posts
     has_many :comments, through: :posts
     has_many :production_updates,dependent: :destroy
+    has_many :preorders,dependent: :destroy
     has_many :products,dependent: :destroy
     validates :title, presence: true
     validates :likes_threshold, presence: true

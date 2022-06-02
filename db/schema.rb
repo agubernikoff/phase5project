@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_05_16_231520) do
+ActiveRecord::Schema.define(version: 2022_06_02_143858) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -112,6 +112,15 @@ ActiveRecord::Schema.define(version: 2022_05_16_231520) do
     t.index ["project_id"], name: "index_posts_on_project_id"
   end
 
+  create_table "preorders", force: :cascade do |t|
+    t.bigint "project_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["project_id"], name: "index_preorders_on_project_id"
+    t.index ["user_id"], name: "index_preorders_on_user_id"
+  end
+
   create_table "production_updates", force: :cascade do |t|
     t.string "ETA"
     t.string "status"
@@ -163,6 +172,8 @@ ActiveRecord::Schema.define(version: 2022_05_16_231520) do
   add_foreign_key "order_items", "products"
   add_foreign_key "orders", "users"
   add_foreign_key "posts", "projects"
+  add_foreign_key "preorders", "projects"
+  add_foreign_key "preorders", "users"
   add_foreign_key "production_updates", "projects"
   add_foreign_key "products", "projects"
   add_foreign_key "projects", "users"
