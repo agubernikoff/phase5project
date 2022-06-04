@@ -37,6 +37,7 @@ class OrdersController < ApplicationController
   # DELETE /orders/1
   def destroy
     @order.destroy
+    render json: @order
   end
 
   private

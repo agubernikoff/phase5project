@@ -41,6 +41,15 @@ function Cart({
     });
   }
 
+  function handleCancelOrder() {
+    fetch(`/orders/${currentOrder.id}`, {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+    }).then((r) => {
+      if (r.ok) r.json().then((data) => putCurrentOrder(""));
+    });
+  }
+
   const mappedItems = currentOrder
     ? currentOrder.items.map((item) => (
         <div
@@ -139,6 +148,26 @@ function Cart({
           TO BROWSE AVAILABLE PRODUCTS
         </p>
       )}
+      {currentOrder ? (
+        <div
+          style={{
+            float: "right",
+            width: "25%",
+            display: "flex",
+            justifyContent: "space-between",
+          }}
+        >
+          <button
+            style={{ borderColor: "red", color: "red" }}
+            onClick={handleCancelOrder}
+          >
+            CANCEL
+          </button>
+          <button style={{ borderColor: "green", color: "green" }}>
+            CHECKOUT
+          </button>
+        </div>
+      ) : null}
     </div>
   );
 }
