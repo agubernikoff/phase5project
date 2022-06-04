@@ -1,6 +1,6 @@
 class OrderItemsController < ApplicationController
   rescue_from ActiveRecord::RecordInvalid,with: :render_unprocessable_entity
-    rescue_from ActiveRecord::RecordNotFound,with: :render_not_found
+  rescue_from ActiveRecord::RecordNotFound,with: :render_not_found
   before_action :set_order_item, only: [:show, :update, :destroy]
 
   # GET /order_items
