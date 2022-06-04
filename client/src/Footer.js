@@ -35,13 +35,13 @@ function Footer({ user, logout, currentOrder }) {
           style={{ width: "10%", borderRadius: 20 }}
         />
       </div>
+      <NavLink to={`/cart`} style={activeStyle}>
+        CART {currentOrder ? `(${currentOrder.items.length})` : null}
+      </NavLink>
+      <br />
+      <br />
       {user.isSeller ? (
         <>
-          <NavLink to={`/cart`} style={activeStyle}>
-            CART {currentOrder ? `(${currentOrder.items.length})` : null}
-          </NavLink>
-          <br />
-          <br />
           <NavLink to={`/u/${user.id}`} style={activeStyle}>
             MY STORE
           </NavLink>

@@ -17,14 +17,18 @@ class OrderItemsController < ApplicationController
 
   # POST /order_items
   def create
-    @order_item = OrderItem.create!(order_item_params)
-    order=Order.find(params[:order_id])
-    order.update(id: params[:order_id])
     product=Product.find(params[:product_id])
     color=product.colors.find_by(color: params[:color])
-    color[params[:size].to_sym]-= params[:quantity]
-    color.save
+    order=Order.find(params[:order_id])
+    if color[params[:size].to_sym] >= params[:quantity]
+      @order_item = OrderItem.create!(order_item_params)
+      order.update(id: params[:order_id])
+      color[params[:size].to_sym]-= params[:quantity]
+      color.save
       render json: @order_item, status: :created, location: @order_item
+    else 
+      render json:{error: "Invalid quantity. Only #{color[params[:size].to_sym]} #{params[:size].upcase} left."}, status: :unauthorized
+    end
   end
 
   # PATCH/PUT /order_items/1

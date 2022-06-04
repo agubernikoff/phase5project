@@ -19,7 +19,7 @@ function Update({ update }) {
     >
       <span
         style={
-          update.status === "On Schedule"
+          update.status === "On Schedule" || update.status === "Completed"
             ? { color: "green" }
             : { color: "red" }
         }

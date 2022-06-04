@@ -80,7 +80,7 @@ function Preorder({
       }
     });
   }
-  console.log(project);
+  console.log(project.production_updates[2].status);
 
   return (
     <div>
@@ -251,7 +251,7 @@ function Preorder({
               ? "SOLD OUT"
               : "PREORDER"}
           </button>
-        ) : (
+        ) : project.status === "Preorder" ? (
           <p
             style={{
               textAlign: "center",
@@ -277,7 +277,7 @@ function Preorder({
                 minute: "2-digit",
               })}
           </p>
-        )}
+        ) : null}
       </div>
     </div>
   );

@@ -1,7 +1,8 @@
 class OrdersController < ApplicationController
   rescue_from ActiveRecord::RecordInvalid,with: :render_unprocessable_entity
-    rescue_from ActiveRecord::RecordNotFound,with: :render_not_found
+  rescue_from ActiveRecord::RecordNotFound,with: :render_not_found
   before_action :set_order, only: [:show, :update, :destroy]
+  before_action :priority_preorder, only: [:create]
 
   # GET /orders
   def index
@@ -24,7 +25,7 @@ class OrdersController < ApplicationController
   def create
     @order = Order.create!(order_params)
     session[:current_order_id] = @order.id
-      render json: @order, status: :created, location: @order
+    render json: @order, status: :created, location: @order
   end
 
   # PATCH/PUT /orders/1
@@ -42,6 +43,15 @@ class OrdersController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_order
       @order = Order.find(params[:id])
+    end
+
+    def priority_preorder
+      product = Product.find(params[:product_id])
+      project=product.project
+      users_who_preordered=project.preorders.map{|pre| pre.user_id}
+      unless users_who_preordered.include?(params[:user_id]) || Time.current > project.updated_at + 1.day
+        render json:{error:["UNAUTHORIZED:"," THIS ACTION IS CURRENTLY RESERVED FOR USERS WHO PREORDERED THE PRODUCT. ", "PLEASE TRY AGAIN ON ","#{project.updated_at + 1.day}"]},status: :unauthorized
+      end
     end
 
     # Only allow a list of trusted parameters through.

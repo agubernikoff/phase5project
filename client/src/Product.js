@@ -8,6 +8,7 @@ function Product({ user, currentOrder, setCurrentOrder, updateCurrentOrder }) {
   const [quantity, setQuantity] = useState(1);
   const [size, setSize] = useState("");
   const [errors, setErrors] = useState([]);
+  const [unauthorized, setUnauthorized] = useState([]);
   const [loading, setLoading] = useState(false);
   const [color, setColor] = useState("");
   const navigate = useNavigate();
@@ -45,14 +46,17 @@ function Product({ user, currentOrder, setCurrentOrder, updateCurrentOrder }) {
 
   function handleAddToCart() {
     setLoading(true);
-    if (!size) {
+    if (!color) {
+      setErrors(["Please select a color"]);
+      setLoading(false);
+    } else if (!size) {
       setErrors(["Please select a size"]);
       setLoading(false);
     } else if (!currentOrder) {
       fetch("/orders", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ user_id: user.id }),
+        body: JSON.stringify({ user_id: user.id, product_id: product.id }),
       }).then((r) => {
         if (r.ok) {
           r.json().then((data) => {
@@ -78,7 +82,7 @@ function Product({ user, currentOrder, setCurrentOrder, updateCurrentOrder }) {
                 });
               } else {
                 r.json().then((data) => {
-                  console.log(data, "this");
+                  setErrors([data.error]);
                   setLoading(false);
                 });
               }
@@ -86,7 +90,7 @@ function Product({ user, currentOrder, setCurrentOrder, updateCurrentOrder }) {
           });
           setLoading(false);
         } else {
-          r.json().then((data) => console.log(data));
+          r.json().then((data) => setUnauthorized(data.error));
           setLoading(false);
         }
       });
@@ -112,7 +116,7 @@ function Product({ user, currentOrder, setCurrentOrder, updateCurrentOrder }) {
           });
         } else {
           r.json().then((data) => {
-            console.log(data, "that");
+            setErrors([data.error]);
             setLoading(false);
           });
         }
@@ -155,7 +159,7 @@ function Product({ user, currentOrder, setCurrentOrder, updateCurrentOrder }) {
         .map((c) => c.inventory)
         .reduce((partialSum, a) => partialSum + a, 0)
     : null;
-
+  console.log(errors[0]);
   return (
     <div>
       <img
@@ -420,14 +424,47 @@ function Product({ user, currentOrder, setCurrentOrder, updateCurrentOrder }) {
           ) : (
             <button>SOLD OUT</button>
           )}
-          {errors.map((err) => (
-            <h3
-              key={err}
-              style={{ display: "block", margin: "auto", marginTop: 10 }}
+          {unauthorized[0] ? (
+            <p
+              style={{
+                textAlign: "center",
+                width: "95%",
+                margin: "auto",
+                marginBottom: "1vw",
+              }}
             >
-              {err}
-            </h3>
-          ))}
+              <strong>{unauthorized[0]}</strong>
+              {unauthorized[1] +
+                unauthorized[2] +
+                new Date(unauthorized[3])
+                  .toLocaleDateString("en-US", {
+                    weekday: "long",
+                    day: "numeric",
+                    month: "long",
+                    year: "numeric",
+                  })
+                  .toUpperCase() +
+                " AT " +
+                new Date(unauthorized[3]).toLocaleTimeString([], {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                })}
+            </p>
+          ) : (
+            errors.map((err) => (
+              <h3
+                key={err}
+                style={{
+                  display: "block",
+                  margin: "auto",
+                  marginTop: 10,
+                  textAlign: "center",
+                }}
+              >
+                {err}
+              </h3>
+            ))
+          )}
         </div>
       </div>
     </div>
