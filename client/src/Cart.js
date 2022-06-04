@@ -2,8 +2,13 @@ import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import Loading from "./Loading";
 
-function Cart({ putCurrentOrder, currentOrder }) {
+function Cart({
+  putCurrentOrder,
+  currentOrder,
+  updateCurrentOrderOnRemoveItem,
+}) {
   const [loading, setLoading] = useState(true);
+  const [hovered, setHovered] = useState(false);
 
   useEffect(() => {
     fetch("/current_order").then((r) => {
@@ -26,11 +31,28 @@ function Cart({ putCurrentOrder, currentOrder }) {
     currency: "USD",
   });
 
+  function handleRemoveItem() {
+    fetch(`/order_items/${hovered}`, {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+    }).then((r) => {
+      if (r.ok)
+        r.json().then((data) => updateCurrentOrderOnRemoveItem(hovered));
+    });
+  }
+
   const mappedItems = currentOrder
     ? currentOrder.items.map((item) => (
         <div
           key={item.id}
-          style={{ display: "flex", justifyContent: "space-between" }}
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            position: "relative",
+            marginBottom: "1vw",
+          }}
+          onMouseEnter={() => setHovered(item.id)}
+          onMouseLeave={() => setHovered(false)}
         >
           <img
             alt={item.product.name}
@@ -54,6 +76,18 @@ function Cart({ putCurrentOrder, currentOrder }) {
           <p>{formatter.format(item.product.price)}</p>
           <p>{item.quantity}</p>
           <p>{formatter.format(item.price)}</p>
+          {hovered === item.id ? (
+            <button
+              style={{
+                position: "absolute",
+                bottom: 0,
+                right: 0,
+              }}
+              onClick={handleRemoveItem}
+            >
+              REMOVE ITEM
+            </button>
+          ) : null}
         </div>
       ))
     : null;

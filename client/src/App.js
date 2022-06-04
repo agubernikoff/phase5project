@@ -82,6 +82,13 @@ function App() {
     });
   }
 
+  function updateCurrentOrderOnRemoveItem(removedID) {
+    const updatedItems = currentOrder.items.filter(
+      (item) => item.id !== removedID
+    );
+    setCurrentOrder({ ...currentOrder, items: updatedItems });
+  }
+
   function logout() {
     setUser("");
     setCurrentOrder("");
@@ -590,6 +597,7 @@ function App() {
                 user={user}
                 putCurrentOrder={putCurrentOrder}
                 currentOrder={currentOrder}
+                updateCurrentOrderOnRemoveItem={updateCurrentOrderOnRemoveItem}
               />
             }
           />

@@ -40,6 +40,7 @@ class OrderItemsController < ApplicationController
   # DELETE /order_items/1
   def destroy
     @order_item.destroy
+    render json: @order_item
   end
 
   private
