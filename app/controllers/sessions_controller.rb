@@ -12,7 +12,10 @@ class SessionsController < ApplicationController
     def destroy
       session.delete :user_id
       session.delete :number
-      session.delete :current_order_id
+      if session[:current_order_id]
+        Order.find(session[:current_order_id]).destroy
+        session.delete :current_order_id
+      end
       head :no_content
     end
   
