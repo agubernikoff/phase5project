@@ -80,7 +80,6 @@ function Preorder({
       }
     });
   }
-  console.log(project.production_updates[2].status);
 
   return (
     <div>
@@ -227,6 +226,7 @@ function Preorder({
         {project.status === "Preorder" && !error ? (
           <button
             style={
+              project.preorders[0] &&
               project.preorders.map((p) => p.user_id).includes(user.id)
                 ? {
                     margin: "auto",

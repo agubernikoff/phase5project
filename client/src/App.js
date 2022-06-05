@@ -92,6 +92,7 @@ function App() {
   function logout() {
     setUser("");
     setCurrentOrder("");
+    setComingSoonClass("");
   }
 
   function updateUserOnEdit(user) {
@@ -267,6 +268,7 @@ function App() {
       ...data.updated_project,
       posts: updatedFilteredProjectPosts,
       production_updates: [],
+      preorders: [],
       products: [],
     };
     setPreOrderProjects([...preOrderProjects, newProject]);
