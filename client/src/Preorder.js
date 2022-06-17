@@ -75,7 +75,13 @@ function Preorder({
         });
       } else {
         r.json().then((data) => {
-          if (data.error[0].includes("UNAUTHORIZED")) setError(data.error);
+          if (data.errors) {
+            setError(data.errors);
+            setTimeout(() => {
+              setError("");
+            }, 2000);
+          } else if (data.error[0].includes("UNAUTHORIZED"))
+            setError(data.error);
         });
       }
     });
@@ -261,21 +267,23 @@ function Preorder({
             }}
           >
             <strong>{error[0]}</strong>
-            {error[1] +
-              error[2] +
-              new Date(error[3])
-                .toLocaleDateString("en-US", {
-                  weekday: "long",
-                  day: "numeric",
-                  month: "long",
-                  year: "numeric",
+            {error[1]
+              ? error[1] +
+                error[2] +
+                new Date(error[3])
+                  .toLocaleDateString("en-US", {
+                    weekday: "long",
+                    day: "numeric",
+                    month: "long",
+                    year: "numeric",
+                  })
+                  .toUpperCase() +
+                " AT " +
+                new Date(error[3]).toLocaleTimeString([], {
+                  hour: "2-digit",
+                  minute: "2-digit",
                 })
-                .toUpperCase() +
-              " AT " +
-              new Date(error[3]).toLocaleTimeString([], {
-                hour: "2-digit",
-                minute: "2-digit",
-              })}
+              : null}
           </p>
         ) : null}
       </div>
