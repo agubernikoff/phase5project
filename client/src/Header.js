@@ -10,7 +10,7 @@ function Header({ comingSoonClass }) {
       : null;
   return (
     <div style={{ width: "16.5%" }}>
-      <h3>INSERT TITLE HERE</h3>
+      <h3>FEEDBACK MARKET</h3>
       <NavLink to={"/"} style={activeStyle}>
         HOME
       </NavLink>

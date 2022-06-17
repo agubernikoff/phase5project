@@ -3,6 +3,7 @@ class OrdersController < ApplicationController
   rescue_from ActiveRecord::RecordNotFound,with: :render_not_found
   before_action :set_order, only: [:show, :update, :destroy]
   before_action :priority_preorder, only: [:create]
+  skip_before_action :is_logged_in?, only: :current_order
 
   # GET /orders
   def index

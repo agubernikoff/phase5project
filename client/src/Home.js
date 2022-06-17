@@ -242,7 +242,7 @@ function Home({
 
   return (
     <div>
-      <p style={{ textAlign: "center" }}>HOME</p>
+      <h3 style={{ textAlign: "center" }}>FEEDBACK MARKET</h3>
       <div style={{ display: "flex", alignItems: "center" }}>
         <div
           style={{

@@ -20,19 +20,16 @@ function App() {
   const [posts, setPosts] = useState([]);
   const [preOrderProjects, setPreOrderProjects] = useState([]);
   const [products, setProducts] = useState([]);
-  const [appLoading, setAppLoading] = useState(false);
   const [currentOrder, setCurrentOrder] = useState("");
   const [comingSoonClass, setComingSoonClass] = useState("");
 
   useEffect(() => {
-    setAppLoading(true);
     fetch("/me").then((r) => {
       if (r.ok) {
         r.json().then((user) => {
           setUser(user);
-          setAppLoading(false);
         });
-      } else setAppLoading(false);
+      }
     });
     fetch("/current_order").then((r) => {
       if (r.ok) {
@@ -411,13 +408,6 @@ function App() {
   function updateProductsOnNewListing(newProduct) {
     setProducts([...products, newProduct]);
   }
-
-  if (!user)
-    return (
-      <div>
-        <Login onLogin={setUser} appLoading={appLoading} />
-      </div>
-    );
 
   return (
     <div className="App" style={{ display: "flex", flexDirection: "row" }}>

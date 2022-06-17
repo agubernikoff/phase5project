@@ -50,7 +50,12 @@ function ComingSoon({
       />
     )
   );
-  return <div>ComingSoon{availableForPreorder}</div>;
+  return (
+    <div>
+      <h3 style={{ textAlign: "center" }}>COMING SOON</h3>
+      {availableForPreorder}
+    </div>
+  );
 }
 
 export default ComingSoon;

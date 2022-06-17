@@ -2,6 +2,7 @@ class ProductsController < ApplicationController
   rescue_from ActiveRecord::RecordInvalid,with: :render_unprocessable_entity
   rescue_from ActiveRecord::RecordNotFound,with: :render_not_found
   before_action :set_product, only: [:show, :update, :destroy]
+  skip_before_action :is_logged_in?, only: :index
 
   # GET /products
   def index

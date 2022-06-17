@@ -1,6 +1,6 @@
 class CommentsController < ApplicationController
   rescue_from ActiveRecord::RecordInvalid,with: :render_unprocessable_entity
-    rescue_from ActiveRecord::RecordNotFound,with: :render_not_found
+  rescue_from ActiveRecord::RecordNotFound,with: :render_not_found
   before_action :set_comment, only: [:show, :update, :destroy]
 
   # GET /comments

@@ -5,7 +5,12 @@ function Marketplace({ products }) {
   const mappedProductPreviews = products.map((product) => (
     <ProductPreview key={product.id} product={product} />
   ));
-  return <div className="marketplace">{mappedProductPreviews}</div>;
+  return (
+    <div>
+      <h3 style={{ textAlign: "center" }}>MARKETPLACE</h3>
+      <div className="marketplace">{mappedProductPreviews}</div>
+    </div>
+  );
 }
 
 export default Marketplace;

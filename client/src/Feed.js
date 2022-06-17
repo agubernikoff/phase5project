@@ -35,6 +35,7 @@ function Feed({
   ));
   return (
     <div>
+      <h3 style={{ textAlign: "center" }}>FEED</h3>
       {postCards}
       {message ? (
         <p>{message}</p>
