@@ -90,7 +90,7 @@ function Footer({ user, logout, currentOrder }) {
           </>
         )}
         <NavLink
-          to={"/login"}
+          to={"/"}
           onClick={() => {
             handleLogout();
           }}

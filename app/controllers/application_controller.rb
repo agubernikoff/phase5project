@@ -3,6 +3,6 @@ class ApplicationController < ActionController::API
   before_action :is_logged_in?
 
   def is_logged_in?
-    render json: {errors: ['Not Uathorized']}, status: :unauthorized unless session.include? :user_id
+    render json: {errors: ['UNAUTHORIZED: PLEASE LOGIN.']}, status: :unauthorized unless session.include? :user_id
   end
 end

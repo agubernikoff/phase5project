@@ -24,6 +24,15 @@ function Post({
   postClass,
 }) {
   const [comment, setComment] = useState("");
+  const [errors, setErrors] = useState([]);
+
+  function displayErrors(errors) {
+    setErrors([errors]);
+    setTimeout(() => {
+      setErrors([]);
+    }, 2000);
+  }
+
   const content = post.files.map((f) => (
     <img src={f.url} alt={"content"} key={f.url} style={{ width: "100%" }} />
   ));
@@ -72,7 +81,7 @@ function Post({
             if (accountHolder) updateAccountOnLike(data);
           }
         });
-      } else r.json().then((data) => console.log(data));
+      } else r.json().then((data) => displayErrors(data.errors));
     });
   }
 
@@ -97,7 +106,9 @@ function Post({
       onUnlike();
     }
   }
-  const userLikesThisPost = user.likes.filter((uL) => uL.post_id === post.id);
+  const userLikesThisPost = user
+    ? user.likes.filter((uL) => uL.post_id === post.id)
+    : null;
 
   function newComment(e) {
     e.preventDefault();
@@ -117,7 +128,7 @@ function Post({
           updatePostCommentsOnComment(data);
           if (accountHolder) updateAccountOnComment(data);
         });
-      } else r.json().then((data) => console.log(data));
+      } else r.json().then((data) => displayErrors(data.errors));
     });
     setComment("");
   }
@@ -194,26 +205,39 @@ function Post({
         )}
       </div>
       <br />
-      <img
-        src={userLikesThisPost[0] ? heartIcon : emptyHeartIcon}
-        alt={"like button"}
-        style={{ width: "6%" }}
-        onClick={handleLikeClick}
-      />
-      <span style={{ float: "right" }}>{`${post.likes.length} LIKES`}</span>
-      {post.message
-        ? post.message.map((pm) => (
-            <p key={pm} style={{ textAlign: "center", color: "white" }}>
-              {pm}
-            </p>
-          ))
-        : null}
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+        }}
+      >
+        <img
+          src={user && userLikesThisPost[0] ? heartIcon : emptyHeartIcon}
+          alt={"like button"}
+          style={{ width: "6%" }}
+          onClick={handleLikeClick}
+        />
+        {errors.map((err) => (
+          <h5 key={err} style={{ margin: "auto" }}>
+            {err}
+          </h5>
+        ))}
+        <span style={{ float: "right" }}>{`${post.likes.length} LIKES`}</span>
+        {post.message
+          ? post.message.map((pm) => (
+              <p key={pm} style={{ textAlign: "center", color: "white" }}>
+                {pm}
+              </p>
+            ))
+          : null}
+      </div>
       <p>{post.caption}</p>
       {comments}
       <br />
       <form onSubmit={newComment}>
         <input
-          style={{ borderRadius: 10, border: "1px solid grey" }}
+          style={{ borderRadius: 10, border: "1px solid grey", width: "84%" }}
           placeholder="add a comment..."
           value={comment}
           onChange={(e) => setComment(e.target.value)}
