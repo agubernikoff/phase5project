@@ -223,14 +223,21 @@ function Post({
             {err}
           </h5>
         ))}
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
+          {post.message
+            ? post.message.map((pm) => (
+                <p key={pm} style={{ textAlign: "center", color: "white" }}>
+                  {pm}
+                </p>
+              ))
+            : null}
+        </div>
         <span style={{ float: "right" }}>{`${post.likes.length} LIKES`}</span>
-        {post.message
-          ? post.message.map((pm) => (
-              <p key={pm} style={{ textAlign: "center", color: "white" }}>
-                {pm}
-              </p>
-            ))
-          : null}
       </div>
       <p>{post.caption}</p>
       {comments}
